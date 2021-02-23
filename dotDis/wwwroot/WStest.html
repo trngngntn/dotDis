@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>WebSocket Test Page</title>
+        <script src="js/ws.js"></script>
+    </head>
+    <body>
+        <header>This is WebSocket test page</header>
+        <main>
+            <form>
+                <input type="button" value="Open" onclick="wsOpen()">
+                <input type="button" value="Close" onclick="wsClose()">
+                <br>
+                Message<br>
+                <textarea id="input-mesg"></textarea>
+                <br>
+                <input type="button" onclick="wsSendMesg()" value="Send">
+                <br>
+                Server Respond<br>
+                <textarea id="respond-mesg" readonly></textarea>
+            </form>
+        </main>
+    </body>
+</html>
