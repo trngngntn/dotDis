@@ -57,7 +57,7 @@ namespace dotdis
             });
 
             app.UseWebSockets();
-            //BaseDAL<string>.GetAll();
+            BaseDAL<string>.GetAll();
             app.Use(async (context, next) =>
             {
                 if(context.Request.Path == "/ws")

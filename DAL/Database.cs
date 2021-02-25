@@ -13,7 +13,7 @@ namespace dotdis.Models.DAL
         public static MySqlConnection GetConnection()
         {
             //String connectionStr = "server=[serverAddr];user=[username];database=[DBName];port=[DBport];password=[pass]";
-            String connectionStr = "server=localhost;user=trng;database=dotDis;port=3306;password=Ntt21032";
+            String connectionStr = "server=dotdis.duckdns.org;user=sa;database=dotDis;port=3306;password=Luan-2000";
             MySqlConnection connection = new MySqlConnection(connectionStr);
             return connection;
         }
