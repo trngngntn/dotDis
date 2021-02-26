@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <PackageReference Include="MySql.Data" Version="8.0.23" />
-    <PackageReference Include="MySql.Web" Version="8.0.23" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,5 @@
 {
-  "FilePath": "/home/trngngntn/Projects/dotDis/dotDis.csproj",
+  "FilePath": "/home/trngngntn/Git/dotDis/dotDis.csproj",
   "Configuration": {
     "ConfigurationName": "MVC-3.0",
     "LanguageVersion": "5.0",
@@ -15603,78 +15603,43 @@
   "RootNamespace": "dotDis",
   "Documents": [
     {
-      "FilePath": "/home/trngngntn/Projects/dotDis/Pages/Privacy.cshtml",
-      "TargetPath": "Pages\\Privacy.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/trngngntn/Projects/dotDis/Pages/_ViewImports.cshtml",
-      "TargetPath": "Pages\\_ViewImports.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/trngngntn/Projects/dotDis/Pages/Shared/_ValidationScriptsPartial.cshtml",
-      "TargetPath": "Pages\\Shared\\_ValidationScriptsPartial.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/trngngntn/Projects/dotDis/Views/Home/UI.cshtml",
-      "TargetPath": "Views\\Home\\UI.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/trngngntn/Projects/dotDis/Views/Shared/_ValidationScriptsPartial.cshtml",
+      "FilePath": "/home/trngngntn/Git/dotDis/Views/Shared/_ValidationScriptsPartial.cshtml",
       "TargetPath": "Views\\Shared\\_ValidationScriptsPartial.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/home/trngngntn/Projects/dotDis/Pages/_ViewStart.cshtml",
-      "TargetPath": "Pages\\_ViewStart.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/trngngntn/Projects/dotDis/Pages/Shared/_Layout.cshtml",
-      "TargetPath": "Pages\\Shared\\_Layout.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/trngngntn/Projects/dotDis/Pages/Index.cshtml",
-      "TargetPath": "Pages\\Index.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/trngngntn/Projects/dotDis/Views/_ViewStart.cshtml",
+      "FilePath": "/home/trngngntn/Git/dotDis/Views/_ViewStart.cshtml",
       "TargetPath": "Views\\_ViewStart.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/home/trngngntn/Projects/dotDis/Views/Shared/Error.cshtml",
-      "TargetPath": "Views\\Shared\\Error.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/trngngntn/Projects/dotDis/Views/Shared/_Layout.cshtml",
-      "TargetPath": "Views\\Shared\\_Layout.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/trngngntn/Projects/dotDis/Views/_ViewImports.cshtml",
-      "TargetPath": "Views\\_ViewImports.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/trngngntn/Projects/dotDis/Views/Home/Index.cshtml",
-      "TargetPath": "Views\\Home\\Index.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/trngngntn/Projects/dotDis/Views/Home/Privacy.cshtml",
+      "FilePath": "/home/trngngntn/Git/dotDis/Views/Home/Privacy.cshtml",
       "TargetPath": "Views\\Home\\Privacy.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/home/trngngntn/Projects/dotDis/Pages/Error.cshtml",
-      "TargetPath": "Pages\\Error.cshtml",
+      "FilePath": "/home/trngngntn/Git/dotDis/Views/Home/UI.cshtml",
+      "TargetPath": "Views\\Home\\UI.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/trngngntn/Git/dotDis/Views/Shared/Error.cshtml",
+      "TargetPath": "Views\\Shared\\Error.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/trngngntn/Git/dotDis/Views/Home/Index.cshtml",
+      "TargetPath": "Views\\Home\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/trngngntn/Git/dotDis/Views/_ViewImports.cshtml",
+      "TargetPath": "Views\\_ViewImports.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/home/trngngntn/Git/dotDis/Views/Shared/_Layout.cshtml",
+      "TargetPath": "Views\\Shared\\_Layout.cshtml",
       "FileKind": "mvc"
     }
   ],
