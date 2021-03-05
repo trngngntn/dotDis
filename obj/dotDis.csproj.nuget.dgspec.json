@@ -38,11 +38,11 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
-            "MySql.Data": {
+            "Microsoft.AspNetCore.Session": {
               "target": "Package",
-              "version": "[8.0.23, )"
+              "version": "[2.2.0, )"
             },
-            "MySql.Web": {
+            "MySql.Data": {
               "target": "Package",
               "version": "[8.0.23, )"
             }

@@ -141,7 +141,6 @@ C:/Users/trngngntn/Git/dotDis/obj/Debug/net5.0/dotDis.genruntimeconfig.cache
 /home/trngngntn/Git/dotDis/bin/Debug/net5.0/MySql.Data.dll
 /home/trngngntn/Git/dotDis/bin/Debug/net5.0/Ubiety.Dns.Core.dll
 /home/trngngntn/Git/dotDis/bin/Debug/net5.0/Zstandard.Net.dll
-/home/trngngntn/Git/dotDis/bin/Debug/net5.0/MySql.Web.dll
 /home/trngngntn/Git/dotDis/bin/Debug/net5.0/Renci.SshNet.dll
 /home/trngngntn/Git/dotDis/bin/Debug/net5.0/SshNet.Security.Cryptography.dll
 /home/trngngntn/Git/dotDis/bin/Debug/net5.0/System.Configuration.ConfigurationManager.dll
@@ -177,3 +176,5 @@ C:/Users/trngngntn/Git/dotDis/obj/Debug/net5.0/dotDis.genruntimeconfig.cache
 /home/trngngntn/Git/dotDis/obj/Debug/net5.0/ref/dotDis.dll
 /home/trngngntn/Git/dotDis/obj/Debug/net5.0/dotDis.pdb
 /home/trngngntn/Git/dotDis/obj/Debug/net5.0/dotDis.genruntimeconfig.cache
+/home/trngngntn/Git/dotDis/obj/Debug/net5.0/Razor/Views/Chat/Index.cshtml.g.cs
+/home/trngngntn/Git/dotDis/obj/Debug/net5.0/Razor/Views/Login/Index.cshtml.g.cs

@@ -1,5 +1,6 @@
 using System;
 using System.Data;
+using MySql.Data.MySqlClient;
 
 namespace dotdis.Models.DAL
 {
@@ -19,6 +20,7 @@ namespace dotdis.Models.DAL
 
         public void Get()
         {
+            //string sql = "SELECT [attr] FROM [tbl] WHERE [cond]";
 
         }
 

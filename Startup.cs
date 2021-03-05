@@ -26,6 +26,11 @@ namespace dotdis
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(1);//You can set Time   
+            });
             services.AddControllersWithViews();
         }
 
@@ -49,6 +54,8 @@ namespace dotdis
 
             app.UseAuthorization();
 
+            app.UseSession();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -57,15 +64,16 @@ namespace dotdis
             });
 
             app.UseWebSockets();
-            BaseDAL<string>.GetAll();
+            //BaseDAL<string>.GetAll();
             app.Use(async (context, next) =>
             {
-                if(context.Request.Path == "/ws")
+                if (context.Request.Path == "/ws")
                 {
-                    if(context.WebSockets.IsWebSocketRequest)
+                    if (context.WebSockets.IsWebSocketRequest)
                     {
                         Console.WriteLine("VALID WEBSOCKET CONNECTION");
-                        using (WebSocket webSocket = await context.WebSockets.AcceptWebSocketAsync())
+                        WebSocket webSocket;
+                        using (webSocket = await context.WebSockets.AcceptWebSocketAsync())
                         {
                             await WebSocketController.Echo(context, webSocket);
                         }

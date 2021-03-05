@@ -1,0 +1,16 @@
+@{
+    ViewData["Title"] = "Login";
+}
+<body>
+    <header>
+        This is header
+    </header>
+    <main>
+        <form id="login-form" asp-action="Authorize" method="POST">
+            <input type="text" name="userid" value="Username or Email">
+            <input type="password" name="passwd" value="Password">
+            <input type="submit" value="Login">
+        </form>
+    </main>
+</body>
+

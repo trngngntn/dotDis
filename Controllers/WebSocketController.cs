@@ -3,11 +3,22 @@ using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using dotdis.Models;
+using System.Collections.Generic;
 
 namespace dotdis.Controllers
 {
     public class WebSocketController
     {
+        private class ActiveConnections{
+            WebSocket webSocket;
+            //Session
+        }
+        private Dictionary<string, ActiveConnections> userBinding;
+        private static WebSocket temp;
+        public void GetWS(){
+
+        }
         public static void PrintIndexAndValues(ArraySegment<byte> arrSeg)
         {
             for (int i = arrSeg.Offset; i < (arrSeg.Offset + arrSeg.Count); i++)
@@ -25,7 +36,8 @@ namespace dotdis.Controllers
             {
                 Console.WriteLine(result.MessageType + "  " + result.EndOfMessage);
                 var mesg = new ArraySegment<byte>(buffer, 0, result.Count);
-                PrintIndexAndValues(mesg);
+                //PrintIndexAndValues(mesg);
+                Console.WriteLine("SUBP: " + webSocket.SubProtocol);
                 await webSocket.SendAsync(new ArraySegment<byte>(buffer, 0, result.Count), result.MessageType, result.EndOfMessage, none);
                 result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), none);
             }
