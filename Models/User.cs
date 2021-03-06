@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using dotdis.Util;
 
 namespace dotdis.Models
 {
@@ -9,14 +10,20 @@ namespace dotdis.Models
         private string id;
         private string name;
         private string email;
-        private string password;
+        private string salt;
         private int status;
-        public User(string id, string name, string email, string password)
+        public User(string id, string name, string email, string salt)
         {
             this.id = id;
             this.name = name;
             this.email = email;
-            this.password = password;
+            this.salt = salt;
+        }
+
+        public User(string id, string name)
+        {
+            this.id = id;
+            this.name = name;
         }
         public string ID
         {
@@ -31,13 +38,12 @@ namespace dotdis.Models
         {
             get => email;
         }
-        public string Password
+        public string Salt
         {
-            get => password;
-            set => password = value;
+            get => salt;
         }
-        public void Login(){
-
+        public void Login(string password){
+            
         }
         public void Logout(){
 

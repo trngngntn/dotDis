@@ -10,26 +10,29 @@ using Microsoft.AspNetCore.Http;
 
 namespace dotdis.Controllers
 {
-    public class ChatController : Controller
+    public class RegisterController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        public ChatController(ILogger<HomeController> logger)
+        public RegisterController(ILogger<HomeController> logger)
         {
             _logger = logger;
         }
 
         public IActionResult Index()
         {
-            String activeUserId = HttpContext.Session.GetString("active-user-id");
-            if(activeUserId == null){
-                Console.WriteLine(this.HttpContext.Items["ID"]);
-                return Redirect("/Login");
-            } else {
-                return View();
-            }
+            return View();
             
         }
-
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Submit(string userid, string passwd){
+            Console.WriteLine(userid + " " + passwd);
+            this.HttpContext.Items.Add("ID", "this from login");
+            //return RedirectToAction("Complete", new {id = 123});
+            //return Json(customer);
+            //return View(customer);
+            return Redirect("/Chat");
+        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

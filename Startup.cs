@@ -20,7 +20,7 @@ namespace dotdis
         {
             Configuration = configuration;
         }
-
+        
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -29,7 +29,9 @@ namespace dotdis
             services.AddDistributedMemoryCache();
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromMinutes(1);//You can set Time   
+                options.Cookie.Name = ".dotDis.Session";
+                options.IdleTimeout = TimeSpan.FromMinutes(1);//You can set Time 
+                options.Cookie.IsEssential = true;  
             });
             services.AddControllersWithViews();
         }
