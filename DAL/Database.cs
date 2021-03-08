@@ -3,7 +3,7 @@ using System.Data;
 using MySql.Data;
 using MySql.Data.MySqlClient;
 
-namespace dotdis.Models.DAL
+namespace dotdis.DAL
 {
     public class Database
     {
@@ -23,8 +23,9 @@ namespace dotdis.Models.DAL
         /// </summary>
         /// <param name="sql"></param>
         /// <return>DataTable</return>
-        public static DataTable GetData(string sql){
+        public static DataTable GetData(string sql, params MySqlParameter[] args){
             MySqlCommand command = new MySqlCommand(sql, GetConnection());
+            command.Parameters.AddRange(args);
             MySqlDataAdapter dataAdapter = new MySqlDataAdapter();
             dataAdapter.SelectCommand = command;
             DataSet dataSet = new DataSet();

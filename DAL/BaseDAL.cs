@@ -2,7 +2,7 @@ using System;
 using System.Data;
 using MySql.Data.MySqlClient;
 
-namespace dotdis.Models.DAL
+namespace dotdis.DAL
 {
     public class BaseDAL<T>
     {

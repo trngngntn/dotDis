@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using dotdis.Models.DAL;
+using dotdis.DAL;
 using dotdis.Controllers;
 using System.Net.WebSockets;
 
@@ -77,7 +77,7 @@ namespace dotdis
                         WebSocket webSocket;
                         using (webSocket = await context.WebSockets.AcceptWebSocketAsync())
                         {
-                            await WebSocketController.Echo(context, webSocket);
+                            await (new WebSocketController()).Echo(context, webSocket);
                         }
                     }
                     else

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace dotdis.Util{
     public class Cryptor{
-        public const int BUFFER_SIZE = 64;
+        public const int BUFFER_SIZE = 12;
         public static string GenerateSalt(){
             RNGCryptoServiceProvider rngCryp = new RNGCryptoServiceProvider();
             byte[] buffer = new byte[BUFFER_SIZE];

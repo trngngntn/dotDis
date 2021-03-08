@@ -1,18 +1,20 @@
 using System;
 using System.Collections.Generic;
 using dotdis.Util;
+using dotdis.DAL;
 
 namespace dotdis.Models
 {
     public class User
     {
         private static HashSet<User> activeUser;
-        private string id;
+        private int id;
+        private string username;
         private string name;
         private string email;
         private string salt;
         private int status;
-        public User(string id, string name, string email, string salt)
+        public User(int id, string name, string email, string salt)
         {
             this.id = id;
             this.name = name;
@@ -20,12 +22,12 @@ namespace dotdis.Models
             this.salt = salt;
         }
 
-        public User(string id, string name)
+        public User(int id, string name)
         {
             this.id = id;
             this.name = name;
         }
-        public string ID
+        public int ID
         {
             get => id;
         }
@@ -42,11 +44,25 @@ namespace dotdis.Models
         {
             get => salt;
         }
-        public void Login(string password){
-            
+        public bool Login(string passwd)
+        {
+            salt = UserDAO.GetSalt(id);
+            String pwd = Cryptor.GenerateHash(passwd, salt);
+            Console.WriteLine(id + " " + salt + " " + pwd);
+            return UserDAO.ComparePwd(id, pwd) == 1;
         }
-        public void Logout(){
+        public void Logout()
+        {
 
+        }
+        public static User GetUserByUsername(string username)
+        {
+            return UserDAO.GetUserByUsername(username);
+        }
+
+        public static bool CreateUser(string name, string email, string username, string passwd)
+        {
+            return UserDAO.CreateNewUser(name, email, username, passwd) == 1;
         }
     }
 }

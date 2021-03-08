@@ -20,18 +20,30 @@ namespace dotdis.Controllers
 
         public IActionResult Index()
         {
+            if(this.HttpContext.Items["error"] == null){
+                ViewData["Error"] = "";
+            }
             return View();
             
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Authorize(string userid, string passwd){
-            Console.WriteLine(userid + " " + passwd);
+        public IActionResult Authorize(string username, string passwd){
+            Console.WriteLine(username + " " + passwd);
             this.HttpContext.Items.Add("ID", "this from login");
-            //return RedirectToAction("Complete", new {id = 123});
-            //return Json(customer);
-            //return View(customer);
-            return Redirect("/Chat");
+            User user = dotdis.Models.User.GetUserByUsername(username);
+            if(user == null) // not found
+            {
+                Console.WriteLine("[LOG] User `{0}` not found!", username);
+                this.HttpContext.Items.Add("error",true);
+                return View("Index");
+            }
+            else if(user.Login(passwd))
+            {
+                Console.WriteLine("[LOG] User `{0}` logged in.", username);
+                return Redirect("/Chat");
+            }
+            else return View("Index");
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

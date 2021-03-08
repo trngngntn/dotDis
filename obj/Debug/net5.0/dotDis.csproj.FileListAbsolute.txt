@@ -178,3 +178,5 @@ C:/Users/trngngntn/Git/dotDis/obj/Debug/net5.0/dotDis.genruntimeconfig.cache
 /home/trngngntn/Git/dotDis/obj/Debug/net5.0/dotDis.genruntimeconfig.cache
 /home/trngngntn/Git/dotDis/obj/Debug/net5.0/Razor/Views/Chat/Index.cshtml.g.cs
 /home/trngngntn/Git/dotDis/obj/Debug/net5.0/Razor/Views/Login/Index.cshtml.g.cs
+/home/trngngntn/Git/dotDis/obj/Debug/net5.0/Razor/Views/Register/Index.cshtml.g.cs
+/home/trngngntn/Git/dotDis/obj/Debug/net5.0/Razor/Views/Register/Success.cshtml.g.cs
