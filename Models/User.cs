@@ -48,7 +48,6 @@ namespace dotdis.Models
         {
             salt = UserDAO.GetSalt(id);
             String pwd = Cryptor.GenerateHash(passwd, salt);
-            Console.WriteLine(id + " " + salt + " " + pwd);
             return UserDAO.ComparePwd(id, pwd) == 1;
         }
         public void Logout()

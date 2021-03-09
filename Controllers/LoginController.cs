@@ -29,7 +29,7 @@ namespace dotdis.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Authorize(string username, string passwd){
-            Console.WriteLine(username + " " + passwd);
+            //Console.WriteLine(username + " " + passwd);
             this.HttpContext.Items.Add("ID", "this from login");
             User user = dotdis.Models.User.GetUserByUsername(username);
             if(user == null) // not found

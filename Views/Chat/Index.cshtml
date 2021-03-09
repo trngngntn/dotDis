@@ -3,9 +3,17 @@
 }
 @section head
 {
-    <script src="js/ws.js"></script>
+    <script src="js/class.js"></script>
+    <script src="js/webSocket.js"></script>
 }
 <main>
+    <span>TestUser status: <span>Offline</span></span>
+    <br />
     <textarea id="field-mesg-input"></textarea>
+    <br />
     <button id="button-send" onclick="sendMesg()">Send</button>
+    <br />
+    <div id="mesg-output">
+        <p> Received Messages :</p>
+    </div>
 </main>
