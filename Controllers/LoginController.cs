@@ -40,6 +40,7 @@ namespace dotdis.Controllers
             }
             else if(user.Login(passwd))
             {
+                this.HttpContext.Session.SetString("active-user", user.ID.ToString());
                 Console.WriteLine("[LOG] User `{0}` logged in.", username);
                 return Redirect("/Chat");
             }

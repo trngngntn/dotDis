@@ -20,7 +20,7 @@ namespace dotdis.Controllers
 
         public IActionResult Index()
         {
-            String activeUserId = HttpContext.Session.GetString("active-user-id");
+            String activeUserId = HttpContext.Session.GetString("active-user");
             if(activeUserId == null){
                 Console.WriteLine(this.HttpContext.Items["ID"]);
                 return Redirect("/Login");
