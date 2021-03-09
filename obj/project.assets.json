@@ -1687,24 +1687,26 @@
     ]
   },
   "packageFolders": {
-    "/home/trngngntn/.nuget/packages/": {}
+    "C:\\Users\\trngngntn\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/trngngntn/Git/dotDis/dotDis.csproj",
+      "projectUniqueName": "C:\\Users\\trngngntn\\Git\\dotDis\\dotDis.csproj",
       "projectName": "dotDis",
-      "projectPath": "/home/trngngntn/Git/dotDis/dotDis.csproj",
-      "packagesPath": "/home/trngngntn/.nuget/packages/",
-      "outputPath": "/home/trngngntn/Git/dotDis/obj/",
+      "projectPath": "C:\\Users\\trngngntn\\Git\\dotDis\\dotDis.csproj",
+      "packagesPath": "C:\\Users\\trngngntn\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\trngngntn\\Git\\dotDis\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/trngngntn/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\trngngntn\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net5.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -1750,7 +1752,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/5.0.102/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
       }
     }
   }

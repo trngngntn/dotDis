@@ -3,26 +3,40 @@ using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using dotdis.Models;
 using System.Collections.Generic;
 using System.Collections;
 using System.Text;
+using dotDis.Models;
 
 namespace dotdis.Controllers
 {
     public class WebSocketController
     {
-        private class ActiveConnections{
-            WebSocket webSocket;
-            //Session
-        }
-        private Dictionary<string, ActiveConnections> userBinding;
-        private static WebSocket temp;
+        private static Dictionary<string, List<UserSession>> userBinding;
         public void GetWS(){
 
         }
         private List<byte> mesg = new List<byte>();
         
+        public void InitSocket(HttpContext context, WebSocket webSocket)
+        {
+            List<UserSession> uSessionList = userBinding[context.Session.GetString("active-user")];
+            bool sessionExist = false;
+            foreach(UserSession uSession in uSessionList)
+            {
+                if(uSession.Equals(context.Session))
+                {
+                    sessionExist = true;
+                    uSession.AddWebSocket(webSocket);
+                }
+            }
+            if (!sessionExist)
+            {
+                UserSession newUSession = new UserSession(context.Session);
+                newUSession.AddWebSocket(webSocket);
+            }
+        }
+
         public async Task Echo(HttpContext context, WebSocket webSocket)
         {
             byte[] buffer = new byte[4];
