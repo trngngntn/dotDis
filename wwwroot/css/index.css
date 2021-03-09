@@ -78,14 +78,6 @@ body {
   margin-top: 8rem !important;
 }
 
-.login {
-  width: 100%;
-  height: 100vh;
-  background-image: url(../../img/login_background.jpg);
-  background-size: cover;
-  background-position: left;
-  position: relative;
-}
 @keyframes moveInTop {
   0% {
     opacity: 0;
@@ -105,6 +97,14 @@ body {
     opacity: 1;
     transform: translate(-75%, -60%) translateY(0);
   }
+}
+.login {
+  width: 100%;
+  height: 100vh;
+  background-image: url(../../img/login_background.jpg);
+  background-size: cover;
+  background-position: left;
+  position: relative;
 }
 .login__form {
   width: 45vw;
@@ -144,9 +144,9 @@ body {
 .login__form__submit--btn {
   color: #fff;
   background-color: #7289da;
-  margin-bottom: 8px;
+  margin-bottom: 0.8rem;
   width: 100%;
-  height: 44px;
+  height: 4.4rem;
   min-width: 13rem;
   min-height: 4.4rem;
   border: none;
@@ -173,12 +173,12 @@ body {
   text-decoration: none;
 }
 .login__form--forgot-password-wrapper {
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
   margin-top: 4px;
   width: auto;
-  font-size: 14px;
+  font-size: 1.4rem;
   font-weight: 500;
-  line-height: 16px;
+  line-height: 1.6rem;
 }
 .login__form-wrapper {
   margin-bottom: 2rem;
@@ -217,10 +217,10 @@ body {
   border-color: #040405;
 }
 .auth__input--input:focus {
-  border-color: #7289da;
+  border: 2px #7289da solid;
 }
 .auth__input--input:invalid {
-  border-bottom-color: #c93434;
+  border: 2px #c75959 solid;
 }
 
 /*# sourceMappingURL=index.css.map */

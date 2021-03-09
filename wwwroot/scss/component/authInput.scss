@@ -29,10 +29,10 @@
       border-color: #040405;
     }
     &:focus {
-      border-color: #7289da;
+      border: 2px $color-light-blue1 solid;
     }
     &:invalid {
-      border-bottom-color: rgb(201, 52, 52);
+      border: 2px rgb(199, 89, 89) solid;
     }
   }
 }
