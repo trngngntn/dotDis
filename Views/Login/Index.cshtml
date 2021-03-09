@@ -4,7 +4,7 @@ ViewData["Title"] = "Login";
 
 <body>
     <main class="login">
-        <form class="login__form" asp-action="Authorize" method="POST">
+        <form class="login__form login__form--login" asp-action="Authorize" method="POST">
             <div class="login__form__content">
                 <div>
                     <h3 class="text__header__primary">
@@ -31,13 +31,9 @@ ViewData["Title"] = "Login";
                     </button>
                     <div>
                         <span class="login__form--register-label">Need an account?</span>
-                        <a class="login__form--register-link" href="#">Register</a>
+                        <a class="login__form--register-link" href="/Register">Register</a>
                     </div>
-
-
-
                 </div>
-
         </form>
     </main>
 </body>
