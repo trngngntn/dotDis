@@ -1,0 +1,196 @@
+/*
+  0 - 600px: Phone
+  600 - 900px: Tablet portrait
+  900 - 1200px: Tablet landscape
+  [1200 - 1800] is where normal style apply
+  1800px + ~ :Big desktop
+  ////////////////////////////////////////////
+  $breakpoint argument choices;
+  - phone
+  - tablet-port
+  - tablet-land
+  - big-desktop
+
+  ORDER: BASE + Typography > general layout + grid > page layout > component
+
+  */
+*,
+a::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+  font-family: Whitney, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+body {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  line-height: 1.7;
+  color: #777;
+}
+
+.text__header__primary {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #fff;
+  font-size: 2.4rem;
+  line-height: 3rem;
+  text-align: center;
+}
+
+.text__header__secondary {
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #b9bbbe;
+  font-size: 16px;
+  line-height: 20px;
+  outline: 0;
+  text-align: center;
+}
+
+.u-center-text {
+  text-align: center;
+}
+
+.u-margin-bottom-big {
+  margin-bottom: 8rem !important;
+}
+
+.u-margin-bottom-medium {
+  margin-bottom: 5rem !important;
+}
+
+.u-margin-bottom-small {
+  margin-bottom: 1.5rem !important;
+}
+
+.u-margin-top-big {
+  margin-top: 8rem !important;
+}
+
+.login {
+  width: 100%;
+  height: 100vh;
+  background-image: url(../../img/login_background.jpg);
+  background-size: cover;
+  background-position: left;
+  position: relative;
+}
+.login__form {
+  height: 40rem;
+  width: 45vw;
+  min-width: 50rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-80%, -50%);
+  color: #72767d;
+  background: #36393f;
+  padding: 3rem;
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 0.5rem;
+  font-size: 1.8rem;
+}
+.login__form__content {
+  height: 100%;
+  display: grid;
+  grid-template-columns: 60% 40%;
+}
+.login__form__submit--text {
+  font-weight: 600;
+  font-size: 1.4rem;
+  line-height: 2.4rem;
+}
+.login__form__submit--btn {
+  color: #fff;
+  background-color: #7289da;
+  margin-bottom: 8px;
+  width: 100%;
+  height: 44px;
+  min-width: 13rem;
+  min-height: 4.4rem;
+  border: none;
+  border-radius: 3px;
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2);
+  outline: none;
+  cursor: pointer;
+}
+.login__form__submit--btn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+.login__form--register-label {
+  font-size: 1.4rem;
+  color: #72767d;
+}
+.login__form--register-link {
+  font-size: 1.4rem;
+  color: #7289da;
+  text-decoration: none;
+}
+.login__form--forgot-password {
+  color: #7289da;
+  text-decoration: none;
+}
+.login__form--forgot-password-wrapper {
+  margin-bottom: 20px;
+  margin-top: 4px;
+  width: auto;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16px;
+}
+.login__form-wrapper {
+  margin-bottom: 2rem;
+  margin-top: 4px;
+  width: auto;
+  font-size: 1.4rem;
+  font-weight: 500;
+  line-height: 1.6rem;
+}
+
+.auth__input__wrapper {
+  margin-bottom: 1rem;
+}
+.auth__input--label {
+  display: inline-block;
+  color: #8e9297;
+  margin-bottom: 0.8rem;
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.auth__input--input {
+  background-color: #303339;
+  padding: 1rem;
+  height: 4rem;
+  width: 100%;
+  border-radius: 3px;
+  outline: 0;
+  text-rendering: optimizeLegibility;
+  border: 1px #222428 solid;
+  color: #dcddde;
+  font-weight: 400;
+}
+.auth__input--input:hover {
+  border-color: #040405;
+}
+.auth__input--input:focus {
+  border-color: #7289da;
+}
+.auth__input--input:invalid {
+  border-bottom-color: #c93434;
+}
+
+/*# sourceMappingURL=index.css.map */

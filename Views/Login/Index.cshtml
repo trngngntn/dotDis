@@ -1,16 +1,43 @@
 @{
-    ViewData["Title"] = "Login";
+ViewData["Title"] = "Login";
 }
+
 <body>
-    <header>
-        This is header
-    </header>
-    <main>
-        <form id="login-form" asp-action="Authorize" method="POST">
-            <input type="text" name="username" placeholder="Username or Email">
-            <input type="password" name="passwd" placeholder="Password">
-            <input type="submit" value="Login">
+    <main class="login">
+        <form class="login__form" asp-action="Authorize" method="POST">
+            <div class="login__form__content">
+                <div>
+                    <h3 class="text__header__primary">
+                        Welcome back!
+                    </h3>
+                    <h4 class="text__header__secondary">
+                        We're so excited to see you again!
+                    </h4>
+                    <div class="auth__input__wrapper">
+                        <label class="auth__input--label" for="username">Email or Phone number</label>
+                        <input class="auth__input--input" id="username" type="text" name="username">
+                    </div>
+                    <div class="auth__input__wrapper">
+                        <label class="auth__input--label" for="password">password</label>
+                        <input class="auth__input--input" id="password" type="password" name="passwd">
+                    </div>
+                    <div class="login__form--forgot-password-wrapper">
+                        <a class="login__form--forgot-password" href="#">Forgot your password?</a>
+                    </div>
+                    <button class="login__form__submit--btn">
+                        <div class="login__form__submit--text">
+                            Login
+                        </div>
+                    </button>
+                    <div>
+                        <span class="login__form--register-label">Need an account?</span>
+                        <a class="login__form--register-link" href="#">Register</a>
+                    </div>
+
+
+
+                </div>
+
         </form>
     </main>
 </body>
-
