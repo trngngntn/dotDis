@@ -73,11 +73,10 @@ namespace dotdis
                 {
                     if (context.WebSockets.IsWebSocketRequest)
                     {
-                        Console.WriteLine("VALID WEBSOCKET CONNECTION");
-                        WebSocket webSocket;
-                        using (webSocket = await context.WebSockets.AcceptWebSocketAsync())
+                        Console.WriteLine("[LOG] Open a new WebSocket");
+                        using (WebSocket webSocket = await context.WebSockets.AcceptWebSocketAsync())
                         {
-                            await (new WebSocketController()).Echo(context, webSocket);
+                            await (new WebSocketController()).ProcessData(context, webSocket);
                         }
                     }
                     else

@@ -19,9 +19,14 @@ namespace dotDis.Models
             bindSockets = new List<WebSocket>(); 
         }
 
-        public void AddWebSocket(WebSocket socket)
+        public void AddSocket(WebSocket socket)
         {
             bindSockets.Add(socket);
+        }
+
+        public List<WebSocket> GetSockets()
+        {
+            return bindSockets;
         }
     }
 }

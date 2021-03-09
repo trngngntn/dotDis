@@ -3,8 +3,8 @@ using System;
 namespace dotdis.Models{
     public class Message{
         private string id;
-        private string senderID;
+        private int sendID;
         private DateTime created;
-        private string content;
+        private string data;
     }
 }
