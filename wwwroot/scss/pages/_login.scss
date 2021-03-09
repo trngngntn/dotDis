@@ -1,0 +1,111 @@
+.login {
+  width: 100%;
+  height: 100vh;
+  background-image: url(../../img/login_background.jpg);
+  //   background-image: linear-gradient(
+  //       120deg,
+  //       rgba(0, 0, 0, 0.9) 0%,
+  //       rgba(0, 0, 0, 0.9) 3%,
+  //       transparent 50%
+  //     ),
+  //     url(../../img/login_background.jpg);
+  background-size: cover;
+  background-position: left;
+  position: relative;
+
+  &__form {
+    width: 45vw;
+    min-width: 50rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: $color-grey1;
+    background: $color-background-login;
+    padding: 3rem;
+    box-shadow: 0 2px 10px 0 rgb(0 0 0 / 20%);
+    border-radius: 0.5rem;
+    font-size: 1.8rem;
+    &--login {
+      transform: translate(-80%, -50%);
+      animation: moveInTop 0.2s ease-out;
+    }
+
+    &--register {
+      transform: translate(-75%, -60%);
+      width: 27vw;
+      animation: moveInBottom 0.2s ease-out;
+    }
+
+    &__content {
+      height: 100%;
+      display: grid;
+      grid-template-columns: 60% 40%;
+
+      &--register {
+        grid-template-columns: 100%;
+      }
+    }
+
+    &__submit--text {
+      font-weight: 600;
+      font-size: 1.4rem;
+      line-height: 2.4rem;
+    }
+
+    &__submit--btn {
+      color: #fff;
+      background-color: $color-light-blue1;
+
+      margin-bottom: 0.8rem;
+      width: 100%;
+      height: 4.4rem;
+      min-width: 13rem;
+      min-height: 4.4rem;
+      border: none;
+      border-radius: 3px;
+      box-shadow: 0 2px 10px 0 rgb(0 0 0 / 20%);
+      outline: none;
+      cursor: pointer;
+
+      &:active {
+        transform: translateY(-1px);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+      }
+    }
+
+    &--register {
+      &-label {
+        font-size: 1.4rem;
+        color: rgb(114, 118, 125);
+      }
+      &-link {
+        font-size: 1.4rem;
+        color: $color-light-blue1;
+        text-decoration: none;
+      }
+    }
+
+    &--forgot-password {
+      color: $color-light-blue1;
+      text-decoration: none;
+
+      &-wrapper {
+        margin-bottom: 2rem;
+        margin-top: 4px;
+        width: auto;
+        font-size: 1.4rem;
+        font-weight: 500;
+        line-height: 1.6rem;
+      }
+    }
+
+    &-wrapper {
+      margin-bottom: 2rem;
+      margin-top: 4px;
+      width: auto;
+      font-size: 1.4rem;
+      font-weight: 500;
+      line-height: 1.6rem;
+    }
+  }
+}

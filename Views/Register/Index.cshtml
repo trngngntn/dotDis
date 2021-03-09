@@ -1,7 +1,7 @@
 @{
-    ViewData["Title"] = "Register";
+ViewData["Title"] = "Register";
 }
-<header>
+<!-- <header>
     Register
 </header>
 <main>
@@ -12,5 +12,52 @@
         <input type="password" name="passwd" placeholder="Password"><br />
         <input type="submit" value="Create">
     </form>
-</main>
+</main> -->
 
+<body>
+    <main class="login">
+        <form class="login__form login__form--register" asp-action="Authorize" method="POST">
+            <div class="login__form__content login__form__content--register">
+                <div>
+                    <h3 class="text__header__primary">
+                        Create an account
+                    </h3>
+                    <div class="auth__input__wrapper">
+                        <label class="auth__input--label" for="email">Email</label>
+                        <input class="auth__input--input" id="email" type="email" name="email">
+                    </div>
+                    <div class="auth__input__wrapper">
+                        <label class="auth__input--label" for="name">username</label>
+                        <input class="auth__input--input" id="name" type="password" name="name">
+                    </div>
+                    <div class="auth__input__wrapper">
+                        <label class="auth__input--label" for="passwd">password</label>
+                        <input class="auth__input--input" id="passwd" type="password" name="passwd">
+                    </div>
+                    <div class="login__form--forgot-password-wrapper">
+                        <label style="width: 24px;height: 24px;">
+                            <input type="checkbox">
+                            <p style="display: inline-block;">
+                                I have read and agree to Discord's
+                                <a class="login__form--register-link" href="#">
+                                    Terms of Service
+                                </a>
+                                and
+                                <a class="login__form--register-link" href="#">
+                                    Privacy Policy
+                                </a>
+                            </p>
+                        </label>
+                    </div>
+                    <button class="login__form__submit--btn">
+                        <div class="login__form__submit--text">
+                            Continue
+                        </div>
+                    </button>
+                    <div>
+                        <a class="login__form--register-link" href="/Login">Already have an account?</a>
+                    </div>
+                </div>
+        </form>
+    </main>
+</body>

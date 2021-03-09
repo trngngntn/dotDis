@@ -1,6 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\DAL",
+    "\\Properties",
+    "\\wwwroot"
   ],
+  "SelectedNode": "\\dotDis.csproj.user",
   "PreviewInSolutionExplorer": false
 }

@@ -1,0 +1,38 @@
+.auth__input {
+  &__wrapper {
+    margin-bottom: 1rem;
+  }
+
+  &--label {
+    display: inline-block;
+    color: $color-authinput-label;
+    margin-bottom: 0.8rem;
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  &--input {
+    background-color: #303339;
+    padding: 1rem;
+    height: 4rem;
+    width: 100%;
+    border-radius: 3px;
+    outline: 0;
+    text-rendering: optimizeLegibility;
+    border: 1px #222428 solid;
+    color: rgb(220, 221, 222);
+    font-weight: 400;
+
+    &:hover {
+      border-color: #040405;
+    }
+    &:focus {
+      border: 2px $color-light-blue1 solid;
+    }
+    &:invalid {
+      border: 2px rgb(199, 89, 89) solid;
+    }
+  }
+}
