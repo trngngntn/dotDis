@@ -107,8 +107,7 @@ body {
   position: relative;
 }
 .login__form {
-  width: 45vw;
-  min-width: 50rem;
+  width: 48.4%;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -119,9 +118,50 @@ body {
   border-radius: 0.5rem;
   font-size: 1.8rem;
 }
+@media (min-width: 112.5em) {
+  .login__form {
+    width: 78.4rem;
+  }
+}
+@media (max-width: 56.5em) {
+  .login__form {
+    width: 48.4%;
+    left: 50%;
+  }
+}
+@media (max-width: 75em) {
+  .login__form {
+    width: 70%;
+    left: 40%;
+  }
+}
+@media (max-width: 37.5em) {
+  .login__form {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-width: 0;
+  }
+}
 .login__form--login {
   transform: translate(-80%, -50%);
   animation: moveInTop 0.2s ease-out;
+}
+@media (max-width: 56.5em) {
+  .login__form--login {
+    transform: translate(-50%, -50%);
+  }
+}
+@media (max-width: 75em) {
+  .login__form--login {
+    transform: translate(-50%, -50%);
+  }
+}
+@media (max-width: 37.5em) {
+  .login__form--login {
+    transform: translate(0);
+  }
 }
 .login__form--register {
   transform: translate(-75%, -60%);
@@ -132,6 +172,11 @@ body {
   height: 100%;
   display: grid;
   grid-template-columns: 60% 40%;
+}
+@media (max-width: 37.5em) {
+  .login__form__content {
+    display: block;
+  }
 }
 .login__form__content--register {
   grid-template-columns: 100%;
@@ -174,7 +219,7 @@ body {
 }
 .login__form--forgot-password-wrapper {
   margin-bottom: 2rem;
-  margin-top: 4px;
+  margin-top: 2rem;
   width: auto;
   font-size: 1.4rem;
   font-weight: 500;
