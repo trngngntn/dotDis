@@ -1,7 +1,7 @@
 @{
 ViewData["Title"] = "Register";
 }
-<header>
+<!-- <header>
     Register
 </header>
 <main>
@@ -12,9 +12,9 @@ ViewData["Title"] = "Register";
         <input type="password" name="passwd" placeholder="Password"><br />
         <input type="submit" value="Create">
     </form>
-</main>
+</main> -->
 
-<!--body>
+<body>
     <main class="login">
         <form class="login__form login__form--register" asp-action="Authorize" method="POST">
             <div class="login__form__content login__form__content--register">
@@ -22,6 +22,10 @@ ViewData["Title"] = "Register";
                     <h3 class="text__header__primary">
                         Create an account
                     </h3>
+                    <div class="auth__input__wrapper">
+                        <label class="auth__input--label" for="fullname">Full Name</label>
+                        <input class="auth__input--input" id="fullname" type="text" name="name">
+                    </div>
                     <div class="auth__input__wrapper">
                         <label class="auth__input--label" for="email">Email</label>
                         <input class="auth__input--input" id="email" type="email" name="email">
@@ -60,4 +64,4 @@ ViewData["Title"] = "Register";
                 </div>
         </form>
     </main>
-</body-->
+</body>
