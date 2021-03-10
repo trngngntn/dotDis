@@ -22,9 +22,10 @@ namespace dotdis.Controllers
         {
             String activeUserId = HttpContext.Session.GetString("active-user");
             if(activeUserId == null){
-                Console.WriteLine(this.HttpContext.Items["ID"]);
+                //Console.WriteLine(this.HttpContext.Items["ID"]);
                 return Redirect("/Login");
             } else {
+                ViewData["uid"] = activeUserId;
                 return View();
             }
             

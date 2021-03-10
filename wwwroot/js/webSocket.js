@@ -1,3 +1,8 @@
+var activeUser;
+function setActiveUser(id){
+    activeUser = id;
+}
+
 //WebSocket declaration and initialisation
 var socket = new WebSocket("wss://localhost:5001/ws");
 //
@@ -35,14 +40,14 @@ function wsGetMesg(mesg){
         case "recv_private_message":
             var privMesg = JSON.parse(obj.data);
             var newElm = document.createElement("p");
-            newElm.innerHTML(privMesg.detail);
+            newElm.innerHTML = privMesg.detail;
             document.getElementById("mesg-output").appendChild(newElm);
             break;
         default:
             break;
     }
 }
-var activeUser;
+
 function sendMesg(){
     var mesg = document.getElementById("field-mesg-input").value;
     var privMesg = new PrivateMessage(activeUser, mesg);

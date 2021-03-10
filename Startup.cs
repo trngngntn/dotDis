@@ -76,7 +76,7 @@ namespace dotdis
                         Console.WriteLine("[LOG] Open a new WebSocket");
                         using (WebSocket webSocket = await context.WebSockets.AcceptWebSocketAsync())
                         {
-                            await (new WebSocketController()).ProcessData(context, webSocket);
+                            await (new WebSocketController()).InitSocket(context, webSocket);
                         }
                     }
                     else
