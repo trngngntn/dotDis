@@ -1,8 +1,54 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<body>
+    <div class="navigation">
+        <input type="checkbox" class="navigation__checkbox" id="navi-toogle">
+        <label for="navi-toogle" class="navigation__button">
+            <span class="navigation__icon">
+                &nbsp;
+            </span>
+        </label>
+
+        <div class="navigation__background">&nbsp;</div>
+
+        <nav class="navigation__nav">
+            <ul class="navigation__list">
+                <li class="navigation__item">
+                    <a href="#" class="navigation__link"><span>01</span>Start now</a>
+                </li>
+                <li class="navigation__item">
+                    <a href="#" class="navigation__link"><span>02</span>Why Discord?</a>
+                </li>
+                <li class="navigation__item">
+                    <a href="#" class="navigation__link"><span>03</span>Safety use</a>
+                </li>
+                <li class="navigation__item">
+                    <a href="#" class="navigation__link"><span>04</span>About us</a>
+                </li>
+                <li class="navigation__item">
+                    <a href="#" class="navigation__link"><span>05</span>Contact</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <main style="height: 100%;">
+        <header class="home__header">
+            <div class="home__header--content">
+                <h1 class="home__header--content--title">
+                    Your place to talk
+                </h1>
+                <p class="home__header--content--description">
+                    Whether you’re part of a school club, gaming group, worldwide art community, or just a handful of
+                    friends that want to spend time together, Discord makes it easy to talk every day and hang out more
+                    often.
+                </p>
+            </div>
+        </header>
+        <section>
+
+        </section>
+
+    </main>
+</body>
