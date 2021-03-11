@@ -20,7 +20,7 @@ namespace dotdis.Controllers
 
         public async Task InitSocket(HttpContext context, WebSocket webSocket)
         {
-            int uid = Int32.Parse(context.Session.GetString("active-user"));
+            int uid = (int)context.Session.GetInt32("active-user");
             if (UserIsOnline(uid)) // user is currently online
             {
                 List<UserSession> uSessionList = userBinding[uid];
@@ -40,7 +40,7 @@ namespace dotdis.Controllers
                     uSessionList.Add(newUSession);
                 }
             }
-            else
+            else // user change state from offline to online
             {
                 List<UserSession> newUSessionList = new List<UserSession>();
                 UserSession newUSession = new UserSession(context.Session);
@@ -48,16 +48,43 @@ namespace dotdis.Controllers
                 newUSessionList.Add(newUSession);
                 userBinding.Add(uid, newUSessionList);
                 Console.WriteLine("Add new user binding");
+                InformUserOnline(uid, webSocket);
             }
             await ProcessData(context, webSocket);
         }
 
-        private void CloseSocket()
+        private async Task CloseSocket(HttpContext context, WebSocket webSocket)
         {
+            int uid = (int)context.Session.GetInt32("active-user");
+            await InformUserOffline(uid);
+            List<UserSession> uSessionList = userBinding[uid];
+            bool endSession = false;
+            UserSession temp = null;
+            //context.Session.R
+            foreach (UserSession userSession in uSessionList)
+            {
+                userSession.GetSockets().Remove(webSocket);
+                if (userSession.GetSockets().Count == 0)
+                {
+                    endSession = true;
+                    temp = userSession;
+                }
+            }
+            if (endSession)
+            {
+                //temp.
+                uSessionList.Remove(temp);
+                if (uSessionList.Count == 0)
+                {
+                    userBinding.Remove(uid);
+                }
+            }
 
         }
+
         public async Task ProcessData(HttpContext context, WebSocket webSocket)
         {
+            Console.WriteLine("[LOG] Processing........");
             byte[] buffer = new byte[BUFFER_SIZE];
             ArraySegment<byte> temp = new ArraySegment<byte>(buffer);
             WebSocketReceiveResult received = await webSocket.ReceiveAsync(temp, CancellationToken.None);
@@ -82,9 +109,9 @@ namespace dotdis.Controllers
                 received = await webSocket.ReceiveAsync(temp, CancellationToken.None);
             }
             // close socket
-            Console.WriteLine("[LOG] Close WebSocket");
-            CloseSocket();
+            Task closeSocket = CloseSocket(context, webSocket);
         }
+
         private async Task Process(string type, string data)
         {
             foreach (KeyValuePair<int, List<UserSession>> kvp in userBinding)
@@ -149,9 +176,9 @@ namespace dotdis.Controllers
 
         }
 
-        private void BroadcastInfo()
+        private async Task BroadcastInfo(JsonGeneric obj, WebSocket webSocket)
         {
-
+            await SendDataToSocket(JsonSerializer.SerializeToUtf8Bytes<JsonGeneric>(obj), webSocket);
         }
 
         private bool UserIsOnline(int uid)
@@ -159,6 +186,66 @@ namespace dotdis.Controllers
             return userBinding.ContainsKey(uid);
         }
 
+        private async Task InformFriendStatus(int uid, WebSocket socket)
+        {
+            Console.WriteLine("[LOG] Informing friend status to user {0}", uid);
+            List<int> fUids = User.ListFriendUid(uid);
+            List<UserStatus> userStatus = new List<UserStatus>();
+            foreach (int fUid in fUids)
+            {
+                if (UserIsOnline(fUid)) userStatus.Add(new UserStatus(fUid, 1));
+                else userStatus.Add(new UserStatus(fUid, 0));
+            }
+            JsonGeneric obj = new JsonGeneric("friend_status", JsonSerializer.Serialize<List<UserStatus>>(userStatus));
+            await BroadcastInfo(obj, socket);
+        }
+        private void InformUserOnline(int uid, WebSocket webSocket)
+        {
+            Console.WriteLine("[LOG] Informing that user {0} is just online", uid);
+            List<int> fUids = User.ListFriendUid(uid);
+            foreach (int fUid in fUids)
+            {
+                if (UserIsOnline(fUid))
+                {
+                    ///
+                    Console.WriteLine("[LOG] Inform user {0} that user {1} is just online", fUid, uid);
+                    JsonGeneric userOnlineInform = new JsonGeneric("user_online", uid.ToString());
+                    Func<WebSocket, Task> action = async (socket) => await BroadcastInfo(userOnlineInform, socket);
+                    Task sendStatus = IterateUserSocket(fUid, action);
+                    ///
+                    Console.WriteLine("[LOG] Inform user {1} that user {0} is currently online", fUid, uid);
+                    JsonGeneric friendOnlineInform = new JsonGeneric("user_online", fUid.ToString());
+                    Task recvStatus = BroadcastInfo(friendOnlineInform,webSocket);
+                }
+            }
+        }
+        
+        private async Task InformUserOffline(int uid)
+        {
+            Console.WriteLine("[LOG] Informing that user {0} is just offline", uid);
+            List<int> fUids = User.ListFriendUid(uid);
+            foreach (int fUid in fUids)
+            {
+                if (UserIsOnline(fUid))
+                {
+                    Console.WriteLine("[LOG] Inform user {0} that user {1} is just offline", fUid, uid);
+                    JsonGeneric userOnlineInform = new JsonGeneric("user_offline", uid.ToString());
+                    Func<WebSocket, Task> action = async (socket) => await BroadcastInfo(userOnlineInform, socket);
+                    await IterateUserSocket(fUid, action);
+                }
+            }
+        }
+        private async Task IterateUserSocket(int uid, Func<WebSocket, Task> action)
+        {
+            List<UserSession> uSessionList = userBinding[uid];
+            foreach (UserSession uSession in uSessionList)
+            {
+                foreach (WebSocket socket in uSession.GetSockets())
+                {
+                    await action(socket);
+                }
+            }
+        }
         //sample function for testing WebSocket
         /*public async Task Echo(HttpContext context, WebSocket webSocket)
         {

@@ -30,7 +30,7 @@ namespace dotdis
             services.AddSession(options =>
             {
                 options.Cookie.Name = ".dotDis.Session";
-                options.IdleTimeout = TimeSpan.FromMinutes(1);//You can set Time 
+                options.IdleTimeout = TimeSpan.FromDays(365);//You can set Time 
                 options.Cookie.IsEssential = true;  
             });
             services.AddControllersWithViews();

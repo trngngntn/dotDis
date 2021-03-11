@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using dotdis.Models;
 using Microsoft.AspNetCore.Http;
-using dotdis.Models;
 
 namespace dotdis.Controllers
 {

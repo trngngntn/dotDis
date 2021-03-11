@@ -28,5 +28,9 @@ namespace dotDis.Models
         {
             return bindSockets;
         }
+
+        /*public ISession CloseSession(){
+            session;
+        }*/
     }
 }

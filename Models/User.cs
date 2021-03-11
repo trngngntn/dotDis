@@ -48,6 +48,7 @@ namespace dotdis.Models
         {
             salt = UserDAO.GetSalt(id);
             String pwd = Cryptor.GenerateHash(passwd, salt);
+            Console.WriteLine("[AUTH] " + salt + " " + pwd);
             return UserDAO.ComparePwd(id, pwd) == 1;
         }
         public void Logout()
@@ -62,6 +63,16 @@ namespace dotdis.Models
         public static bool CreateUser(string name, string email, string username, string passwd)
         {
             return UserDAO.CreateNewUser(name, email, username, passwd) == 1;
+        }
+
+        public static List<int> ListFriendUid(int uid)
+        {
+            return UserDAO.ListFriendUid(uid);
+        }
+
+        public static List<User> ListFriend(int uid)
+        {
+            return UserDAO.ListFriend(uid);
         }
     }
 }

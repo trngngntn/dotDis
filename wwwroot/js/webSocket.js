@@ -43,8 +43,24 @@ function wsGetMesg(mesg){
             newElm.innerHTML = privMesg.detail;
             document.getElementById("mesg-output").appendChild(newElm);
             break;
+        case "user_online":
+            SetUserStatus(obj.data, true);
+            break;
+        case "user_offline":
+            SetUserStatus(obj.data, false);
+            break;    
         default:
             break;
+    }
+}
+function SetUserStatus(id, status){
+    var elm = document.getElementById(`status-${id}`);
+    if(status){
+        elm.innerHTML = "Online";
+        elm.style.color = "green";
+    } else {
+        elm.innerHTML = "Offline";
+        elm.style.color = "red";
     }
 }
 

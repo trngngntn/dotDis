@@ -20,6 +20,10 @@ namespace dotdis.Controllers
 
         public IActionResult Index()
         {
+            if(this.HttpContext.Session.GetInt32("active-user") != null)
+            {
+                return Redirect("Chat");
+            }
             if(this.HttpContext.Items["error"] == null){
                 ViewData["Error"] = "";
             }
@@ -40,7 +44,7 @@ namespace dotdis.Controllers
             }
             else if(user.Login(passwd))
             {
-                this.HttpContext.Session.SetString("active-user", user.ID.ToString());
+                this.HttpContext.Session.SetInt32("active-user", user.ID);
                 Console.WriteLine("[LOG] User `{0}` logged in.", username);
                 return Redirect("/Chat");
             }

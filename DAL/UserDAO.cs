@@ -3,6 +3,7 @@ using System.Data;
 using MySql.Data.MySqlClient;
 using dotdis.Models;
 using dotdis.Util;
+using System.Collections.Generic;
 
 namespace dotdis.DAL
 {
@@ -52,7 +53,7 @@ namespace dotdis.DAL
 
         public static int ComparePwd(int id, string pwd)
         {
-            string sql = "SELECT COUNT(`id`) FROM `User` WHERE `id`=@id AND `pwd`=@pwd";
+            string sql = "SELECT `id` FROM `User` WHERE `id`=@id AND `pwd`=@pwd";
             MySqlParameter[] param = new MySqlParameter[] {
                 new MySqlParameter("id", MySqlDbType.Int32),
                 new MySqlParameter("pwd", MySqlDbType.String)
@@ -77,16 +78,45 @@ namespace dotdis.DAL
             }
         }
 
+        public static User GetUserByID(int uid)
+        {
+            string sql = "SELECT `fullname` FROM `User` WHERE `id`=@uid";
+            MySqlParameter param = new MySqlParameter("uid", MySqlDbType.Int32);
+            param.Value = uid;
+            DataTable dat = Database.GetData(sql, param);
+            if (dat.Rows.Count == 0) return null;
+            else
+            {
+                User user = new User(Int32.Parse(dat.Rows[0]["id"].ToString()),
+                dat.Rows[0]["fullname"].ToString());
+                return user;
+            }
+        }
+
         public void GetUserByEmail()
         {
 
         }
 
-        public void Insert()
+        public static List<int> ListFriendUid(int uid)
         {
-
+            string sql = "SELECT * FROM `Friend` WHERE uid1=@uid OR uid2=@uid";
+            MySqlParameter param = new MySqlParameter("uid", MySqlDbType.Int32);
+            param.Value = uid;
+            DataTable dat = Database.GetData(sql, param);
+            List<int> fUids = new List<int>();
+            foreach(DataRow row in dat.Rows)
+            {
+                int tmpUid = Int32.Parse(row["uid1"].ToString());
+                fUids.Add(tmpUid == uid ? Int32.Parse(row["uid2"].ToString()) : tmpUid);
+            }
+            return fUids;
         }
 
+        public static List<User> ListFriend(int uid){
+            List<int> fUids = ListFriendUid(uid);
+            return null;
+        }
         public void Delete()
         {
 

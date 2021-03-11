@@ -5,10 +5,13 @@
 {
     <script src="js/class.js"></script>
     <script src="js/webSocket.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <script src="https://kit.fontawesome.com/6e774c561d.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400&display=swap" rel="stylesheet">
 }
 <script type="text/javascript">window.onload = setActiveUser(@ViewData["uid"])</script>
-<main>
-    <span>TestUser status: <span>Offline</span></span>
+<!--main>
+    <span>TestUser status: <span id="status-3">Offline</span></span>
     <br />
     <textarea id="field-mesg-input"></textarea>
     <br />
@@ -17,4 +20,21 @@
     <div id="mesg-output">
         <p> Received Messages :</p>
     </div>
+</main-->
+<nav>
+     <div id="list-friend">
+         @foreach (User user in (List<User>)ViewData["Friend"])
+         {
+             <div class="friend" id="@user.ID">
+                <img class="avatar" src="img/avatar.png"></img>
+                <div>@user.Name</div>
+             </div>
+         }
+     </div>
+     <div id="list-room">
+
+     </div>
+</nav>
+<main>
+
 </main>

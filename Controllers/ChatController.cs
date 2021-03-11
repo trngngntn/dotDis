@@ -20,7 +20,7 @@ namespace dotdis.Controllers
 
         public IActionResult Index()
         {
-            String activeUserId = HttpContext.Session.GetString("active-user");
+            int? activeUserId = this.HttpContext.Session.GetInt32("active-user");
             if(activeUserId == null){
                 //Console.WriteLine(this.HttpContext.Items["ID"]);
                 return Redirect("/Login");
@@ -29,6 +29,11 @@ namespace dotdis.Controllers
                 return View();
             }
             
+        }
+
+        private void GetFriendList(int uid){
+            
+            ViewData["Friend"] = dotdis.Models.User.ListFriend(uid);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
