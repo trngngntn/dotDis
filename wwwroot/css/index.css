@@ -318,6 +318,14 @@ body {
   position: relative;
   z-index: 1;
 }
+.home__header__logo-box {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+}
+.home__header__logo {
+  height: 13rem;
+}
 .home__header--content {
   position: absolute;
   top: 40%;

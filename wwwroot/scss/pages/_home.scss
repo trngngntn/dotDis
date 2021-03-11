@@ -13,6 +13,16 @@
     position: relative;
     z-index: 1;
 
+    &__logo-box {
+      position: absolute;
+      top: 40px;
+      left: 40px;
+    }
+
+    &__logo {
+      height: 13rem;
+    }
+
     &--content {
       position: absolute;
       top: 40%;

@@ -34,6 +34,9 @@ ViewData["Title"] = "Home Page";
         </nav>
     </div>
     <header class="home__header">
+        <div class="home__header__logo-box">
+            <img src='@Url.Content("~/img/logo1.png")' alt="logo" class="home__header__logo">
+        </div>
         <div class="home__header--content">
             <h1 class="home__header--content--title">
                 Your place to talk
@@ -135,11 +138,11 @@ ViewData["Title"] = "Home Page";
     </main>
     <footer class="footer">
         <div class="footer__logo-box">
+            <img src='@Url.Content("~/img/logo1.png")'>
             <!-- <picture class="footer__logo">
                 <source srcset="" media="(max-width:37.5rem)">
                 <img srcset="img/logo-green-2x.png 1x, img/logo-green-2x.png 2x" alt="Full logo">
             </picture> -->
-            <i class="feature-box__icon icon-basic-world"></i>
         </div>
         <div class="footer__navigation--wrapper">
             <div>
