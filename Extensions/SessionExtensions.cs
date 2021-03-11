@@ -33,6 +33,7 @@ namespace Extensions
             if (userBindings[uid].Count == 0) // no more active session from user
             {
                 Task inform = WebSocketController.InformUserOffline(uid);
+                userBindings.Remove(uid, out _);
             }
         }
 
@@ -49,12 +50,12 @@ namespace Extensions
         /// Uid related methods -----------------------------------------------------------
         public static int GetBindedUid(this ISession session)
         {
-            return (int)session.GetInt32("uid");
+            return (int)session.GetInt32("active-user");
         }
 
         public static void BindToUid(this ISession session, int uid)
         {
-            if (userBindings[uid] == null)
+            if (!userBindings.ContainsKey(uid))
             {
                 userBindings[uid] = new List<ISession>();
             }
@@ -69,6 +70,10 @@ namespace Extensions
         /// WebSocket related methods -----------------------------------------------------
         public static void AddSocket(this ISession session, WebSocket webSocket)
         {
+            if(!sessionSockets.ContainsKey(session))
+            {
+                sessionSockets[session] = new List<WebSocket>();
+            }
             sessionSockets[session].Add(webSocket);
         }
 
@@ -82,7 +87,8 @@ namespace Extensions
             sessionSockets[session].Remove(socket);
             if (sessionSockets[session].Count == 0)
             {
-
+                sessionSockets.Remove(session, out _);
+                Kill(session);
             }
         }
 

@@ -23,21 +23,22 @@ namespace dotdis.Controllers
             int uid = (int)context.Session.GetBindedUid();
             if (UserIsOnline(uid)) // user is currently online
             {
-                if (context.Session.IsBindedToUid(uid)) context.Session.AddSocket(webSocket);
-                else context.Session.BindToUid(uid);
+                // check if there is a new session
+                if (!context.Session.IsBindedToUid(uid)) context.Session.BindToUid(uid);
             }
             else // user change state from offline to online
             {
                 context.Session.BindToUid(uid);
-                context.Session.AddSocket(webSocket);
                 Console.WriteLine("Add new user binding");
                 InformUserOnline(uid, webSocket);
             }
+            context.Session.AddSocket(webSocket);
             await ProcessData(context, webSocket);
         }
 
         private static void CloseSocket(HttpContext context, WebSocket webSocket)
         {
+            Console.WriteLine("[LOG] Close Socket");
             context.Session.CloseSocket(webSocket);
         }
 
