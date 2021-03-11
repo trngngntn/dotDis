@@ -28,7 +28,7 @@ namespace Extensions
 
         public static void Kill(this ISession session)
         {
-            int uid = session.GetBindedUid();
+            int uid = (int)session.GetBindedUid();
             userBindings[uid].Remove(session);
             if (userBindings[uid].Count == 0) // no more active session from user
             {
@@ -48,9 +48,9 @@ namespace Extensions
         }
 
         /// Uid related methods -----------------------------------------------------------
-        public static int GetBindedUid(this ISession session)
+        public static int? GetBindedUid(this ISession session)
         {
-            return (int)session.GetInt32("active-user");
+            return session.GetInt32("active-user");
         }
 
         public static void BindToUid(this ISession session, int uid)

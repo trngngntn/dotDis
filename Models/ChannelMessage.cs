@@ -1,6 +1,6 @@
 using System;
 
-namespace dotdis.Models{
+namespace Models{
     public class ChannelMessage:Message{
         private string channelID;
     }

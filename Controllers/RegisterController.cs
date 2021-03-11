@@ -1,11 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using dotdis.Models;
+using Models;
 using Microsoft.AspNetCore.Http;
 
 namespace dotdis.Controllers
@@ -26,9 +23,9 @@ namespace dotdis.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Submit(string name, string email, string username, string passwd)
         {
-            if(dotdis.Models.User.GetUserByUsername(username) == null)
+            if(Models.User.GetUserByUsername(username) == null)
             {
-                dotdis.Models.User.CreateUser(name, email, username, passwd);
+                Models.User.CreateUser(name, email, username, passwd);
                 Console.WriteLine("[LOG] Create new user `{0}`", username);
                 return View("Success");
             }

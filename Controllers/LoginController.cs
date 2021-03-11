@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using dotdis.Models;
+using Models;
 using Microsoft.AspNetCore.Http;
 
 namespace dotdis.Controllers
@@ -35,7 +35,7 @@ namespace dotdis.Controllers
         public IActionResult Authorize(string username, string passwd){
             //Console.WriteLine(username + " " + passwd);
             this.HttpContext.Items.Add("ID", "this from login");
-            User user = dotdis.Models.User.GetUserByUsername(username);
+            User user = Models.User.GetUserByUsername(username);
             if(user == null) // not found
             {
                 Console.WriteLine("[LOG] User `{0}` not found!", username);

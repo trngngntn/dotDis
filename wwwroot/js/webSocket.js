@@ -1,24 +1,27 @@
 var activeUser;
-function setActiveUser(id) {
+var chatUser;
+
+var socket;
+
+function init(id){
   activeUser = id;
+  socket = new WebSocket("wss://localhost:5001/ws");
+  //
+  socket.onopen = function (mesg) {
+    wsOpen(mesg);
+  };
+  socket.onmessage = function (mesg) {
+    wsGetMesg(mesg);
+  };
+  socket.onclose = function (mesg) {
+    wsClose(mesg);
+  };
+  socket.onerror = function (mesg) {
+    wsError(mesg);
+  };
+  //
 }
 
-//WebSocket declaration and initialisation
-var socket = new WebSocket("wss://localhost:5001/ws");
-//
-socket.onopen = function (mesg) {
-  wsOpen(mesg);
-};
-socket.onmessage = function (mesg) {
-  wsGetMesg(mesg);
-};
-socket.onclose = function (mesg) {
-  wsClose(mesg);
-};
-socket.onerror = function (mesg) {
-  wsError(mesg);
-};
-//
 function wsOpen(){
     console.log("Connected to WebSocket at ........");
 }
@@ -37,24 +40,25 @@ function wsGetMesg(mesg){
     var obj = JSON.parse(mesg.data);
     console.log(`Received message: "${mesg.data}"`);
     switch(obj.type){
-        case "recv_private_message":
+        case TYPE_B_RECV_PRIVATE_MESG:
             var privMesg = JSON.parse(obj.data);
             var newElm = document.createElement("p");
             newElm.innerHTML = privMesg.detail;
             document.getElementById("mesg-output").appendChild(newElm);
             break;
-        case "user_online":
-            SetUserStatus(obj.data, true);
+        case TYPE_B_INFO_USER_ONL:
+            setUserStatus(obj.data, true);
             break;
-        case "user_offline":
-            SetUserStatus(obj.data, false);
+        case TYPE_B_INFO_USER_OFF:
+            setUserStatus(obj.data, false);
             break;    
         default:
             break;
     }
 }
-function SetUserStatus(id, status){
-    var elm = document.getElementById(`status-${id}`);
+function setUserStatus(id, status){
+    var elm = document.getElementById(`status-user-${id}`);
+    console.log(`status-user-${id}`);
     if(status){
         elm.innerHTML = "Online";
         elm.style.color = "green";
@@ -63,10 +67,13 @@ function SetUserStatus(id, status){
         elm.style.color = "red";
     }
 }
+function setChatUser(id){
+  chatUser = id;
+}
 
 function sendMesg() {
   var mesg = document.getElementById("field-mesg-input").value;
-  var privMesg = new PrivateMessage(activeUser, mesg);
+  var privMesg = new PrivateMessage(activeUser, chatUser, mesg);
   var obj = new JSONGeneric("sent_private_message", JSON.stringify(privMesg));
   wsSendMesg(obj);
 }

@@ -1,7 +1,7 @@
 using System;
 using System.Text.Json.Serialization;
 
-namespace dotdis.Models{
+namespace Models{
     public class PrivateMessage:Message{
         private int recvID;
         [JsonPropertyName("recvId")]

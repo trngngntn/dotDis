@@ -1,11 +1,11 @@
 using System;
 using System.Data;
 using MySql.Data.MySqlClient;
-using dotdis.Models;
+using Models;
 using dotdis.Util;
 using System.Collections.Generic;
 
-namespace dotdis.DAL
+namespace DAL
 {
     public class UserDAO
     {
@@ -80,7 +80,7 @@ namespace dotdis.DAL
 
         public static User GetUserByID(int uid)
         {
-            string sql = "SELECT `fullname` FROM `User` WHERE `id`=@uid";
+            string sql = "SELECT `id`,`fullname` FROM `User` WHERE `id`=@uid";
             MySqlParameter param = new MySqlParameter("uid", MySqlDbType.Int32);
             param.Value = uid;
             DataTable dat = Database.GetData(sql, param);
@@ -115,7 +115,12 @@ namespace dotdis.DAL
 
         public static List<User> ListFriend(int uid){
             List<int> fUids = ListFriendUid(uid);
-            return null;
+            List<User> friend = new List<User>();
+            foreach(int fUid in fUids)
+            {
+                friend.Add(GetUserByID(fUid));
+            }
+            return friend;
         }
         public void Delete()
         {

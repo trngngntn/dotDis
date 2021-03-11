@@ -1,6 +1,6 @@
 using System;
 
-namespace dotdis.Models{
+namespace Models{
     public class Channel{
         private string id;
         private string roomID;

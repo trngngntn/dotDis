@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
+using Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using dotdis.Models;
+using Models;
 using Microsoft.AspNetCore.Http;
 
 namespace dotdis.Controllers
@@ -20,20 +20,18 @@ namespace dotdis.Controllers
 
         public IActionResult Index()
         {
-            int? activeUserId = this.HttpContext.Session.GetInt32("active-user");
-            if(activeUserId == null){
-                //Console.WriteLine(this.HttpContext.Items["ID"]);
+            int? uid = this.HttpContext.Session.GetBindedUid();
+            if (uid == null)
+            {
                 return Redirect("/Login");
-            } else {
-                ViewData["uid"] = activeUserId;
+            }
+            else
+            {
+                ViewData["uid"] = uid;
+                ViewData["friend"] = Models.User.ListFriend((int)uid);
                 return View();
             }
-            
-        }
 
-        private void GetFriendList(int uid){
-            
-            ViewData["Friend"] = dotdis.Models.User.ListFriend(uid);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using dotdis.Util;
-using dotdis.DAL;
+using DAL;
 
-namespace dotdis.Models
+namespace Models
 {
     public class User
     {

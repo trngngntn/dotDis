@@ -1,6 +1,6 @@
 using System;
 
-namespace dotdis.Models{
+namespace Models{
     public class Room{
         private string id;
         private string name;

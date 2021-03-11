@@ -6,10 +6,9 @@ using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using Extensions;
 using System.Text;
-using dotDis.Models;
 using System.Linq;
 using System.Text.Json;
-using dotdis.Models;
+using Models;
 
 namespace dotdis.Controllers
 {

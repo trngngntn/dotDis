@@ -21,13 +21,13 @@ using dotdis;
 #nullable disable
 #nullable restore
 #line 2 "/home/trngngntn/Git/dotDis/Views/_ViewImports.cshtml"
-using dotdis.Models;
+using Models;
 
 #line default
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"61c3f8c3735e0d1a8311f2267437af7ed41a8a6c", @"/Views/Register/Index.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"a98d08d27857268ec6cada6ada4fabd505d4a77d", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"7131d8d06665ee11de7040b7069ac5c5a863a366", @"/Views/_ViewImports.cshtml")]
     public class Views_Register_Index : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("class", new global::Microsoft.AspNetCore.Html.HtmlString("login__form login__form--register"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -81,7 +81,7 @@ ViewData["Title"] = "Register";
 </main> -->
 
 ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "61c3f8c3735e0d1a8311f2267437af7ed41a8a6c4851", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "61c3f8c3735e0d1a8311f2267437af7ed41a8a6c4844", async() => {
                 WriteLiteral("\n    <main class=\"login\">\n    <div class=\"home__header__logo-box\">\n            <img");
                 BeginWriteAttribute("src", " src=\'", 590, "\'", 627, 1);
 #nullable restore
@@ -93,7 +93,7 @@ WriteAttributeValue("", 596, Url.Content("~/img/logo1.png"), 596, 31, false);
 #nullable disable
                 EndWriteAttribute();
                 WriteLiteral(" alt=\"logo\" class=\"home__header__logo\">\n        </div>\n        ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "61c3f8c3735e0d1a8311f2267437af7ed41a8a6c5615", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "61c3f8c3735e0d1a8311f2267437af7ed41a8a6c5608", async() => {
                     WriteLiteral(@"
             <div class=""login__form__content login__form__content--register"">
                 <div>
