@@ -16,7 +16,16 @@ namespace dotdis.Controllers
     public static class WebSocketController
     {
         private const int BUFFER_SIZE = 1024;
-        //private static Dictionary<int, List<ISession>> userSession = new Dictionary<int, List<ISession>>();
+        private const int TYPE_R_SUBS_PRIVATE_MESG = 0;
+        private const int TYPE_R_SUBS_CHANNEL_MESG = 1;
+        private const int TYPE_R_LOAD_PRIVATE_MESG = 2;
+        private const int TYPE_R_LOAD_CHANNEL_MESG = 3;
+        private const int TYPE_R_SENT_PRIVATE_MESG = 4;
+        private const int TYPE_R_SENT_CHANNEL_MESG = 5;
+        private const int TYPE_B_RECV_PRIVATE_MESG = 6;
+        private const int TYPE_B_RECV_CHANNEL_MESG = 7;
+        private const int TYPE_B_INFO_USER_ONL = 8;
+        private const int TYPE_B_INFO_USER_OFF = 9;
 
         public static async Task InitSocket(HttpContext context, WebSocket webSocket)
         {
@@ -33,7 +42,7 @@ namespace dotdis.Controllers
                 InformUserOnline(uid, webSocket);
             }
             context.Session.AddSocket(webSocket);
-            await ProcessData(context, webSocket);
+            await ReadDataFromSocket(context, webSocket);
         }
 
         private static void CloseSocket(HttpContext context, WebSocket webSocket)
@@ -42,9 +51,9 @@ namespace dotdis.Controllers
             context.Session.CloseSocket(webSocket);
         }
 
-        public static async Task ProcessData(HttpContext context, WebSocket webSocket)
+        public static async Task ReadDataFromSocket(HttpContext context, WebSocket webSocket)
         {
-            Console.WriteLine("[LOG] Processing........");
+            Console.WriteLine("[LOG] Listening to Socket\n.............");
             byte[] buffer = new byte[BUFFER_SIZE];
             ArraySegment<byte> temp = new ArraySegment<byte>(buffer);
             WebSocketReceiveResult received = await webSocket.ReceiveAsync(temp, CancellationToken.None);
@@ -70,20 +79,48 @@ namespace dotdis.Controllers
             // close socket
             CloseSocket(context, webSocket);
         }
+        private static async Task SendDataToSocket(byte[] data, WebSocket webSocket)
+        {
+            //byte[] buffer = new byte[BUFFER_SIZE];
+            int offset = 0, length = BUFFER_SIZE;
+            while (offset < data.Length)
+            {
+                length = (data.Length - offset) < BUFFER_SIZE ? (data.Length - offset) : BUFFER_SIZE;
+                Console.WriteLine("[LOG] offset = {0}, length = {1}, data = {2}", offset, length, data.Length);
+                await webSocket.SendAsync(
+                    new ArraySegment<byte>(data, offset, length),
+                    WebSocketMessageType.Text,
+                    (offset + length) == data.Length, CancellationToken.None
+                );
+                offset += length;
+            }
+            Console.WriteLine("[LOG] Sent data to Socket");
+        }
 
-        private static async Task Process(string type, string data)
+        private static async Task Process(int type, string data)
         {
             Console.WriteLine("[LOG] Processing message type: " + type);
             switch (type)
             {
-                case "sent_private_message":
-                    PrivateMessage mesg = JsonSerializer.Deserialize<PrivateMessage>(data);
-                    await BroadcastMesgToUser(mesg);
+                //Processing Private Messages---------------------------------------------------------------------------
+                case TYPE_R_SUBS_PRIVATE_MESG:
                     break;
-                case "load_private__message":
+                case TYPE_R_LOAD_PRIVATE_MESG:
                     {
                         string[] info = JsonSerializer.Deserialize<string>(data).Split(";");
                     }
+                    break;
+                case TYPE_R_SENT_PRIVATE_MESG:
+                    PrivateMessage mesg = JsonSerializer.Deserialize<PrivateMessage>(data);
+                    await BroadcastMesgToUser(mesg);
+                    break;
+
+                //Processing Channel Messages---------------------------------------------------------------------------
+                case TYPE_R_SUBS_CHANNEL_MESG:
+                    break;
+                case TYPE_R_LOAD_CHANNEL_MESG:
+                    break;
+                case TYPE_R_SENT_CHANNEL_MESG:
                     break;
                 default:
                     break;
@@ -95,27 +132,15 @@ namespace dotdis.Controllers
             if (UserIsOnline(mesg.RecvID))
             {
                 Console.WriteLine("[LOG] Broadcasting message to user " + mesg.RecvID);
-                Func<WebSocket, Task> action = async(socket) => {
-                    JsonGeneric obj = new JsonGeneric("recv_private_message", JsonSerializer.Serialize<PrivateMessage>(mesg));
+                Func<WebSocket, Task> action = async (socket) =>
+                {
+                    JsonGeneric obj = new JsonGeneric(TYPE_B_RECV_PRIVATE_MESG, JsonSerializer.Serialize<PrivateMessage>(mesg));
                     await SendDataToSocket(JsonSerializer.SerializeToUtf8Bytes<JsonGeneric>(obj), socket);
                 };
                 await IterateUserSockets(mesg.RecvID, action);
             }
         }
 
-        private static async Task SendDataToSocket(byte[] data, WebSocket webSocket)
-        {
-            //byte[] buffer = new byte[BUFFER_SIZE];
-            int offset = 0, length = BUFFER_SIZE;
-            while (offset < data.Length)
-            {
-                length = (data.Length - offset) < BUFFER_SIZE ? (data.Length - offset) : BUFFER_SIZE;
-                Console.WriteLine("[LOG] offset = {0}, length = {1}, data = {2}", offset, length, data.Length);
-                await webSocket.SendAsync(new ArraySegment<byte>(data, offset, length), WebSocketMessageType.Text, (offset + length) == data.Length, CancellationToken.None);
-                offset += length;
-            }
-            Console.WriteLine("[LOG] Sent data to Socket");
-        }
         private static void BroadcastMesgToChannel(ChannelMessage mesg)
         {
 
@@ -146,12 +171,12 @@ namespace dotdis.Controllers
                 {
                     ///
                     Console.WriteLine("[LOG] Inform user {0} that user {1} is just online", fUid, uid);
-                    JsonGeneric userOnlineInform = new JsonGeneric("user_online", uid.ToString());
+                    JsonGeneric userOnlineInform = new JsonGeneric(TYPE_B_INFO_USER_ONL, uid.ToString());
                     Func<WebSocket, Task> action = async (socket) => await BroadcastInfo(userOnlineInform, socket);
                     Task sendStatus = IterateUserSockets(fUid, action);
                     ///
                     Console.WriteLine("[LOG] Inform user {1} that user {0} is currently online", fUid, uid);
-                    JsonGeneric friendOnlineInform = new JsonGeneric("user_online", fUid.ToString());
+                    JsonGeneric friendOnlineInform = new JsonGeneric(TYPE_B_INFO_USER_ONL, fUid.ToString());
                     Task recvStatus = BroadcastInfo(friendOnlineInform, webSocket);
                 }
             }
@@ -166,7 +191,7 @@ namespace dotdis.Controllers
                 if (UserIsOnline(fUid))
                 {
                     Console.WriteLine("[LOG] Inform user {0} that user {1} is just offline", fUid, uid);
-                    JsonGeneric userOnlineInform = new JsonGeneric("user_offline", uid.ToString());
+                    JsonGeneric userOnlineInform = new JsonGeneric(TYPE_B_INFO_USER_OFF, uid.ToString());
                     Func<WebSocket, Task> action = async (socket) => await BroadcastInfo(userOnlineInform, socket);
                     await IterateUserSockets(fUid, action);
                 }
@@ -192,29 +217,5 @@ namespace dotdis.Controllers
                 await action(session);
             }
         }
-        //sample function for testing WebSocket
-        /*public async Task Echo(HttpContext context, WebSocket webSocket)
-        {
-            byte[] buffer = new byte[4];
-            var none = CancellationToken.None;
-            WebSocketReceiveResult result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), none);
-            while (!result.CloseStatus.HasValue)
-            {
-                Console.WriteLine(result.MessageType + "  " + result.EndOfMessage);
-                var mesgx = new ArraySegment<byte>(buffer, 0, result.Count);
-                //mesg.AddRange(buffer);
-                mesg.AddRange(buffer);
-                //PrintIndexAndValues(mesgx);
-                //Console.WriteLine("toString: " + BitConverter.ToString(buffer));
-                if(result.EndOfMessage == true)
-                {
-                    byte[] fin = mesg.ToArray();
-                    Console.WriteLine("Final MESG: " + Encoding.UTF8.GetString(fin));
-                }
-                await webSocket.SendAsync(new ArraySegment<byte>(buffer, 0, result.Count), result.MessageType, result.EndOfMessage, none);
-                result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), none);
-            }
-            await webSocket.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription, none);
-        }*/
     }
 }

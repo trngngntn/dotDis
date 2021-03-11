@@ -1,8 +1,17 @@
+const TYPE_R_SUBS_CHANNEL_MESG = 1;
+const TYPE_R_LOAD_PRIVATE_MESG = 2;
+const TYPE_R_LOAD_CHANNEL_MESG = 3;
+const TYPE_R_SENT_PRIVATE_MESG = 4;
+const TYPE_R_SENT_CHANNEL_MESG = 5;
+const TYPE_B_RECV_PRIVATE_MESG = 6;
+const TYPE_B_RECV_CHANNEL_MESG = 7;
+const TYPE_B_INFO_USER_ONL = 8;
+const TYPE_B_INFO_USER_OFF = 9;
+
 class PrivateMessage {
-    constructor(sendId, detail){
+    constructor(sendId, recvId, detail){
         this.sendId = sendId;
-        if(sendId == 1) this.recvId = 3;
-        else this.recvId = 1;
+        this.recvId = recvId;
         this.detail = detail;
     }
 }
