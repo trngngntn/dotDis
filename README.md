@@ -1,2 +1,2 @@
 # dotDis
-Another Discord Rip-off
+Not Another Discord Rip-off

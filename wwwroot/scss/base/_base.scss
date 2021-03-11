@@ -10,7 +10,10 @@ html {
   // Define 1rem = 10px
   font-size: 62.5%;
   scroll-behavior: smooth;
-  font-family: Whitney, "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  &::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+  }
 }
 
 body {
