@@ -24,11 +24,12 @@
      <div id="list-room">
 
      </div>
+     <button onclick='location.href = "Chat/Logout"'>Logout</button>
 </nav>
 <main>
     <textarea id="field-mesg-input"></textarea>
     <br />
-    <button id="button-send" onclick="sendMesg()">Send</button>
+    <button id="button-send" onclick="sendMesg()" disabled>Send</button>
     <br />
     <div id="mesg-output">
         <p> Received Messages :</p>

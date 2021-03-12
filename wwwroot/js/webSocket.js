@@ -1,5 +1,5 @@
 var activeUser;
-var chatUser;
+var chatUser = null;
 
 var socket;
 
@@ -69,11 +69,12 @@ function setUserStatus(id, status){
 }
 function setChatUser(id){
   chatUser = id;
+  document.getElementById("button-send").disabled = false;
 }
 
 function sendMesg() {
   var mesg = document.getElementById("field-mesg-input").value;
   var privMesg = new PrivateMessage(activeUser, chatUser, mesg);
-  var obj = new JSONGeneric("sent_private_message", JSON.stringify(privMesg));
+  var obj = new JSONGeneric(TYPE_R_SENT_PRIVATE_MESG, JSON.stringify(privMesg));
   wsSendMesg(obj);
 }

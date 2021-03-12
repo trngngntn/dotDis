@@ -34,6 +34,13 @@ namespace dotdis.Controllers
 
         }
 
+        public IActionResult Logout()
+        {
+            int uid = (int)this.HttpContext.Session.GetBindedUid();
+            this.HttpContext.Session.Kill();
+            return Redirect("/Login");
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

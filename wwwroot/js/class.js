@@ -7,6 +7,7 @@ const TYPE_B_RECV_PRIVATE_MESG = 6;
 const TYPE_B_RECV_CHANNEL_MESG = 7;
 const TYPE_B_INFO_USER_ONL = 8;
 const TYPE_B_INFO_USER_OFF = 9;
+const TYPE_B_ACTN_LOG_OUT = 10;
 
 class PrivateMessage {
     constructor(sendId, recvId, detail){

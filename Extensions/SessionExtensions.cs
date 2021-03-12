@@ -30,11 +30,15 @@ namespace Extensions
         {
             int uid = (int)session.GetBindedUid();
             userBindings[uid].Remove(session);
+            if(sessionSockets.ContainsKey(session)){
+                sessionSockets.Remove(session, out _);
+            }
             if (userBindings[uid].Count == 0) // no more active session from user
             {
                 Task inform = WebSocketController.InformUserOffline(uid);
                 userBindings.Remove(uid, out _);
             }
+            session.Clear();
         }
 
         public static void Set<T>(this ISession session, string key, T value)
