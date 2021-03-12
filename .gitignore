@@ -1,10 +1,9 @@
 
-./.vs
-./.vscode
-./Properties
-./bin
-./obj
-*.dll
+./.vs/*
+./.vscode/*
+./Properties/*
+./bin/*
+./obj/*
 
 # Compiled source #
 ###################
