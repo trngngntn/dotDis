@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Models;
 
-namespace dotdis.Controllers
+namespace Controllers
 {
     public class HomeController : Controller
     {

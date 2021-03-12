@@ -2,7 +2,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Net.WebSockets;
 using System.Threading.Tasks;
-using dotdis.Controllers;
+using Controllers;
 using Microsoft.AspNetCore.Http;
 using Models.Collections;
 

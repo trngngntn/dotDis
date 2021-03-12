@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text.Json;
 using Models;
 
-namespace dotdis.Controllers
+namespace Controllers
 {
     public static class WebSocketController
     {

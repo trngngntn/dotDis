@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 using Models;
 using Microsoft.AspNetCore.Http;
 
-namespace dotdis.Controllers
+namespace Controllers
 {
     public class ChatController : Controller
     {
