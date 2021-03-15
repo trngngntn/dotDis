@@ -74,5 +74,10 @@ namespace Models
         {
             return UserDAO.ListFriend(uid);
         }
+
+        public static int CountAllUsers()
+        {
+            return UserDAO.CountAllUsers();
+        }
     }
 }
