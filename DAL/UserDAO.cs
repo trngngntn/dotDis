@@ -2,7 +2,7 @@ using System;
 using System.Data;
 using MySql.Data.MySqlClient;
 using Models;
-using dotdis.Util;
+using Utils;
 using System.Collections.Generic;
 
 namespace DAL

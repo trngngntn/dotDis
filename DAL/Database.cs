@@ -24,13 +24,18 @@ namespace DAL
         /// <param name="sql"></param>
         /// <return>DataTable</return>
         public static DataTable GetData(string sql, params MySqlParameter[] args){
-            MySqlCommand command = new MySqlCommand(sql, GetConnection());
-            command.Parameters.AddRange(args);
-            MySqlDataAdapter dataAdapter = new MySqlDataAdapter();
-            dataAdapter.SelectCommand = command;
-            DataSet dataSet = new DataSet();
-            dataAdapter.Fill(dataSet);
-            return dataSet.Tables[0];
+            try{
+                MySqlCommand command = new MySqlCommand(sql, GetConnection());
+                command.Parameters.AddRange(args);
+                MySqlDataAdapter dataAdapter = new MySqlDataAdapter();
+                dataAdapter.SelectCommand = command;
+                DataSet dataSet = new DataSet();
+                dataAdapter.Fill(dataSet);
+                return dataSet.Tables[0];
+            } catch(Exception){
+                Console.WriteLine("[ERR] Database error");
+            }
+            return null;
         }
 
         /// <summary>

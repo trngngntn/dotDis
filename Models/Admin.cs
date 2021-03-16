@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using dotdis.Util;
+using Utils;
 using DAL;
 
 namespace Models

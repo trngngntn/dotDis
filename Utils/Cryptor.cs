@@ -2,7 +2,7 @@ using System;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace dotdis.Util{
+namespace Utils{
     public class Cryptor{
         public const int BUFFER_SIZE = 12;
         public static string GenerateSalt(){

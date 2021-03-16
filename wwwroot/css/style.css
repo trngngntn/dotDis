@@ -141,6 +141,7 @@ main{
 }
 
 #chat-window{
+    position: relative;
     height: calc(100vh - 3rem);
     padding: 1rem 0;
 }
@@ -158,33 +159,44 @@ main{
 }
 #conversation{
     height: 100%;
+    padding: 0 15px;
 }
 #mesg-input{
-    background-color: var(--background-color-darker);
-    height: auto;
-    margin: 1rem;
     position: absolute;
     bottom: 0;
-    padding: 0.8rem;
+    width: 100%;
+    background-color: var(--background-color-darker);
+    font-size: 0;
+    padding: 7px 15px;
+    border-radius: 10px;
 }
 #field-mesg-input{
-    background-color: var(--background-color-darker);
-    border-radius: 1rem;
-    height: 1.5rem;
+    background: none;   
+    overflow: hidden; 
     resize: none;
-    padding: .5rem;
+    font-size: 1rem;
+    height: 1.5rem;
+    line-height: 1.5rem;
+}
+#field-mesg-input:focus{
+    outline: none;
+}
+#button-send{
+    vertical-align: top;
 }
 #mesg-list{
     padding: 20px;
 }
+.mesg-wrap{
+    margin: 20px 0;
+    height: auto;
+}
 .mesg-bubble{
-    display: inline-block;
+    display: table;
     background-color: var(--background-color-darker);
     padding: 7px 15px;
-    margin: 20px 0;
     border-radius: 10px;
-}
-.mesg-other{
+    max-width: 80%;
 }
 .mesg-own{
     margin-left: auto;

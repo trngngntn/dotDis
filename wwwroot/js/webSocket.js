@@ -43,9 +43,6 @@ function wsGetMesg(mesg){
         case TYPE_B_RECV_PRIVATE_MESG:
             var privMesg = JSON.parse(obj.data);
             createNewMesg(privMesg.detail ,0);
-            var newElm = document.createElement("p");
-            newElm.innerHTML = privMesg.detail;
-            document.getElementById("mesg-output").appendChild(newElm);
             break;
         case TYPE_B_INFO_USER_ONL:
             setUserStatus(obj.data, true);
@@ -81,6 +78,8 @@ function sendMesg() {
 
 function createNewMesg(detail, type){
   var mesgList = document.getElementById("mesg-list");
+  var newMesgWrap = document.createElement("div");
+  newMesgWrap.className = "mesg-wrap";
   var newMesg = document.createElement("div");
   newMesg.innerHTML = detail;
   newMesg.className = "mesg-bubble";
@@ -89,5 +88,6 @@ function createNewMesg(detail, type){
   } else {
     newMesg.className+=" mesg-other";
   }
-  mesgList.appendChild(newMesg);
+  newMesgWrap.appendChild(newMesg);
+  mesgList.appendChild(newMesgWrap);
 }
