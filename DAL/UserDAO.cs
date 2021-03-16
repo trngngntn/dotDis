@@ -105,7 +105,7 @@ namespace DAL
             param.Value = uid;
             DataTable dat = Database.GetData(sql, param);
             List<int> fUids = new List<int>();
-            foreach(DataRow row in dat.Rows)
+            foreach (DataRow row in dat.Rows)
             {
                 int tmpUid = Int32.Parse(row["uid1"].ToString());
                 fUids.Add(tmpUid == uid ? Int32.Parse(row["uid2"].ToString()) : tmpUid);
@@ -113,10 +113,11 @@ namespace DAL
             return fUids;
         }
 
-        public static List<User> ListFriend(int uid){
+        public static List<User> ListFriend(int uid)
+        {
             List<int> fUids = ListFriendUid(uid);
             List<User> friend = new List<User>();
-            foreach(int fUid in fUids)
+            foreach (int fUid in fUids)
             {
                 friend.Add(GetUserByID(fUid));
             }
@@ -130,6 +131,14 @@ namespace DAL
         public void Update()
         {
 
+        }
+
+        public static int CountAllUsers()
+        {
+            string sql = "SELECT COUNT(*) FROM `User`;";
+            DataTable dat = Database.GetData(sql);
+            int result = Int32.Parse(dat.Rows[0][0].ToString());
+            return result;
         }
     }
 }

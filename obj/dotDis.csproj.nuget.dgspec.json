@@ -1,25 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "/home/trngngntn/Git/dotDis/dotDis.csproj": {}
+    "Z:\\FPT Major\\Semester 5\\PRN292 - .NET and C#\\Project\\Git\\dotDis\\dotDis.csproj": {}
   },
   "projects": {
-    "/home/trngngntn/Git/dotDis/dotDis.csproj": {
+    "Z:\\FPT Major\\Semester 5\\PRN292 - .NET and C#\\Project\\Git\\dotDis\\dotDis.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/trngngntn/Git/dotDis/dotDis.csproj",
+        "projectUniqueName": "Z:\\FPT Major\\Semester 5\\PRN292 - .NET and C#\\Project\\Git\\dotDis\\dotDis.csproj",
         "projectName": "dotDis",
-        "projectPath": "/home/trngngntn/Git/dotDis/dotDis.csproj",
-        "packagesPath": "/home/trngngntn/.nuget/packages/",
-        "outputPath": "/home/trngngntn/Git/dotDis/obj/",
+        "projectPath": "Z:\\FPT Major\\Semester 5\\PRN292 - .NET and C#\\Project\\Git\\dotDis\\dotDis.csproj",
+        "packagesPath": "C:\\Users\\letha\\.nuget\\packages\\",
+        "outputPath": "Z:\\FPT Major\\Semester 5\\PRN292 - .NET and C#\\Project\\Git\\dotDis\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/trngngntn/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\letha\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -65,7 +67,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/5.0.102/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }
