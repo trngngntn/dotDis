@@ -188,7 +188,7 @@ namespace Controllers
 
         public static void InformUserOffline(int uid)
         {
-            //Console.WriteLine("[LOG] Informing that user {0} is just offline", uid);
+            //ConsoleLogger.Log("Inform UID:{0} is offline", uid);
             List<int> fUids = User.ListFriendUid(uid);
             foreach (int fUid in fUids)
             {
