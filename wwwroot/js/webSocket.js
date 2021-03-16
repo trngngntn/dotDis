@@ -42,6 +42,7 @@ function wsGetMesg(mesg){
     switch(obj.type){
         case TYPE_B_RECV_PRIVATE_MESG:
             var privMesg = JSON.parse(obj.data);
+            createNewMesg(privMesg.detail ,0);
             var newElm = document.createElement("p");
             newElm.innerHTML = privMesg.detail;
             document.getElementById("mesg-output").appendChild(newElm);
@@ -60,11 +61,9 @@ function setUserStatus(id, status){
     var elm = document.getElementById(`status-user-${id}`);
     console.log(`status-user-${id}`);
     if(status){
-        elm.innerHTML = "Online";
-        elm.style.color = "green";
+        elm.style.backgroundColor = "green";
     } else {
-        elm.innerHTML = "Offline";
-        elm.style.color = "red";
+        elm.style.backgroundColor = "silver";
     }
 }
 function setChatUser(id){
@@ -77,4 +76,18 @@ function sendMesg() {
   var privMesg = new PrivateMessage(activeUser, chatUser, mesg);
   var obj = new JSONGeneric(TYPE_R_SENT_PRIVATE_MESG, JSON.stringify(privMesg));
   wsSendMesg(obj);
+  createNewMesg(mesg, 1);
+}
+
+function createNewMesg(detail, type){
+  var mesgList = document.getElementById("mesg-list");
+  var newMesg = document.createElement("div");
+  newMesg.innerHTML = detail;
+  newMesg.className = "mesg-bubble";
+  if(type === 1){
+    newMesg.className+=" mesg-own";
+  } else {
+    newMesg.className+=" mesg-other";
+  }
+  mesgList.appendChild(newMesg);
 }

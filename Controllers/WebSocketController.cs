@@ -28,7 +28,13 @@ namespace Controllers
 
         public static async Task InitSocket(HttpContext context, WebSocket webSocket)
         {
-            int uid = (int)context.Session.GetBindedUid();
+            int? uidN = context.Session.GetBindedUid();
+            if(uidN == null){
+                context.Response.Redirect("/Login");
+                webSocket.Abort();
+                return;
+            }
+            int uid = (int)uidN;
             if (UserIsOnline(uid)) // user is currently online
             {
                 // check if there is a new session
@@ -65,7 +71,7 @@ namespace Controllers
                     string data = Encoding.UTF8.GetString(dataByte.ToArray());
                     JsonGeneric obj = JsonSerializer.Deserialize<JsonGeneric>(data);
                     Console.WriteLine("RECV_MESG:" + obj);
-                    await Process(obj.Type, obj.Data);
+                    Process(obj.Type, obj.Data);
                     dataByte = new List<byte>();
                 }
                 else
@@ -96,7 +102,7 @@ namespace Controllers
             Console.WriteLine("[LOG] Sent data to Socket");
         }
 
-        private static async Task Process(int type, string data)
+        private static void Process(int type, string data)
         {
             Console.WriteLine("[LOG] Processing message type: " + type);
             switch (type)
@@ -111,7 +117,7 @@ namespace Controllers
                     break;
                 case TYPE_R_SENT_PRIVATE_MESG:
                     PrivateMessage mesg = JsonSerializer.Deserialize<PrivateMessage>(data);
-                    await BroadcastMesgToUser(mesg);
+                    BroadcastMesgToUser(mesg);
                     break;
 
                 //Processing Channel Messages---------------------------------------------------------------------------
@@ -126,7 +132,7 @@ namespace Controllers
             }
         }
 
-        private static async Task BroadcastMesgToUser(PrivateMessage mesg)
+        private static void BroadcastMesgToUser(PrivateMessage mesg)
         {
             if (UserIsOnline(mesg.RecvID))
             {
@@ -136,7 +142,7 @@ namespace Controllers
                     JsonGeneric obj = new JsonGeneric(TYPE_B_RECV_PRIVATE_MESG, JsonSerializer.Serialize<PrivateMessage>(mesg));
                     await SendDataToSocket(JsonSerializer.SerializeToUtf8Bytes<JsonGeneric>(obj), socket);
                 };
-                await IterateUserSockets(mesg.RecvID, action);
+                IterateUserSockets(mesg.RecvID, action);
             }
         }
 
@@ -172,7 +178,7 @@ namespace Controllers
                     Console.WriteLine("[LOG] Inform user {0} that user {1} is just online", fUid, uid);
                     JsonGeneric userOnlineInform = new JsonGeneric(TYPE_B_INFO_USER_ONL, uid.ToString());
                     Func<WebSocket, Task> action = async (socket) => await BroadcastInfo(userOnlineInform, socket);
-                    Task sendStatus = IterateUserSockets(fUid, action);
+                    IterateUserSockets(fUid, action);
                     ///
                     Console.WriteLine("[LOG] Inform user {1} that user {0} is currently online", fUid, uid);
                     JsonGeneric friendOnlineInform = new JsonGeneric(TYPE_B_INFO_USER_ONL, fUid.ToString());
@@ -181,7 +187,7 @@ namespace Controllers
             }
         }
 
-        public static async Task InformUserOffline(int uid)
+        public static void InformUserOffline(int uid)
         {
             Console.WriteLine("[LOG] Informing that user {0} is just offline", uid);
             List<int> fUids = User.ListFriendUid(uid);
@@ -192,18 +198,18 @@ namespace Controllers
                     Console.WriteLine("[LOG] Inform user {0} that user {1} is just offline", fUid, uid);
                     JsonGeneric userOnlineInform = new JsonGeneric(TYPE_B_INFO_USER_OFF, uid.ToString());
                     Func<WebSocket, Task> action = async (socket) => await BroadcastInfo(userOnlineInform, socket);
-                    await IterateUserSockets(fUid, action);
+                    IterateUserSockets(fUid, action);
                 }
             }
         }
-        private static async Task IterateUserSockets(int uid, Func<WebSocket, Task> action)
+        private static void IterateUserSockets(int uid, Func<WebSocket, Task> action)
         {
             List<ISession> sessionList = Extensions.SessionExtensions.GetUserSessions(uid);
             foreach (ISession session in sessionList)
             {
                 foreach (WebSocket socket in session.GetSockets())
                 {
-                    await action(socket);
+                    Task doAction = action(socket);
                 }
             }
         }

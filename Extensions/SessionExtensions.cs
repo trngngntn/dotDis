@@ -35,10 +35,10 @@ namespace Extensions
             }
             if (userBindings[uid].Count == 0) // no more active session from user
             {
-                Task inform = WebSocketController.InformUserOffline(uid);
+                WebSocketController.InformUserOffline(uid);
                 userBindings.Remove(uid, out _);
             }
-            session.Clear();
+            //session.Clear();
         }
 
         public static void Set<T>(this ISession session, string key, T value)
@@ -94,6 +94,7 @@ namespace Extensions
                 sessionSockets.Remove(session, out _);
                 Kill(session);
             }
+            socket.Abort();
         }
 
         public static List<ISession> GetUserSessions(int uid)

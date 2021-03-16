@@ -16,9 +16,9 @@
          @foreach (User user in (List<User>)ViewData["Friend"])
          {
              <div class="nav-entry friend-room" id="@user.ID" onclick="setChatUser(@user.ID)">
-                <!--img class="avatar" src="img/avatar.png"></img-->
+                <img class="avatar" src="img/avatar.png"></img>
                 <div>@user.Name</div>
-                <span id="status-user-@user.ID">Offline</span>
+                <div id="status-user-@user.ID"></div>
              </div>
          }
      </div>
@@ -38,10 +38,31 @@
             <div id="personal-setting" class="circle-bt"><i class="fas fa-cog"></i></div>
         </div>
     </div>
-    <textarea id="field-mesg-input"></textarea>
-    <br />
-    <button id="button-send" onclick="sendMesg()" disabled>Send</button>
-    <br />
+    <div id="chat-window">
+            <div id="conversation">
+                <div id="mesg-list">
+                    <div class="mesg-bubble mesg-own">This is a message</div>
+                    <div class="mesg-bubble mesg-other">This is another message</div>
+                    <div class="mesg-bubble mesg-own">This is just another one</div>
+                </div>
+                <div id="mesg-input">
+                    <textarea id="field-mesg-input"></textarea>
+                    <button id="button-send" onclick="sendMesg()" disabled>Send</button>
+                </div>
+            </div>
+            
+            <div id="member-list">
+                <div class="vertical-seperator"></div>
+                <div class="friend-room">
+                    <img class="avatar" src="img/avatar.png"></img>
+                    <div>USER_NAME</div>
+                </div>
+                <div class="friend-room">
+                    <img class="avatar" src="img/avatar.png"></img>
+                    <div>USER_NAME</div>
+                </div>
+            </div>
+        </div>
     <div id="mesg-output">
         <p> Received Messages :</p>
     </div>
