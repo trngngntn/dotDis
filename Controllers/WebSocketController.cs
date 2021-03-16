@@ -204,6 +204,7 @@ namespace Controllers
         }
         private static void IterateUserSockets(int uid, Func<WebSocket, Task> action)
         {
+            Console.Write("[LOG] Iterating user {0} sockets", uid);
             List<ISession> sessionList = Extensions.SessionExtensions.GetUserSessions(uid);
             foreach (ISession session in sessionList)
             {
