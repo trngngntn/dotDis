@@ -93,9 +93,19 @@ namespace DAL
             }
         }
 
-        public void GetUserByEmail()
+        public static User GetUserByEmail(string email)
         {
-
+            string sql = "SELECT `id`,`fullname` FROM `User` WHERE `email`=@email";
+            MySqlParameter param = new MySqlParameter("uid", MySqlDbType.VarChar);
+            param.Value = email;
+            DataTable dat = Database.GetData(sql, param);
+            if (dat.Rows.Count == 0) return null;
+            else
+            {
+                User user = new User(Int32.Parse(dat.Rows[0]["id"].ToString()),
+                dat.Rows[0]["fullname"].ToString());
+                return user;
+            }
         }
 
         public static List<int> ListFriendUid(int uid)
@@ -122,15 +132,6 @@ namespace DAL
                 friend.Add(GetUserByID(fUid));
             }
             return friend;
-        }
-        public void Delete()
-        {
-
-        }
-
-        public void Update()
-        {
-
         }
 
         public static int CountAllUsers()
