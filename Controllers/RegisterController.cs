@@ -27,7 +27,8 @@ namespace Controllers
             {
                 Models.User.CreateUser(name, email, username, passwd);
                 Console.WriteLine("[LOG] Create new user `{0}`", username);
-                return View("Success");
+                //return View("Success");
+                return Redirect("Login");
             }
             else {
                 return View("Index");

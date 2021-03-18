@@ -13,7 +13,7 @@ namespace Utils
         {
             Console.ForegroundColor = ConsoleColor.White;
             Console.BackgroundColor = ConsoleColor.Red;
-            Console.WriteLine("\t[LOG] " + str,args);
+            Console.WriteLine("\t[ERR] " + str,args);
             Console.ResetColor();
         }
     }

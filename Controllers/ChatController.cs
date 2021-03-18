@@ -37,7 +37,7 @@ namespace Controllers
         public IActionResult Logout()
         {
             int uid = (int)this.HttpContext.Session.GetBindedUid();
-            this.HttpContext.Session.Kill();
+            this.HttpContext.Session.KillNow();
             return Redirect("/Login");
         }
 

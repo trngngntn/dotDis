@@ -41,6 +41,12 @@ namespace Extensions
             //session.Clear();
         }
 
+        public static void KillNow(this ISession session)
+        {
+            session.Kill();
+            session.Clear();
+        }
+
         public static void Set<T>(this ISession session, string key, T value)
         {
             sessionItems[session][key] = value;
