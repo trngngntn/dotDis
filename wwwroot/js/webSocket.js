@@ -70,6 +70,7 @@ function setChatUser(id){
 
 function sendMesg() {
   var mesg = document.getElementById("field-mesg-input").value;
+  if(mesg == "") return;
   var privMesg = new PrivateMessage(activeUser, chatUser, mesg);
   var obj = new JSONGeneric(TYPE_R_SENT_PRIVATE_MESG, JSON.stringify(privMesg));
   wsSendMesg(obj);
