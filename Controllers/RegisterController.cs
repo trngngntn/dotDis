@@ -9,7 +9,7 @@ namespace Controllers
 {
     public class RegisterController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<HomeController> _logger;   
         public RegisterController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -28,7 +28,10 @@ namespace Controllers
                 Models.User.CreateUser(name, email, username, passwd);
                 Console.WriteLine("[LOG] Create new user `{0}`", username);
                 return View("Success");
+<<<<<<< HEAD
+=======
                 // return Redirect("Login");
+>>>>>>> 406d52895727ebe3a0c0a09ff3c88f4d436bd9ad
             }
             else {
                 return View("Index");

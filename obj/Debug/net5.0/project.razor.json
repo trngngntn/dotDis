@@ -15601,6 +15601,7 @@
     "CSharpLanguageVersion": 900
   },
   "RootNamespace": "dotDis",
+<<<<<<< HEAD
   "Documents": [
     {
       "FilePath": "d:\\FPT Major\\Semester 5\\PRN292 - .NET and C#\\dotDis\\Git\\dotDis\\Views\\Register\\Success.cshtml",
@@ -15673,5 +15674,8 @@
       "FileKind": "mvc"
     }
   ],
+=======
+  "Documents": [],
+>>>>>>> 7acce058ad4d43760c9aed7cd182ecdfeb64c0f6
   "SerializationFormat": "0.2"
 }
