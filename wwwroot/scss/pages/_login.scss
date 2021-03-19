@@ -92,6 +92,31 @@
       }
     }
 
+    &--success {
+      transform: translate(-50%, -50%);
+      width: 55rem;
+      animation: moveInBottom 0.2s ease-out;
+
+      @include respond(tablet-land) {
+        width: 40vw;
+        transform: translate(-50%, -50%);
+      }
+      @include respond(tablet-port) {
+        width: 50vw;
+        transform: translate(-50%, -50%);
+      }
+
+      @include respond(phone) {
+        width: 70vw;
+        transform: translate(-50%, -50%);
+      }
+
+      @include respond(small-phone) {
+        width: 100%;
+        transform: translate(-50%, -50%);
+      }
+    }
+
     &__content {
       height: 100%;
       display: grid;
@@ -107,6 +132,23 @@
       &--register {
         grid-template-columns: 100%;
       }
+    }
+
+    &__success {
+      text-align: center;
+      padding: 1rem;
+
+      &--logo {
+        height: 10rem;
+      }
+
+      &--title {
+        color: #fff;
+      }
+
+      // &--description {
+      //   color: #fff;
+      // }
     }
 
     &__submit--text {

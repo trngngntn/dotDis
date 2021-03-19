@@ -235,6 +235,35 @@ body {
     transform: translate(-50%, -50%);
   }
 }
+.login__form--success {
+  transform: translate(-50%, -50%);
+  width: 55rem;
+  animation: moveInBottom 0.2s ease-out;
+}
+@media (max-width: 75em) {
+  .login__form--success {
+    width: 40vw;
+    transform: translate(-50%, -50%);
+  }
+}
+@media (max-width: 56.25em) {
+  .login__form--success {
+    width: 50vw;
+    transform: translate(-50%, -50%);
+  }
+}
+@media (max-width: 37.5em) {
+  .login__form--success {
+    width: 70vw;
+    transform: translate(-50%, -50%);
+  }
+}
+@media (max-width: 25em) {
+  .login__form--success {
+    width: 100%;
+    transform: translate(-50%, -50%);
+  }
+}
 .login__form__content {
   height: 100%;
   display: grid;
@@ -252,6 +281,16 @@ body {
 }
 .login__form__content--register {
   grid-template-columns: 100%;
+}
+.login__form__success {
+  text-align: center;
+  padding: 1rem;
+}
+.login__form__success--logo {
+  height: 10rem;
+}
+.login__form__success--title {
+  color: #fff;
 }
 .login__form__submit--text {
   font-weight: 600;
@@ -311,7 +350,7 @@ body {
 
 .home__header {
   height: 95vh;
-  background-image: linear-gradient(to right bottom, rgba(85, 197, 122, 0.8), rgba(126, 213, 111, 0.8)), url(../../img/login_background.png);
+  background-image: linear-gradient(to right bottom, rgba(85, 197, 122, 0.8), rgba(126, 213, 111, 0.8)), url(../../img/login_background1.jpg);
   background-size: cover;
   background-position: top;
   clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);

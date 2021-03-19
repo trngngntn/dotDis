@@ -28,7 +28,7 @@ ViewData["Title"] = "Register";
     <div class="home__header__logo-box">
             <img src='@Url.Content("~/img/logo1.png")' alt="logo" class="home__header__logo">
         </div>
-        <form class="login__form login__form--register" asp-action="Authorize" method="POST">
+        <form class="login__form login__form--register" asp-action="Submit" method="POST">
             <div class="login__form__content login__form__content--register">
                 <div>
                     <h3 class="text__header__primary">
@@ -44,7 +44,7 @@ ViewData["Title"] = "Register";
                     </div>
                     <div class="auth__input__wrapper">
                         <label class="auth__input--label" for="name">username</label>
-                        <input class="auth__input--input" id="name" type="password" name="name">
+                        <input class="auth__input--input" id="name" type="text" name="username">
                     </div>
                     <div class="auth__input__wrapper">
                         <label class="auth__input--label" for="passwd">password</label>
@@ -54,7 +54,7 @@ ViewData["Title"] = "Register";
                         <label>
                             <input type="checkbox">
                             <p style="display: inline-block;">
-                                I have read and agree to Discord's
+                                I have read and agree to DotDis's
                                 <a class="login__form--register-link" href="#">
                                     Terms of Service
                                 </a>
@@ -66,7 +66,12 @@ ViewData["Title"] = "Register";
                         </label>
                     </div>
                     <button class="login__form__submit--btn">
-                        <div class="login__form__submit--text">
+                        <div id="auth-loading" class="snippet" data-title=".dot-flashing">
+                            <div class="stage">
+                                <div class="dot-flashing"></div>
+                            </div>
+                        </div>
+                        <div onclick="handlePressAuthBtn()" id="auth-text" class="login__form__submit--text">
                             Continue
                         </div>
                     </button>
@@ -77,3 +82,4 @@ ViewData["Title"] = "Register";
         </form>
     </main>
 </body>
+<script src='@Url.Content("~/js/loginPage.js")'></script>

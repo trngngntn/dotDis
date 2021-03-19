@@ -28,11 +28,14 @@ namespace Controllers
                 Models.User.CreateUser(name, email, username, passwd);
                 Console.WriteLine("[LOG] Create new user `{0}`", username);
                 return View("Success");
+<<<<<<< HEAD
+=======
+                // return Redirect("Login");
+>>>>>>> 406d52895727ebe3a0c0a09ff3c88f4d436bd9ad
             }
             else {
                 return View("Index");
             }
-            
         }
         public IActionResult Success(string name)
         {
