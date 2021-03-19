@@ -62,8 +62,8 @@ namespace Controllers
 
         private void CollectData() {
             ViewData["Users"] = Models.User.CountAllUsers();
-            ViewData["Rooms"] = 1;
-            ViewData["Messages"] = 100;
+            ViewData["Rooms"] = Models.Room.CountAllRooms();
+            ViewData["Messages"] = Models.Message.CountAllMessage();
         }
     }
 }

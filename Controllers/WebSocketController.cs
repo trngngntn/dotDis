@@ -26,6 +26,7 @@ namespace Controllers
         private const int TYPE_B_RECV_CHANNEL_MESG = 7;
         private const int TYPE_B_INFO_USER_ONL = 8;
         private const int TYPE_B_INFO_USER_OFF = 9;
+        private const int TYPE_B_INFO_SEND_ERROR = 11;
 
         public static async Task InitSocket(HttpContext context, WebSocket webSocket)
         {
@@ -73,7 +74,7 @@ namespace Controllers
                     string data = Encoding.UTF8.GetString(dataByte.ToArray());
                     JsonGeneric obj = JsonSerializer.Deserialize<JsonGeneric>(data);
                     Console.WriteLine("RECV_MESG:" + obj);
-                    Process(obj.Type, obj.Data);
+                    Process(obj.Type, obj.Data, webSocket);
                     dataByte = new List<byte>();
                 }
                 else
@@ -87,7 +88,7 @@ namespace Controllers
             CloseSocket(context, webSocket);
         }
 
-        private static void Process(int type, string data)
+        private static void Process(int type, string data, WebSocket socket)
         {
             Console.WriteLine("[LOG] Processing message type: " + type);
             switch (type)
@@ -103,7 +104,14 @@ namespace Controllers
                 case TYPE_R_SENT_PRIVATE_MESG:
                     {
                         PrivateMessage mesg = JsonSerializer.Deserialize<PrivateMessage>(data);
-                        BroadcastMesgToUser(mesg);
+                        int result = mesg.SendPrivateMessage();
+                        if (result > 0) {
+                            BroadcastMesgToUser(mesg);
+                        } else {
+                            JsonGeneric obj = new JsonGeneric(TYPE_B_INFO_SEND_ERROR, "Sent error!");
+                            Task t = BroadcastInfo(obj, socket);
+                        }
+                        
                     }
                     break;
 
@@ -116,6 +124,7 @@ namespace Controllers
                 case TYPE_R_SENT_CHANNEL_MESG:
                     {
                         ChannelMessage mesg = JsonSerializer.Deserialize<ChannelMessage>(data);
+                        mesg.SendChannelMessage();
                         BroadcastMesgToChannel(mesg);
                     }
                     break;
@@ -137,6 +146,7 @@ namespace Controllers
                 IterateUserSockets(mesg.RecvID, action);
             }
         }
+
 
         private static void BroadcastMesgToChannel(ChannelMessage mesg)
         {

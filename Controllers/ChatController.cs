@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Models;
 using Microsoft.AspNetCore.Http;
+using System.Net;
+using System.Net.WebSockets;
 
 namespace Controllers
 {
@@ -28,7 +30,7 @@ namespace Controllers
             else
             {
                 ViewData["uid"] = uid;
-                ViewData["friend"] = Models.User.ListFriend((int)uid);
+                ViewData["Friend"] = Models.User.ListFriend((int)uid);
                 return View();
             }
 
@@ -46,5 +48,7 @@ namespace Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        
     }
 }

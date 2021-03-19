@@ -49,7 +49,10 @@ function wsGetMesg(mesg){
             break;
         case TYPE_B_INFO_USER_OFF:
             setUserStatus(obj.data, false);
-            break;    
+            break;
+        case TYPE_B_INFO_SEND_ERROR:
+            alert("Send Error!");
+            break;
         default:
             break;
     }

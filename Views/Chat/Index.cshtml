@@ -13,7 +13,7 @@
 <script type="text/javascript">window.onload = init(@ViewData["uid"])</script>
 <nav>
      <div id="list-friend">
-         @foreach (User user in (List<User>)ViewData["Friend"])
+         @foreach (Models.User user in (List<Models.User>)ViewData["Friend"])
          {
              <div class="nav-entry friend-room" id="@user.ID" onclick="setChatUser(@user.ID)">
                 <img class="avatar" src="img/avatar.png"></img>
@@ -53,7 +53,7 @@
                 </div>
                 <div id="mesg-input">
                     <textarea id="field-mesg-input"></textarea>
-                    <button id="button-send" onclick="sendMesg()" disabled><i class="fas fa-paper-plane"></i></button>
+                    <button id="button-send" onclick="sendMesg()" enabled><i class="fas fa-paper-plane"></i></button>
                 </div>
             </div>
             
