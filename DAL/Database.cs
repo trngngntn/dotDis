@@ -2,6 +2,7 @@ using System;
 using System.Data;
 using MySql.Data;
 using MySql.Data.MySqlClient;
+using System.Collections.Generic;
 
 namespace DAL
 {
@@ -52,5 +53,15 @@ namespace DAL
             command.Connection.Close();
             return affectedRows;
         }
+
+        public static List<string> GetTables() {
+            List<string> list = new List<string>();
+            string sql = "show tables;";
+            DataTable dat = GetData(sql);
+            foreach (DataRow row in dat.Rows) {
+                list.Add(row[0].ToString());
+            }
+            return list;
+        } 
     }
 }

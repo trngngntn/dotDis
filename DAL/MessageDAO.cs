@@ -44,16 +44,22 @@ namespace DAL
             return result;
         }
 
-        public static int CountAllMessage()
-        {
+        public static int CountAllPrivateMessage() {
             string countPrivate = "SELECT COUNT(*) FROM `Private_Mesg`;";
-            string countChannel = "SELECT COUNT(*) FROM `Channel_Mesg`;";
             DataTable dat1 = Database.GetData(countPrivate);
-            DataTable dat2 = Database.GetData(countChannel);
             int prvt = Int32.Parse(dat1.Rows[0][0].ToString());
-            int chnl = Int32.Parse(dat2.Rows[0][0].ToString());
-            return prvt + chnl;
+            return prvt;
         }
+
+        public static int CountAllChannelMessage()
+        {
+            string countChannel = "SELECT COUNT(*) FROM `Channel_Mesg`;";
+            DataTable dat2 = Database.GetData(countChannel);
+            int chnl = Int32.Parse(dat2.Rows[0][0].ToString());
+            return chnl;
+        }
+
+        
 
         public static List<PrivateMessage> GetMessages(int recvId)
         {

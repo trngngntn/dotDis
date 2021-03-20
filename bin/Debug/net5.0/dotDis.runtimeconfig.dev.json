@@ -1,8 +1,8 @@
 {
   "runtimeOptions": {
     "additionalProbingPaths": [
-      "C:\\Users\\Sircle\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\Sircle\\.nuget\\packages"
+      "C:\\Users\\letha\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\letha\\.nuget\\packages"
     ]
   }
 }
