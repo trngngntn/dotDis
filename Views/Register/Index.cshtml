@@ -1,0 +1,85 @@
+@{
+ViewData["Title"] = "Register";
+}
+@section head
+{
+    <link rel="apple-touch-icon" sizes="180x180" href='@Url.Content("~/img/apple-touch-icon.png")'>
+    <link rel="icon" type="image/png" sizes="32x32" href='@Url.Content("~/img/favicon-32x32.png")'>
+    <link rel="icon" type="image/png" sizes="16x16" href='@Url.Content("~/img/favicon-16x16.png")'>
+    <link rel="manifest" href='@Url.Content("~/img/site.webmanifest")'>    
+    <link href='@Url.Content("~/css/index.css")' rel="stylesheet" type="text/css" />
+    <link href='@Url.Content("~/css/fontIcon.css")' rel="stylesheet" type="text/css" />
+}
+<!-- <header>
+    Register
+</header>
+<main>
+    <form id="register-form" asp-action="Submit" method="POST">
+        <input type="text" name="name" placeholder="Fullname"><br />
+        <input type="email" name="email" placeholder="E-mail"><br />
+        <input type="text" name="username" placeholder="Username"><br />
+        <input type="password" name="passwd" placeholder="Password"><br />
+        <input type="submit" value="Create">
+    </form>
+</main> -->
+
+<body>
+    <main class="login">
+    <div class="home__header__logo-box">
+            <img src='@Url.Content("~/img/logo1.png")' alt="logo" class="home__header__logo">
+        </div>
+        <form class="login__form login__form--register" asp-action="Submit" method="POST">
+            <div class="login__form__content login__form__content--register">
+                <div>
+                    <h3 class="text__header__primary">
+                        Create an account
+                    </h3>
+                    <div class="auth__input__wrapper">
+                        <label class="auth__input--label" for="fullname">Full Name</label>
+                        <input class="auth__input--input" id="fullname" type="text" name="name">
+                    </div>
+                    <div class="auth__input__wrapper">
+                        <label class="auth__input--label" for="email">Email</label>
+                        <input class="auth__input--input" id="email" type="email" name="email">
+                    </div>
+                    <div class="auth__input__wrapper">
+                        <label class="auth__input--label" for="name">username</label>
+                        <input class="auth__input--input" id="name" type="text" name="username">
+                    </div>
+                    <div class="auth__input__wrapper">
+                        <label class="auth__input--label" for="passwd">password</label>
+                        <input class="auth__input--input" id="passwd" type="password" name="passwd">
+                    </div>
+                    <div class="login__form--forgot-password-wrapper">
+                        <label>
+                            <input type="checkbox">
+                            <p style="display: inline-block;">
+                                I have read and agree to DotDis's
+                                <a class="login__form--register-link" href="#">
+                                    Terms of Service
+                                </a>
+                                and
+                                <a class="login__form--register-link" href="#">
+                                    Privacy Policy
+                                </a>
+                            </p>
+                        </label>
+                    </div>
+                    <button class="login__form__submit--btn">
+                        <div id="auth-loading" class="snippet" data-title=".dot-flashing">
+                            <div class="stage">
+                                <div class="dot-flashing"></div>
+                            </div>
+                        </div>
+                        <div onclick="handlePressAuthBtn()" id="auth-text" class="login__form__submit--text">
+                            Continue
+                        </div>
+                    </button>
+                    <div>
+                        <a class="login__form--register-link" href="/Login">Already have an account?</a>
+                    </div>
+                </div>
+        </form>
+    </main>
+</body>
+<script src='@Url.Content("~/js/loginPage.js")'></script>

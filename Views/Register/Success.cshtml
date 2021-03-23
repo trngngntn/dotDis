@@ -1,0 +1,28 @@
+@{
+ViewData["Title"] = "Register Success";
+}
+@section head
+{
+<link rel="apple-touch-icon" sizes="180x180" href='@Url.Content("~/img/apple-touch-icon.png")'>
+<link rel="icon" type="image/png" sizes="32x32" href='@Url.Content("~/img/favicon-32x32.png")'>
+<link rel="icon" type="image/png" sizes="16x16" href='@Url.Content("~/img/favicon-16x16.png")'>
+<link rel="manifest" href='@Url.Content("~/img/site.webmanifest")'>
+<link href='@Url.Content("~/css/index.css")' rel="stylesheet" type="text/css" />
+<link href='@Url.Content("~/css/fontIcon.css")' rel="stylesheet" type="text/css" />
+}
+
+<body>
+    <main class="login">
+        <div class="home__header__logo-box">
+            <img src='@Url.Content("~/img/logo1.png")' alt="logo" class="home__header__logo">
+        </div>
+        <form class="login__form login__form--success" asp-action="Authorize" method="POST">
+            <div class="login__form__success ">
+                <img class="login__form__success--logo" src='@Url.Content("~/img/check.png")' alt="success logo">
+                <h2 class="login__form__success--title">Register Successfully</h2>
+                <p class="login__form__success--description">Just stay for a moment we will take you to the login
+                    session soon!</p>
+            </div>
+        </form>
+    </main>
+</body>

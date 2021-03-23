@@ -1,0 +1,111 @@
+.home {
+  &__header {
+    height: 95vh;
+    background-image: linear-gradient(
+        to right bottom,
+        rgba($main-blue-color1, 0.8),
+        rgba($main-blue-color2, 0.8)
+      ),
+      url(../../img/login_background1.jpg);
+    background-size: cover;
+    background-position: top;
+    clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+    position: relative;
+    z-index: 1;
+
+    &__logo-box {
+      position: absolute;
+      top: 40px;
+      left: 40px;
+    }
+
+    &__logo {
+      height: 13rem;
+    }
+
+    &--content {
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: #fff;
+
+      &--title {
+        font-size: 5.6rem;
+        font-weight: 700;
+      }
+
+      &--description {
+        font-size: 2rem;
+      }
+    }
+  }
+
+  &__section {
+    width: 100%;
+
+    &--1 {
+      display: grid;
+      grid-template-columns: 6fr 1fr 3fr 2fr;
+      padding: 25rem 10rem;
+      margin-top: -20vh;
+      background-color: #f7f7f7;
+      z-index: -1;
+
+      &--content {
+        display: flex;
+        align-items: center;
+      }
+
+      &--image {
+        width: 100%;
+      }
+
+      &--title {
+        // color: rgb(35, 39, 42);
+        font-size: 4.8rem;
+        line-height: 6rem;
+      }
+      &--description {
+        font-size: 2.4rem;
+      }
+    }
+
+    &--2 {
+      padding: 20rem 10rem;
+      background-image: linear-gradient(
+          to right bottom,
+          rgba($main-blue-color1, 0.8),
+          rgba($main-blue-color2, 0.8)
+        ),
+        url(../../img/login_background1.jpg);
+      background-size: cover;
+      transform: skewY(-7deg);
+      margin-top: -10rem;
+      object-fit: cover;
+
+      &--wrapper {
+        display: grid;
+        grid-template-columns: 2fr 1fr 2fr 1fr 2fr 1fr 2fr;
+        width: 90%;
+        margin: 0 auto;
+      }
+
+      & > * {
+        transform: skewY(7deg);
+      }
+
+      @include respond(tab-port) {
+        padding: 10rem 0;
+      }
+    }
+    &--3 {
+      padding: 25rem 10rem;
+      margin-top: -11vh;
+      background-color: #f6f6f6;
+      display: grid;
+      grid-template-columns: 1fr 4fr 1fr 6fr;
+    }
+  }
+}
