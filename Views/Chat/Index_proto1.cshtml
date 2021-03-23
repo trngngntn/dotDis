@@ -1,0 +1,76 @@
+@{
+    ViewData["Title"] = "dotDis";
+    User activeUser = (User)ViewData["active-user"];
+}
+@section head
+{
+    <script src="js/class.js"></script>
+    <script src="js/webSocket.js"></script>
+    <link rel="stylesheet" href="css/stylesheet.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <script src="https://kit.fontawesome.com/6e774c561d.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
+}
+<script type="text/javascript">window.onload = init(@activeUser.ID)</script>
+<nav>
+    <div id="panel-friend" class="panel">
+        <div class="group">Friends</div>
+        <div>
+            @foreach (Models.User user in (List<Models.User>)ViewData["list-friend"])
+            {  
+                <div class="entry clickable" id="uid-@user.ID" onclick="setChatUser(@user.ID)">
+                    <img class="avatar" src="img/avatar.png"></img>
+                    <div class="name">@user.Name</div>
+                    <div id="status-user-@user.ID" class="status-dot"></div>
+                </div>
+            }
+            <div class="entry clickable" id="button-add-friend" onclick="">
+
+            </div>
+        </div>
+    </div>
+    <div id="panel-room" class="panel">
+        <div class="group">Rooms</div>
+        <div>
+            @foreach (Models.User user in (List<Models.User>)ViewData["list-friend"])
+            {  
+                <div class="entry clickable" id="uid-@user.ID" onclick="setChatUser(@user.ID)">
+                    <img class="avatar" src="img/avatar.png"></img>
+                    <div class="name" id="uid-@user.ID-name">@user.Name</div>
+                    <div id="status-user-@user.ID" class="status-dot"></div>
+                </div>
+            }
+            <div class="entry clickable" id="button-add-friend" onclick="">
+
+            </div>
+        </div>
+    </div>
+    <div id="button-add-friend" class="clickable"></div>
+</nav>
+<main>
+    <div id="topbar">
+        <div id="chat-info">
+            <span id="chat-name">chat_name_here</span>
+        </div>
+        <div id="personal">
+            <img class="avatar" src="img/avatar.png"/>
+            <span class="name">@activeUser.Name</span>
+            <button class="clickable" id="button-user-opt"></button>
+        </div>
+    </div>
+    <div id="pane-chat">
+        <div id="pane-conversation">
+            <div id="pane-mesg">
+            </div>
+            <div id="pane-input">
+                <textarea id="field-mesg"></textarea>
+                <button id="button-send-mesg" class="clickable">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+        <div id="pane-status"></div>
+    </div>
+</main>

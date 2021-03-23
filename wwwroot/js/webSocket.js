@@ -68,10 +68,10 @@ function setUserStatus(id, status){
 }
 function setChatUser(id){
   chatUser = id;
-  document.getElementById("button-send").disabled = false;
+  document.getElementById("chat-name").innerHTML = document.getElementById(`uid-${id}-name`).innerHTML;
+  //document.getElementById("button-send").disabled = false;
   var obj = new JSONGeneric(TYPE_R_SUBS_PRIVATE_MESG, id);
   wsSendMesg(obj);
-
 }
 
 function sendMesg() {

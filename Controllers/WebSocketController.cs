@@ -64,28 +64,32 @@ namespace Controllers
             Console.WriteLine("[LOG] Listening to Socket\n.............");
             byte[] buffer = new byte[BUFFER_SIZE];
             ArraySegment<byte> temp = new ArraySegment<byte>(buffer);
-            WebSocketReceiveResult received = await webSocket.ReceiveAsync(temp, CancellationToken.None);
-            List<byte> dataByte = new List<byte>();
-            while (!received.CloseStatus.HasValue)
-            {
-                if (received.EndOfMessage) // receive final mesg part
+            try{
+                WebSocketReceiveResult received = await webSocket.ReceiveAsync(temp, CancellationToken.None);
+                List<byte> dataByte = new List<byte>();
+                while (!received.CloseStatus.HasValue)
                 {
-                    dataByte.AddRange(buffer.Take(received.Count));
-                    string data = Encoding.UTF8.GetString(dataByte.ToArray());
-                    JsonGeneric obj = JsonSerializer.Deserialize<JsonGeneric>(data);
-                    Console.WriteLine("RECV_MESG:" + obj);
-                    Process(obj.Type, obj.Data, webSocket);
-                    dataByte = new List<byte>();
+                    if (received.EndOfMessage) // receive final mesg part
+                    {
+                        dataByte.AddRange(buffer.Take(received.Count));
+                        string data = Encoding.UTF8.GetString(dataByte.ToArray());
+                        JsonGeneric obj = JsonSerializer.Deserialize<JsonGeneric>(data);
+                        Console.WriteLine("RECV_MESG:" + obj);
+                        Process(obj.Type, obj.Data, webSocket);
+                        dataByte = new List<byte>();
+                    }
+                    else
+                    {
+                        dataByte.AddRange(buffer);
+                    }
+                    // continue waiting to receive data
+                    received = await webSocket.ReceiveAsync(temp, CancellationToken.None);
                 }
-                else
-                {
-                    dataByte.AddRange(buffer);
-                }
-                // continue waiting to receive data
-                received = await webSocket.ReceiveAsync(temp, CancellationToken.None);
+            } catch (Exception){
+                ConsoleLogger.Warn("Socket closed prematurely");
+            } finally {
+                CloseSocket(context, webSocket);
             }
-            // close socket
-            CloseSocket(context, webSocket);
         }
 
         private static void Process(int type, string data, WebSocket socket)
@@ -189,7 +193,7 @@ namespace Controllers
                     Func<WebSocket, Task> action = async (socket) => await BroadcastInfo(userOnlineInform, socket);
                     IterateUserSockets(fUid, action);
                     ///
-                    ConsoleLogger.Log("Inform back UID:{1} is online to UID:{2}", uid, fUid);
+                    ConsoleLogger.Log("Inform back UID:{1} is online to UID:{0}", uid, fUid);
                     JsonGeneric friendOnlineInform = new JsonGeneric(TYPE_B_INFO_USER_ONL, fUid.ToString());
                     Task recvStatus = BroadcastInfo(friendOnlineInform, webSocket);
                 }
