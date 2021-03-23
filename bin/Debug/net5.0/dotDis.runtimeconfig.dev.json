@@ -1,8 +1,8 @@
 {
   "runtimeOptions": {
     "additionalProbingPaths": [
-      "C:\\Users\\Sircle\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\Sircle\\.nuget\\packages"
+      "/home/trngngntn/.dotnet/store/|arch|/|tfm|",
+      "/home/trngngntn/.nuget/packages"
     ]
   }
 }

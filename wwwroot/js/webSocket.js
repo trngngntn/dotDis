@@ -69,6 +69,9 @@ function setUserStatus(id, status){
 function setChatUser(id){
   chatUser = id;
   document.getElementById("button-send").disabled = false;
+  var obj = new JSONGeneric(TYPE_R_SUBS_PRIVATE_MESG, id);
+  wsSendMesg(obj);
+
 }
 
 function sendMesg() {

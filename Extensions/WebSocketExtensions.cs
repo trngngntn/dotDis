@@ -1,12 +1,15 @@
 using System;
+using System.Collections.Concurrent;
 using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
+using Models;
 
 namespace Extensions{
     public static class WebSocketExtension{
 
         private const int BUFFER_SIZE = 1024;
+        private static ConcurrentDictionary<WebSocket, JsonGeneric> socketInfo;
         public static async Task SendData(this WebSocket socket, byte[] data)
         {
             int offset = 0, length = BUFFER_SIZE;
@@ -21,6 +24,9 @@ namespace Extensions{
                 );
                 offset += length;
             }
+        }
+        public static void SetSubscriber(this WebSocket socket, JsonGeneric info)
+        {
         }
     }
 }
