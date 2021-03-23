@@ -5,71 +5,55 @@
 {
     <script src="js/class.js"></script>
     <script src="js/webSocket.js"></script>
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/stylesheet.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <script src="https://kit.fontawesome.com/6e774c561d.js" crossorigin="anonymous"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400&display=swap" rel="stylesheet">
 }
 <script type="text/javascript">window.onload = init(@ViewData["uid"])</script>
 <nav>
-     <div id="list-friend">
-         @foreach (Models.User user in (List<Models.User>)ViewData["Friend"])
-         {
-             <div class="nav-entry friend-room" id="@user.ID" onclick="setChatUser(@user.ID)">
+    <div>
+    <div id="panel-friend" class="panel">
+        @foreach (Models.User user in (List<Models.User>)ViewData["Friend"])
+        {  
+            <div class="entry clickable" id="uid-@user.ID" onclick="setChatUser(@user.ID)">
                 <img class="avatar" src="img/avatar.png"></img>
-                <div>@user.Name</div>
-                <div id="status-user-@user.ID"></div>
-             </div>
-         }
-     </div>
-     <div id="list-room">
+                <div class="name">@user.Name</div>
+                <div id="status-user-@user.ID" class="status-dot"></div>
+            </div>
+        }
+        <div class="entry clickable" id="button-add-friend" onclick="">
 
-     </div>
-     <button onclick='location.href = "Chat/Logout"'>Logout</button>
-</nav>
-<main>
-    <div id="top-bar">
-        <div class="vertical-center" id="chat-name">CHANNEL_NAME</div>
-        <div id="personal">
-            <div class="vertical-seperator vertical-center"></div>
-            <div id="personal-noti" class="circle-bt"><i class="fas fa-bell"></i></div>
-            <img id="personal-avatar" class="vertical-center" src="img/avatar.png"></img>
-            <div id="personal-name" class="vertical-center"></div>
-            <div id="personal-setting" class="circle-bt"><i class="fas fa-cog"></i></div>
         </div>
     </div>
-    <div id="chat-window">
-            <div id="conversation">
-                <div id="mesg-list">
-                    <div class="mesg-wrap">
-                        <div class="mesg-bubble mesg-own">This is a message</div>
-                    </div>
-                    <div class="mesg-wrap">
-                        <div class="mesg-bubble mesg-other">This is another message</div>
-                    </div>
-                    <div class="mesg-wrap">
-                        <div class="mesg-bubble mesg-own">This is just another one</div>
-                    </div>
-                </div>
-                <div id="mesg-input">
-                    <textarea id="field-mesg-input"></textarea>
-                    <button id="button-send" onclick="sendMesg()" enabled><i class="fas fa-paper-plane"></i></button>
-                </div>
+    <div id="panel-room" class="panel hidden">
+        @foreach (Models.User user in (List<Models.User>)ViewData["Friend"])
+        {  
+            <div class="entry clickable" id="uid-@user.ID" onclick="setChatUser(@user.ID)">
+                <img class="avatar" src="img/avatar.png"></img>
+                <div class="name">@user.Name</div>
+                <div id="status-user-@user.ID" class="status-dot"></div>
             </div>
-            
-            <div id="member-list">
-                <div class="vertical-seperator"></div>
-                <div class="friend-room">
-                    <img class="avatar" src="img/avatar.png"></img>
-                    <div>USER_NAME</div>
-                </div>
-                <div class="friend-room">
-                    <img class="avatar" src="img/avatar.png"></img>
-                    <div>USER_NAME</div>
-                </div>
+        }
+        <div class="entry clickable" id="button-add-friend" onclick="">
+
+        </div>
+    </div>
+</nav>
+<main>
+    <div id="topbar"></div>
+    <div id="pane-chat">
+        <div id="pane-conversation">
+            <div id="pane-mesg">
+            </div>
+            <div id="pane-input">
+                <textarea id="field-mesg"></textarea>
+                <button id="button-send-mesg" class="clickable">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
             </div>
         </div>
-    <div id="mesg-output">
-        <p> Received Messages :</p>
+        <div id="pane-status"></div>
     </div>
 </main>

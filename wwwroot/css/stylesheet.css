@@ -1,0 +1,125 @@
+:root{
+    --main-color: #333;
+    --main-color-blur: #2b2b2b;
+    --font-color: rgb(51, 45, 27);
+    --background-color: rgb(236, 235, 227);
+    --background-color-darker: rgb(221, 216, 209);
+    --hover: #0002;
+}
+*{
+    font-size: 16px;
+    font-family: 'Roboto Mono', monospace;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    border: none;
+    box-sizing: border-box;
+}
+html, body{
+    height: 100vh;
+    width: 100vw;
+}
+.clickable{
+    cursor: pointer;
+}
+.clickable:hover{
+    background-color: var(--hover);
+}
+.clickable:active{
+
+}
+.hidden{
+    display: none;
+}
+nav{
+    display: inline-block;
+    color: white;
+    background-color: var(--main-color);
+    height: 100vh;
+    width: 360px;
+}
+.entry{
+    position: relative;
+    font-size: 0;
+    height: 3rem;
+}
+.entry .avatar{
+    height: 2rem;
+    margin: .5rem 1rem;
+    border-radius: 50%;
+}
+.entry .name{
+    vertical-align: top;
+    display: inline-block;
+    line-height: 3rem;
+    height: 3rem;
+}
+.entry .status-dot{
+    position: absolute;
+    bottom: 0.4rem;
+    left: 2.4rem;
+    background-color: silver;
+    height: .8rem;
+    width: .8rem;
+    border-radius: 50%;
+    border: 2px solid var(--main-color);
+}
+
+main{
+    float: right;
+    background-color: var(--background-color);
+    height: 100vh;
+    width: calc(100vw - 360px);
+}
+#topbar{
+    width: 100%;
+    height: 3rem;
+    background-color: var(--background-color-darker);
+}
+#pane-chat{
+    position: relative;
+    height: calc(100vh - 3rem);
+}
+#pane-converstion{
+    width: 100%;
+    height: calc(100% - 3rem);
+}
+#pane-input{
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    height: 3rem;
+}
+#field-mesg{
+    position: relative;
+    height: 2rem;
+    width: calc(100% - 2rem);
+    background-color: var(--background-color-darker);
+    margin: 0.5rem 1rem;
+    border-radius: 1rem;
+    resize: none;
+    padding: 0 1rem;
+    line-height: 2rem;
+}
+#field-mesg:focus{
+    outline: none;
+}
+#button-send-mesg{
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 2.4rem;
+    width: 2.4rem;
+    margin: .3rem 1rem .3rem 0;
+    background-color: var(--main-color);
+    border-radius: 50%;
+    text-align: left;
+}
+#button-send-mesg .fas{
+    color: var(--background-color-darker);
+    font-size: 1rem;
+    margin: 11px;
+}
+#pane-status{
+    display: none;
+}
