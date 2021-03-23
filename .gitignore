@@ -1,9 +1,9 @@
 
-./.vs/*
-./.vscode/*
-./Properties/*
-./bin/*
-./obj/*
+./.vs/
+./.vscode/
+./Properties/
+./bin/
+./obj/
 
 # Compiled source #
 ###################
