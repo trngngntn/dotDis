@@ -15,8 +15,14 @@ namespace Models{
         [JsonPropertyName("detail")]
         public string Detail { get => detail; set => detail = value; }
 
+        public static int CountAllPrivateMessage() {
+            return MessageDAO.CountAllPrivateMessage();
+        }
+        public static int CountAllChannelMessage() {
+            return MessageDAO.CountAllChannelMessage();
+        }
         public static int CountAllMessage() {
-            return MessageDAO.CountAllMessage();
+            return CountAllChannelMessage() + CountAllPrivateMessage();
         }
     }
 }

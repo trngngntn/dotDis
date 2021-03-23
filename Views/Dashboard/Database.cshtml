@@ -1,0 +1,23 @@
+<body>
+    <table border=1>
+        @{
+            var tableHeader = ViewData["TableHeader"] as System.Collections.Generic.List<string>;
+            var tableData = ViewData["TableData"] as System.Collections.Generic.List<System.Data.DataRow>;
+            <tr>
+            @foreach (var item in tableHeader)
+            {
+                <td>@item</td>
+            }
+            </tr>
+            @foreach (System.Data.DataRow row in tableData)
+            {
+                <tr>
+                    @for (var i = 0; i < tableHeader.Count; i++ )
+                    {
+                        <td>@row[i]</td>
+                    }
+                </tr>
+            }
+        }
+    </table>
+</body>

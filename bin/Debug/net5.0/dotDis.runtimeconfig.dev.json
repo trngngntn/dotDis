@@ -1,8 +1,13 @@
 {
   "runtimeOptions": {
     "additionalProbingPaths": [
+<<<<<<< HEAD
       "/home/trngngntn/.dotnet/store/|arch|/|tfm|",
       "/home/trngngntn/.nuget/packages"
+=======
+      "C:\\Users\\letha\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\letha\\.nuget\\packages"
+>>>>>>> e66a9f102a0377e15959fdb67d521d703e1137d8
     ]
   }
 }
