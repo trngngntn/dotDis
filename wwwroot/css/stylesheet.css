@@ -117,18 +117,36 @@ main{
     width: 100%;
     height: calc(100% - 3rem);
 }
+#pane-mesg{
+    height: calc(100vh - 7rem);
+    padding: 1rem;
+}
+.bubble-wrapper{
+    overflow:hidden;
+}
+.bubble-mesg{
+    display: inline-block;
+    background-color: var(--background-color-darker);
+    margin: .2rem 0;
+    padding: 0.8rem 1rem;
+    min-height: 3rem;
+    border-radius: 1rem;
+}
+.own-mesg{
+    float: right;
+}
 #pane-input{
     position: absolute;
     width: 100%;
     bottom: 0;
-    height: 3rem;
+    height: 4rem;
 }
 #field-mesg{
     position: relative;
     height: 2rem;
     width: calc(100% - 2rem);
     background-color: var(--background-color-darker);
-    margin: 0.5rem 1rem;
+    margin: 1rem;
     border-radius: 1rem;
     resize: none;
     padding: 0 1rem;
@@ -143,7 +161,7 @@ main{
     right: 0;
     height: 2.4rem;
     width: 2.4rem;
-    margin: .3rem 1rem .3rem 0;
+    margin: .8rem 1rem .8rem 0;
     background-color: var(--main-color);
     border-radius: 50%;
     text-align: left;

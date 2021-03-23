@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text.Json;
 using Models;
 using Utils;
+using DAL;
 
 namespace Controllers
 {
@@ -17,16 +18,22 @@ namespace Controllers
     {
         private const int BUFFER_SIZE = 1024;
         private const int TYPE_R_SUBS_PRIVATE_MESG = 0;
-        private const int TYPE_R_SUBS_CHANNEL_MESG = 1;
-        private const int TYPE_R_LOAD_PRIVATE_MESG = 2;
-        private const int TYPE_R_LOAD_CHANNEL_MESG = 3;
-        private const int TYPE_R_SENT_PRIVATE_MESG = 4;
-        private const int TYPE_R_SENT_CHANNEL_MESG = 5;
-        private const int TYPE_B_RECV_PRIVATE_MESG = 6;
-        private const int TYPE_B_RECV_CHANNEL_MESG = 7;
-        private const int TYPE_B_INFO_USER_ONL = 8;
-        private const int TYPE_B_INFO_USER_OFF = 9;
-        private const int TYPE_B_INFO_SEND_ERROR = 11;
+        private const int TYPE_R_UNSB_PRVATE_MESG = 1;
+        private const int TYPE_R_SUBS_CHANNEL_MESG = 2;
+        private const int TYPE_R_UNSB_CHANNEL_MESG = 3;
+        private const int TYPE_R_LOAD_PRIVATE_MESG = 4;
+        private const int TYPE_R_LOAD_CHANNEL_MESG = 5;
+        private const int TYPE_R_SENT_PRIVATE_MESG = 6;
+        private const int TYPE_R_SENT_CHANNEL_MESG = 7;
+        private const int TYPE_B_RECV_PRIVATE_MESG = 8;
+        private const int TYPE_B_RECV_CHANNEL_MESG = 9;
+        private const int TYPE_B_INFO_PRIVATE_MESG = 10;
+        private const int TYPE_B_INFO_CHANNEL_MESG = 11;
+        private const int TYPE_B_INFO_USER_ONL = 12;
+        private const int TYPE_B_INFO_USER_OFF = 13;
+        private const int TYPE_B_INFO_SEND_OK = 14;
+        private const int TYPE_B_INFO_SEND_ERROR = 15;
+        private const int TYPE_B_ACTN_LOG_OUT = -1;
 
         public static async Task InitSocket(HttpContext context, WebSocket webSocket)
         {
@@ -55,7 +62,7 @@ namespace Controllers
 
         private static void CloseSocket(HttpContext context, WebSocket webSocket)
         {
-            Console.WriteLine("[LOG] Close Socket");
+            ConsoleLogger.Log("Close Socket");
             context.Session.CloseSocket(webSocket);
         }
 
@@ -64,7 +71,8 @@ namespace Controllers
             Console.WriteLine("[LOG] Listening to Socket\n.............");
             byte[] buffer = new byte[BUFFER_SIZE];
             ArraySegment<byte> temp = new ArraySegment<byte>(buffer);
-            try{
+            //try
+            //{
                 WebSocketReceiveResult received = await webSocket.ReceiveAsync(temp, CancellationToken.None);
                 List<byte> dataByte = new List<byte>();
                 while (!received.CloseStatus.HasValue)
@@ -74,8 +82,7 @@ namespace Controllers
                         dataByte.AddRange(buffer.Take(received.Count));
                         string data = Encoding.UTF8.GetString(dataByte.ToArray());
                         JsonGeneric obj = JsonSerializer.Deserialize<JsonGeneric>(data);
-                        Console.WriteLine("RECV_MESG:" + obj);
-                        Process(obj.Type, obj.Data, webSocket);
+                        Process(obj.Type, obj.Data, context.Session, webSocket);
                         dataByte = new List<byte>();
                     }
                     else
@@ -85,37 +92,63 @@ namespace Controllers
                     // continue waiting to receive data
                     received = await webSocket.ReceiveAsync(temp, CancellationToken.None);
                 }
-            } catch (Exception){
+            /*}
+            catch (Exception)
+            {
                 ConsoleLogger.Warn("Socket closed prematurely");
-            } finally {
-                CloseSocket(context, webSocket);
             }
+            finally
+            {
+                CloseSocket(context, webSocket);
+            }*/
+            CloseSocket(context, webSocket);
         }
 
-        private static void Process(int type, string data, WebSocket socket)
+        private static void Process(int type, string data, ISession session, WebSocket socket)
         {
             Console.WriteLine("[LOG] Processing message type: " + type);
             switch (type)
             {
                 //Processing Private Messages---------------------------------------------------------------------------
                 case TYPE_R_SUBS_PRIVATE_MESG:
+                    {
+                        int uid = Int32.Parse(data);
+                        // to do
+                    }
+
+                    break;
+                case TYPE_R_UNSB_PRVATE_MESG:
+                    {
+                        int uid = Int32.Parse(data);
+                        // to do
+                    }
                     break;
                 case TYPE_R_LOAD_PRIVATE_MESG:
                     {
-                        string[] info = JsonSerializer.Deserialize<string>(data).Split(";");
+                        string[] info = data.Split(";");
+                        int uid = Int32.Parse(info[0]);
+                        int index = Int32.Parse(info[1]);
+                        List<PrivateMessage> mesgList = PrivateMessageDAO.Get((int)session.GetBindedUid(), uid, index);
+                        JsonGeneric obj = new JsonGeneric(TYPE_B_INFO_PRIVATE_MESG,
+                        JsonSerializer.Serialize<List<PrivateMessage>>(mesgList)
+                        );
+                        Task b = BroadcastInfo(obj, socket);
                     }
                     break;
                 case TYPE_R_SENT_PRIVATE_MESG:
                     {
                         PrivateMessage mesg = JsonSerializer.Deserialize<PrivateMessage>(data);
                         int result = mesg.SendPrivateMessage();
-                        if (result > 0) {
+                        if (result > 0)
+                        {
                             BroadcastMesgToUser(mesg);
-                        } else {
+                        }
+                        else
+                        {
                             JsonGeneric obj = new JsonGeneric(TYPE_B_INFO_SEND_ERROR, "Sent error!");
                             Task t = BroadcastInfo(obj, socket);
                         }
-                        
+
                     }
                     break;
 

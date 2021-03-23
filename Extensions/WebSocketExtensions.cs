@@ -25,9 +25,5 @@ namespace Extensions{
                 offset += length;
             }
         }
-        public static void SetSubscriber(this WebSocket socket, JsonGeneric info)
-        {
-            
-        }
     }
 }

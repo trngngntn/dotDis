@@ -9,6 +9,7 @@ namespace DAL
 {
     public class MessageDAO
     {
+        
         public static int CreatePrivateMessage(int sendID, int recvID, string detail)
         {
             string sql = "insert into `Private_Mesg`(`send_id`, `recv_id`, detail) values (@sendId, @recvId, @detail)";
