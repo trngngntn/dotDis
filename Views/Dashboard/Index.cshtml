@@ -179,21 +179,23 @@
                         </li>
 
                         <li class="nav-header">DATABASE</li>
-                        <li class="nav-item">
-                            @{var list = ViewData["DatabaseTables"] as System.Collections.Generic.List<string>;
+                        
+                        @{var list = ViewData["DatabaseTables"] as System.Collections.Generic.List<string>;
                                 
-                                foreach (var item in list)
-                                {
+                            foreach (var item in list)
+                            {
+                                <li class="nav-item">
                                     <a href="/Dashboard/Table?table=@item" class="nav-link">
                                         <i class="nav-icon far fa-image"></i>
                                         <p>
                                             @item;
                                         </p>
                                     </a>
-                                }
+                                </li>
                             }
+                        }
                             
-                        </li>
+                        
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->
