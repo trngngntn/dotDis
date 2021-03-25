@@ -22,7 +22,7 @@
             {  
                 <div class="entry clickable" id="uid-@user.ID" onclick="setChatUser(@user.ID)">
                     <img class="avatar" src="img/avatar.png"></img>
-                    <div class="name">@user.Name</div>
+                    <div class="name" id="uid-@user.ID-name">@user.Name</div>
                     <div id="status-user-@user.ID" class="status-dot"></div>
                 </div>
             }
@@ -36,10 +36,9 @@
         <div>
             @foreach (Models.User user in (List<Models.User>)ViewData["list-friend"])
             {  
-                <div class="entry clickable" id="uid-@user.ID" onclick="setChatUser(@user.ID)">
+                <div class="entry clickable" id="rid-@user.ID" onclick="setChatUser(@user.ID)">
                     <img class="avatar" src="img/avatar.png"></img>
-                    <div class="name" id="uid-@user.ID-name">@user.Name</div>
-                    <div id="status-user-@user.ID" class="status-dot"></div>
+                    <div class="name" id="rid-@user.ID-name">@user.Name</div>
                 </div>
             }
             <div class="entry clickable" id="button-add-friend" onclick="">
@@ -70,7 +69,7 @@
             </div>
             <div id="pane-input">
                 <textarea id="field-mesg"></textarea>
-                <button id="button-send-mesg" class="clickable">
+                <button id="button-send-mesg" class="clickable" onclick="sendMesg()">
                     <i class="fas fa-paper-plane"></i>
                 </button>
             </div>

@@ -24,8 +24,7 @@ namespace Models
         public int SendPrivateMessage()
         {
             this.Created = new DateTime();
-            // return MessageDAO.CreatePrivateMessage(SendID, RecvID, Detail);
-            return 0;
+            return MessageDAO.CreatePrivateMessage(SendID, RecvID, Detail);
         }
 
         public static List<PrivateMessage> GetMessages(int recvId)

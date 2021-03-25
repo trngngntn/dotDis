@@ -71,8 +71,8 @@ namespace Controllers
             Console.WriteLine("[LOG] Listening to Socket\n.............");
             byte[] buffer = new byte[BUFFER_SIZE];
             ArraySegment<byte> temp = new ArraySegment<byte>(buffer);
-            //try
-            //{
+            try
+            {
                 WebSocketReceiveResult received = await webSocket.ReceiveAsync(temp, CancellationToken.None);
                 List<byte> dataByte = new List<byte>();
                 while (!received.CloseStatus.HasValue)
@@ -92,15 +92,15 @@ namespace Controllers
                     // continue waiting to receive data
                     received = await webSocket.ReceiveAsync(temp, CancellationToken.None);
                 }
-            /*}
-            catch (Exception)
+            }
+            catch (WebSocketException)
             {
                 ConsoleLogger.Warn("Socket closed prematurely");
             }
             finally
             {
                 CloseSocket(context, webSocket);
-            }*/
+            }
             CloseSocket(context, webSocket);
         }
 
@@ -214,7 +214,7 @@ namespace Controllers
 
         private static void InformUserOnline(int uid, WebSocket webSocket)
         {
-            //ConsoleLogger.Log("Inform UID:{0} is online", uid);
+            ConsoleLogger.Log("Inform UID:{0} is online", uid);
             List<int> fUids = User.ListFriendUid(uid);
             foreach (int fUid in fUids)
             {
@@ -235,7 +235,7 @@ namespace Controllers
 
         public static void InformUserOffline(int uid)
         {
-            //ConsoleLogger.Log("Inform UID:{0} is offline", uid);
+            ConsoleLogger.Log("Inform UID:{0} is offline", uid);
             List<int> fUids = User.ListFriendUid(uid);
             foreach (int fUid in fUids)
             {

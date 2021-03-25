@@ -7,24 +7,14 @@ namespace DAL
 {
     public abstract class BaseDAO<T> where T : DBObject<T>
     {
-        protected abstract string GetTableName();
-        protected string C(string str)
+        protected string GetTableName()
         {
-            return "`" + str + "`";
+            DBTableAttribute attr = (DBTableAttribute)Attribute.GetCustomAttribute(typeof(T), typeof(DBTableAttribute));
+            return attr.DbName;
         }
         public void GetAll(params string[] propeties)
-        {
-            String sql = "SELECT ";
-            for (int i = 0; i < propeties.Length; i++)
-            {
-                sql += C(propeties[i]);
-                if (i < propeties.Length)
-                {
-                    
-                }
-            }
-
-
+        {   
+            
         }
         public void Insert()
         {

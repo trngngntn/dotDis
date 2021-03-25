@@ -7,6 +7,10 @@ namespace DAL
 {
     public class RoomDAO
     {
+        public List<Room> GetById(int id){
+            string sql = "SELECT * FROM `Room`";
+            return null;
+        }
         public static int CountAllRooms()
         {
             string sql = "SELECT COUNT(*) FROM `Room`;";
@@ -16,7 +20,7 @@ namespace DAL
         }
 
         public static Room GetRoomById(int roomId) {
-            string sql = "SELECT * FROM `Room` WHERE `id`={0}";
+            string sql = "SELECT * FROM `Room` WHERE `id`=@roomId";
             string.Format(sql, roomId);
             DataTable dat = Database.GetData(sql);
 
