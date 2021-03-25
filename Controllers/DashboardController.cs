@@ -23,6 +23,7 @@ namespace Controllers
         {
             if (this.HttpContext.Session.GetInt32("active-admin") != null)
             {
+                CollectData();
                 return View("Index");
             }
 
@@ -50,8 +51,7 @@ namespace Controllers
             {
                 this.HttpContext.Session.SetInt32("active-admin", admin.Id);
                 Console.WriteLine("[LOG] Admin `{0}` logged in.", username);
-                CollectData();
-                return View("Index");
+                return Redirect("/Dashboard");
             }
             else
             {
