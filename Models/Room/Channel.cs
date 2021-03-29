@@ -21,9 +21,5 @@ namespace Models{
         public int RoomID { get => roomID; set => roomID = value; }
         public string Name { get => name; set => name = value; }
         public int Type { get => type; set => type = value; }
-
-        public static int CreateChannel(int roomId, string name, int type) {
-            return ChannelDAO.CreateChannel(roomId, name, type);
-        }
     }
 }
