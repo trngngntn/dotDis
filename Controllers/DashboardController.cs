@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Models;
 using Microsoft.AspNetCore.Http;
 using System.Data;
+using System.Text.Json;
 
 namespace Controllers
 {
@@ -74,8 +75,51 @@ namespace Controllers
             CollectData();
             ViewData["TableHeader"] = header;
             ViewData["TableData"] = list;
+
             return View("Temp");
 
+        }
+
+        [HttpGet]
+        public string TableString(string table) {
+            string sql = "select * from " + table;
+            DataTable dat = DAL.Database.GetData(sql);
+            List<List<string>> list = new List<List<string>>();
+
+            List<string> header = GetTableHeader(table);
+            list.Add(header);
+
+            foreach (DataRow row in dat.Rows)
+            {
+                List<string> admin = new List<string>();
+                for (int i = 0; i < dat.Columns.Count; i++) {
+                    admin.Add(row[i].ToString());
+                }
+                list.Add(admin);
+            }
+
+            return JsonSerializer.Serialize<List<List<string>>>(list);
+        }
+
+        [HttpGet]
+        public string ExecuteSQL(string sql, string table) {
+            DataTable dat = DAL.Database.GetData(sql);
+            Console.WriteLine(sql);
+            List<List<string>> list = new List<List<string>>();
+
+            List<string> header = GetTableHeader(table);
+            list.Add(header);
+
+            foreach (DataRow row in dat.Rows)
+            {
+                List<string> admin = new List<string>();
+                for (int i = 0; i < dat.Columns.Count; i++) {
+                    admin.Add(row[i].ToString());
+                }
+                list.Add(admin);
+            }
+
+            return JsonSerializer.Serialize<List<List<string>>>(list);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
