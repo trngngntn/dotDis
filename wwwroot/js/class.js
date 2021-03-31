@@ -15,11 +15,29 @@ const TYPE_B_INFO_USER_OFF = 13;
 const TYPE_B_INFO_SEND_OK = 14;
 const TYPE_B_INFO_SEND_ERROR = 15;
 
+const TYPE_R_LOAD_ROOM_INFO = 100;
+const TYPE_B_INFO_ROOM_CHANNEL = 101;
+
 class PrivateMessage {
     constructor(sendId, recvId, detail){
         this.sendId = sendId;
         this.recvId = recvId;
         this.detail = detail;
+    }
+}
+class ChannelMessage {
+    constructor(channelId, sendId, detail){
+        this.channelId = channelId;
+        this.sendId = sendId;
+        this.detail = detail;
+    }
+}
+
+class Channel {
+    constructor(id, name, type){
+        this.id = id;
+        this.name = name;
+        this.type = type;
     }
 }
 

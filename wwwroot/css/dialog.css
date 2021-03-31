@@ -1,0 +1,21 @@
+#box-dialog-wrapper{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10;
+    background-color: var(--blur);
+}
+.box-dialog{
+    background-color: var(--background-color);
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+    border-radius: 0.5rem;
+    height: 300px;
+    width: 400px;
+    box-shadow: var(--shadow);
+}

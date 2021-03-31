@@ -34,8 +34,8 @@ namespace DAL
                 DataSet dataSet = new DataSet();
                 dataAdapter.Fill(dataSet);
                 return dataSet.Tables[0];
-            } catch(Exception){
-                ConsoleLogger.Error("[ERR] Database error");
+            } catch(FormatException){
+                ConsoleLogger.Error("Database error");
             }
             return null;
         }

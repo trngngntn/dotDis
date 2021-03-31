@@ -7,6 +7,7 @@
     <script src="js/class.js"></script>
     <script src="js/webSocket.js"></script>
     <link rel="stylesheet" href="css/stylesheet.css" />
+    <link rel="stylesheet" href="css/dialog.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <script src="https://kit.fontawesome.com/6e774c561d.js" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -15,38 +16,58 @@
 }
 <script type="text/javascript">window.onload = init(@activeUser.ID)</script>
 <nav>
-    <div id="panel-friend" class="panel">
-        <div class="group">Friends</div>
-        <div>
-            @foreach (Models.User user in (List<Models.User>)ViewData["list-friend"])
-            {  
-                <div class="entry clickable" id="uid-@user.ID" onclick="setChatUser(@user.ID)">
-                    <img class="avatar" src="img/avatar.png"></img>
-                    <div class="name" id="uid-@user.ID-name">@user.Name</div>
-                    <div id="status-user-@user.ID" class="status-dot"></div>
+    <div id="panel-detail-user">
+        <div id="panel-friend" class="panel">
+            <div class="group">Friends</div>
+            <div>
+                @foreach (Models.User user in (List<Models.User>)ViewData["list-friend"])
+                {  
+                    <div class="entry clickable" id="uid-@user.ID" onclick="setChatUser(@user.ID)">
+                        <img class="avatar" src="img/avatar.png"></img>
+                        <div class="name" id="uid-@user.ID-name">@user.Name</div>
+                        <div id="status-user-@user.ID" class="status-dot"></div>
+                    </div>
+                }
+                
+
                 </div>
-            }
-            <div class="entry clickable" id="button-add-friend" onclick="">
+            </div>
+        </div>
+
+        <div id="panel-room" class="panel">
+            <div class="group">Rooms <div id="bt-add-room" class="bt-add-entry clickable">+</div></div>
+            <div>
+                @foreach (Room room in (List<Room>)ViewData["list-room"])
+                {  
+                    <div class="entry clickable" id="rid-@room.ID" onclick="setChatRoom(@room.ID)">
+                        <img class="avatar" src="img/avatar.png"></img>
+                        <div class="name" id="rid-@room.ID-name">@room.Name</div>
+                    </div>
+                }
+                
+
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="panel-detail-room">
+        <div id="panel-channel-text" class="panel">
+            <div class="group">Conversations<div id="bt-add-text" class="bt-add-entry clickable">+</div></div>
+            <div id="panel-channel-text-list">
+
+            </div>
+        </div>
+        <div id="panel-channel-voice" class="panel">
+            <div class="group">Voice chat<div id="bt-add-voice" class="bt-add-entry clickable">+</div></div>
+            <div id="panel-channel-voice-list">
 
             </div>
         </div>
     </div>
-    <div id="panel-room" class="panel">
-        <div class="group">Rooms <div id="bt-add-room" class="bt-add-entry clickable">+</div></div>
-        <div>
-            @foreach (Room room in (List<Room>)ViewData["list-room"])
-            {  
-                <div class="entry clickable" id="rid-@room.ID" onclick="setChatRoom(@room.ID)">
-                    <img class="avatar" src="img/avatar.png"></img>
-                    <div class="name" id="rid-@room.ID-name">@room.Name</div>
-                </div>
-            }
-            <div class="entry clickable" id="button-add-friend" onclick="">
 
-            </div>
-        </div>
-    </div>
-    <div id="button-add-friend" class="clickable"></div>
+
+
 </nav>
 <main>
     <div id="topbar">
@@ -77,3 +98,9 @@
         <div id="pane-status"></div>
     </div>
 </main>
+
+<div id="box-dialog-wrapper">
+    <div id="box-add-room" class="box-dialog">
+        <div></div>
+    </div>
+</div>

@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json.Serialization;
 using DAL;
 
 namespace Models
@@ -16,6 +17,18 @@ namespace Models
             base.Detail = detail;
         }
 
+        public ChannelMessage(int send_id, int channelID, string detail)
+        {
+            base.SendID = send_id;
+            this.channelID = channelID;
+            base.Detail = detail;
+        }
+
+        public ChannelMessage()
+        {
+        }
+
+        [JsonPropertyName("channelId")]
         public int ChannelID { get => channelID; set => channelID = value; }
 
         public int SendChannelMessage()

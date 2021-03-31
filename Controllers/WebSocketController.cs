@@ -25,6 +25,11 @@ namespace Controllers
         private const int TYPE_R_LOAD_CHANNEL_MESG = 5;
         private const int TYPE_R_SENT_PRIVATE_MESG = 6;
         private const int TYPE_R_SENT_CHANNEL_MESG = 7;
+
+        private const int TYPE_R_LOAD_ROOM_INFO = 100;
+
+        private const int TYPE_B_INFO_ROOM_CHANNEL = 101;
+
         private const int TYPE_B_RECV_PRIVATE_MESG = 8;
         private const int TYPE_B_RECV_CHANNEL_MESG = 9;
         private const int TYPE_B_INFO_PRIVATE_MESG = 10;
@@ -101,7 +106,6 @@ namespace Controllers
             {
                 CloseSocket(context, webSocket);
             }
-            CloseSocket(context, webSocket);
         }
 
         private static void Process(int type, string data, ISession session, WebSocket socket)
@@ -137,6 +141,7 @@ namespace Controllers
                     break;
                 case TYPE_R_SENT_PRIVATE_MESG:
                     {
+                        Console.Write("DAMNNNNN:" + data);
                         PrivateMessage mesg = JsonSerializer.Deserialize<PrivateMessage>(data);
                         int result = mesg.SendPrivateMessage();
                         if (result > 0)
@@ -156,13 +161,32 @@ namespace Controllers
                 case TYPE_R_SUBS_CHANNEL_MESG:
                     break;
                 case TYPE_R_LOAD_CHANNEL_MESG:
-
+                    {
+                        string[] info = data.Split(";");
+                        int channelId = Int32.Parse(info[0]);
+                        int index = Int32.Parse(info[1]);
+                        List<ChannelMessage> mesgList = ChannelMessageDAO.Get(channelId, index);
+                        JsonGeneric obj = new JsonGeneric(TYPE_B_INFO_CHANNEL_MESG,
+                        JsonSerializer.Serialize<List<ChannelMessage>>(mesgList)
+                        );
+                        Task b = BroadcastInfo(obj, socket);
+                    }
                     break;
                 case TYPE_R_SENT_CHANNEL_MESG:
                     {
                         ChannelMessage mesg = JsonSerializer.Deserialize<ChannelMessage>(data);
                         mesg.SendChannelMessage();
                         BroadcastMesgToChannel(mesg);
+                    }
+                    break;
+                //Processing Room
+                case TYPE_R_LOAD_ROOM_INFO:
+                    {
+                        int roomId = data.ToInt();
+                        // broadcast channels
+                        List<Channel> channels = ChannelDAO.Get(roomId, (int)session.GetBindedUid());
+                        JsonGeneric obj = new JsonGeneric(TYPE_B_INFO_ROOM_CHANNEL, JsonSerializer.Serialize<List<Channel>>(channels));
+                        Task t = BroadcastInfo(obj, socket);
                     }
                     break;
                 default:
@@ -187,7 +211,7 @@ namespace Controllers
 
         private static void BroadcastMesgToChannel(ChannelMessage mesg)
         {
-            List<int> uidList = new List<int>(); /// list of user have permission to read message from channel
+            List<int> uidList = ChannelDAO.GetAccessibleUID(mesg.ChannelID); /// list of user have permission to read message from channel
             foreach (int uid in uidList)
             {
                 if (UserIsOnline(uid))

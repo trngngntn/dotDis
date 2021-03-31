@@ -10,7 +10,7 @@ namespace DAL
     public class RoomDAO
     {
         //Get methods
-        public Room GetById(int id)
+        public static Room GetById(int id)
         {
             string sql = "SELECT `id`,`name` FROM `Room` WHERE `id`=@id";
             MySqlParameter param = new MySqlParameter("id", MySqlDbType.Int32);
@@ -20,7 +20,7 @@ namespace DAL
             return new Room(Int32.Parse(row["id"].ToString()), row["name"].ToString(), -1);
         }
 
-        public List<Room> GetByUserId(int uid)
+        public static List<Room> GetByUserId(int uid)
         {
             string sql = "SELECT `tb2`.`id`, `tb2`.`name` "
             + "FROM `Room_User` AS `tb1` INNER JOIN `Room` AS `tb2` "
@@ -37,8 +37,22 @@ namespace DAL
             return result;
         }
 
+        public static List<int> GetMembersUID(int id)
+        {
+            string sql = "SELECT `uid` FROM `Room_User` WHERE `room_id` = @roomId";
+            MySqlParameter param = new MySqlParameter("roomId", MySqlDbType.Int32);
+            param.Value = id;
+            DataTable dat = Database.GetData(sql, param);
+            List<int> result = new List<int>();
+            foreach(DataRow row in dat.Rows)
+            {
+                result.Add(row["uid"].ToString().ToInt());
+            }
+            return result;
+        }
+
         //Create method
-        public void Create(string name, int owner)
+        public static void Create(string name, int owner)
         {
             string sql = "SELECT AddNewRoom(@name, @owner)";
             MySqlParameter[] param = {

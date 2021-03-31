@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json.Serialization;
 using DAL;
 using MySql.Data.MySqlClient;
 
@@ -19,9 +20,11 @@ namespace Models
         }
 
         [DBProperty("id", MySqlDbType.Int32)]
+        [JsonPropertyName("id")]
         public int ID { get => id; set => id = value; }
 
         [DBProperty("name", MySqlDbType.VarChar)]
+        [JsonPropertyName("name")]
         public string Name { get => name; set => name = value; }
 
         [DBProperty("owner_id", MySqlDbType.Int32)]

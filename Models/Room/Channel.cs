@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using DAL;
 
 namespace Models{
@@ -16,10 +17,13 @@ namespace Models{
             this.name = name;
             this.type = type;
         }
-
+        [JsonPropertyName("id")]
         public int Id { get => id; set => id = value; }
+        [JsonPropertyName("roomId")]
         public int RoomID { get => roomID; set => roomID = value; }
+        [JsonPropertyName("name")]
         public string Name { get => name; set => name = value; }
+        [JsonPropertyName("type")]
         public int Type { get => type; set => type = value; }
     }
 }
