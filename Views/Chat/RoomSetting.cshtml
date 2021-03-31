@@ -1,0 +1,56 @@
+@{
+    ViewData["Title"] = "dotDis";
+    //User activeUser = (User)ViewData["active-user"];
+}
+@section head
+{
+    <script src="js/class.js"></script>
+    <!--script src="js/webSocket.js"></script-->
+    <link rel="stylesheet" href='@Url.Content("~/css/stylesheet.css")'/>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <script src="https://kit.fontawesome.com/6e774c561d.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
+}
+<nav>
+    <div id="panel-friend" class="panel">
+        <div class="group">Generals</div>
+        <div>
+            <div class="entry clickable">
+                <img class="avatar" src="img/avatar.png"></img>
+                <div class="name">Overview</div>
+            </div>
+            <div class="entry clickable">
+                <img class="avatar" src="img/avatar.png"></img>
+                <div class="name">Notification</div>
+            </div>
+            <div class="entry clickable">
+                <img class="avatar" src="img/avatar.png"></img>
+                <div class="name">Roles</div>
+            </div>
+        </div>
+    </div>
+    <div id="panel-room" class="panel">
+        <div class="group">Users</div>
+        <div>
+            <div class="entry clickable">
+                <img class="avatar" src="img/avatar.png"></img>
+                <div class="name">Members</div>
+            </div>
+            <div class="entry clickable">
+                <img class="avatar" src="img/avatar.png"></img>
+                <div class="name">Bans</div>
+            </div>
+        </div>
+    </div>
+</nav>
+<main>
+    <div id="topbar">
+        <div id="chat-info">
+            <span id="chat-name">Room Settings</span>
+        </div>
+    </div>
+    <div id="pane-setting" class="pane-right">
+    </div>
+</main>

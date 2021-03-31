@@ -19,7 +19,7 @@ namespace Models
         }
 
         [DBProperty("id", MySqlDbType.Int32)]
-        public int Id { get => id; set => id = value; }
+        public int ID { get => id; set => id = value; }
 
         [DBProperty("name", MySqlDbType.VarChar)]
         public string Name { get => name; set => name = value; }

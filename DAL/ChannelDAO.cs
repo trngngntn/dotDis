@@ -16,6 +16,10 @@ namespace DAL {
         {
             return Create(roomId, "General", 2);
         }
+        public static int GetUserPermission(int channelId, int uid){
+            
+            return 0;
+        }
         public static int Create(int roomId, string name, int type) {
             string sql = "INSERT INTO `Channel`(`room_id`, `name`, `type`) VALUES (@roomId, @name, @type)";
             MySqlParameter[] param = new MySqlParameter[] {

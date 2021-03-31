@@ -4,6 +4,7 @@ using MySql.Data.MySqlClient;
 using Models;
 using Utils;
 using System.Collections.Generic;
+using Extensions;
 
 namespace DAL
 {
@@ -33,7 +34,7 @@ namespace DAL
                 new MySqlParameter("salt", MySqlDbType.String),
                 new MySqlParameter("pwd", MySqlDbType.String)
             };
-            Console.WriteLine(username + " " + name + " " + email + " " + salt + " " + pwd);
+            //Console.WriteLine(username + " " + name + " " + email + " " + salt + " " + pwd);
             param[0].Value = username;
             param[1].Value = name;
             param[2].Value = email;
@@ -120,6 +121,7 @@ namespace DAL
                 int tmpUid = Int32.Parse(row["uid1"].ToString());
                 fUids.Add(tmpUid == uid ? Int32.Parse(row["uid2"].ToString()) : tmpUid);
             }
+
             return fUids;
         }
 
@@ -134,6 +136,22 @@ namespace DAL
             return friend;
         }
 
+        public static List<Room> ListRoom(int uid)
+        {
+            string sql = "SELECT * FROM `Room_User` INNER JOIN `Room` ON `Room`.`id` = `Room_User`.`room_id` "
+            + "WHERE `Room_User`.`uid` = @uid ";
+            MySqlParameter param = new MySqlParameter("uid", MySqlDbType.Int32);
+            param.Value = uid;
+            DataTable dat = Database.GetData(sql, param);
+            List<Room> result = new List<Room>();
+            foreach (DataRow row in dat.Rows)
+            {
+                int id = row["id"].ToString().ToInt();
+                string name = row["name"].ToString();
+                result.Add(new Room(id, name, -1));
+            }
+            return result;
+        }
         public static int CountAllUsers()
         {
             string sql = "SELECT COUNT(*) FROM `User`;";

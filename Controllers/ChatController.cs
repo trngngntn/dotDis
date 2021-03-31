@@ -30,9 +30,24 @@ namespace Controllers
             {
                 ViewData["active-user"] = UserDAO.GetUserByID((int)uid);
                 ViewData["list-friend"] = Models.User.ListFriend((int)uid);
+                ViewData["list-room"] = Models.User.ListRoom((int)uid);
                 return View();
             }
+        }
 
+        public IActionResult RoomSetting()
+        {
+            int? uid = this.HttpContext.Session.GetBindedUid();
+            if (uid == null)
+            {
+                return Redirect("/Login");
+            }
+            else
+            {
+                //ViewData["active-user"] = UserDAO.GetUserByID((int)uid);
+                //ViewData["list-friend"] = Models.User.ListFriend((int)uid);
+                return View();
+            }
         }
 
         public IActionResult Logout()

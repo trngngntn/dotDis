@@ -75,6 +75,12 @@ namespace Models
             return UserDAO.ListFriend(uid);
         }
 
+        public static object ListRoom(int uid)
+        {
+            return UserDAO.ListRoom(uid);
+        }
+
+
         public static int CountAllUsers()
         {
             return UserDAO.CountAllUsers();

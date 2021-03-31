@@ -32,13 +32,13 @@
         </div>
     </div>
     <div id="panel-room" class="panel">
-        <div class="group">Rooms</div>
+        <div class="group">Rooms <div id="bt-add-room" class="bt-add-entry clickable">+</div></div>
         <div>
-            @foreach (Models.User user in (List<Models.User>)ViewData["list-friend"])
+            @foreach (Room room in (List<Room>)ViewData["list-room"])
             {  
-                <div class="entry clickable" id="rid-@user.ID" onclick="setChatUser(@user.ID)">
+                <div class="entry clickable" id="rid-@room.ID" onclick="setChatRoom(@room.ID)">
                     <img class="avatar" src="img/avatar.png"></img>
-                    <div class="name" id="rid-@user.ID-name">@user.Name</div>
+                    <div class="name" id="rid-@room.ID-name">@room.Name</div>
                 </div>
             }
             <div class="entry clickable" id="button-add-friend" onclick="">
@@ -59,7 +59,7 @@
             <button class="clickable" id="button-user-opt"></button>
         </div>
     </div>
-    <div id="pane-chat">
+    <div id="pane-chat" class="pane-right">
         <div id="pane-conversation">
             <div id="pane-mesg">
                 <div class="bubble-wrapper"><div class="bubble-mesg own-mesg">Hello world!</div></div>

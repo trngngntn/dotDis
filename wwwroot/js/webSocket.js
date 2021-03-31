@@ -1,5 +1,6 @@
 var activeUser;
 var chatUser = null;
+var chatRoom = null;
 
 var socket;
 
@@ -88,6 +89,16 @@ function setChatUser(id){
   curPrivateMesgIndex[id] = 0;
   loadPrivateMesg(id);
 }
+function setChatRoom(id){
+  chatRoom = id;
+  document.getElementById("chat-name").innerHTML = document.getElementById(`rid-${id}-name`).innerHTML;
+  var obj = new JSONGeneric(TYPE_R_SUBS_CHANNEL_MESG, `${id}`);
+  wsSendMesg(obj);
+  clearMesgPane();
+  curChannelMesgIndex[id] = 0;
+  loadChannelMesg(id);
+}
+
 
 function clearMesgPane(){
   var elm = document.getElementById("pane-mesg").innerHTML = "";
@@ -96,6 +107,12 @@ function clearMesgPane(){
 function loadPrivateMesg(uid){
   var obj = new JSONGeneric(TYPE_R_LOAD_PRIVATE_MESG, `${uid};${curPrivateMesgIndex[uid]}`);
   curPrivateMesgIndex[uid] += 25;
+  wsSendMesg(obj);
+}
+
+function loadChannelMesg(uid){
+  var obj = new JSONGeneric(TYPE_R_LOAD_CHANNEL_MESG, `${uid};${curChannelMesgIndex[uid]}`);
+  curChannelMesgIndex[uid] += 25;
   wsSendMesg(obj);
 }
 

@@ -3,6 +3,7 @@ using System.Data;
 using MySql.Data;
 using MySql.Data.MySqlClient;
 using System.Collections.Generic;
+using Utils;
 
 namespace DAL
 {
@@ -34,7 +35,7 @@ namespace DAL
                 dataAdapter.Fill(dataSet);
                 return dataSet.Tables[0];
             } catch(Exception){
-                Console.WriteLine("[ERR] Database error");
+                ConsoleLogger.Error("[ERR] Database error");
             }
             return null;
         }

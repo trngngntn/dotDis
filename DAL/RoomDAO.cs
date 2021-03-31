@@ -55,6 +55,8 @@ namespace DAL
             //create default roles
         }
 
+
+
         public static int CountAllRooms()
         {
             string sql = "SELECT COUNT(*) FROM `Room`;";
