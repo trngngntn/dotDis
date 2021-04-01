@@ -13,6 +13,18 @@ function loadTable(table) {
     xhttp.send();
 }
 
+function getXMLHttpResponse(command) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            return this.responseText;
+        }
+    }
+
+    xhttp.open("GET", command, true);
+    xhttp.send();
+}
+
 function loadTableFromSQL(table) {
     var xhttp = new XMLHttpRequest();
     var sql = document.getElementsByName('sql')[0].value;
@@ -78,8 +90,13 @@ function createTableControl(table) {
     sql.setAttribute('onclick', `loadSqlTextField('${table}')`);
     sql.innerHTML = "SQL";
 
+    var insert = document.createElement('button');
+    insert.setAttribute('onclick', `onClickInsertButton('${table}')`);
+    insert.innerHTML = "Insert";
+
     div.appendChild(structure);
     div.appendChild(sql);
+    div.appendChild(insert);
     return div;
 }
 
@@ -109,4 +126,12 @@ function loadSqlTextField(table) {
     main.appendChild(createTableControl(table));
     main.appendChild(div);
 
+}
+
+function onClickInsertButton(table) {
+    var div = document.createElement('div');
+    div.setAttribute('class', 'table-insert');
+
+    div.innerHTML = getXMLHttpResponse(`Dashboard/GetTableDataType?table=${table}`);
+    document.getElementsByClassName('content')[0].innerHTML = div.innerHTML;
 }

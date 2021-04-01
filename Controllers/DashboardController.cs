@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Models;
 using Microsoft.AspNetCore.Http;
 using System.Data;
+using MySql.Data.MySqlClient;
 using System.Text.Json;
 
 namespace Controllers
@@ -81,7 +82,8 @@ namespace Controllers
         }
 
         [HttpGet]
-        public string TableString(string table) {
+        public string TableString(string table)
+        {
             string sql = "select * from " + table;
             DataTable dat = DAL.Database.GetData(sql);
             List<List<string>> list = new List<List<string>>();
@@ -92,7 +94,8 @@ namespace Controllers
             foreach (DataRow row in dat.Rows)
             {
                 List<string> admin = new List<string>();
-                for (int i = 0; i < dat.Columns.Count; i++) {
+                for (int i = 0; i < dat.Columns.Count; i++)
+                {
                     admin.Add(row[i].ToString());
                 }
                 list.Add(admin);
@@ -102,7 +105,8 @@ namespace Controllers
         }
 
         [HttpGet]
-        public string ExecuteSQL(string sql, string table) {
+        public string ExecuteSQL(string sql, string table)
+        {
             DataTable dat = DAL.Database.GetData(sql);
             Console.WriteLine(sql);
             List<List<string>> list = new List<List<string>>();
@@ -113,7 +117,8 @@ namespace Controllers
             foreach (DataRow row in dat.Rows)
             {
                 List<string> admin = new List<string>();
-                for (int i = 0; i < dat.Columns.Count; i++) {
+                for (int i = 0; i < dat.Columns.Count; i++)
+                {
                     admin.Add(row[i].ToString());
                 }
                 list.Add(admin);
@@ -134,6 +139,25 @@ namespace Controllers
             ViewData["Rooms"] = Models.Room.CountAllRooms();
             ViewData["Messages"] = Models.Message.CountAllMessage();
             ViewData["DatabaseTables"] = DAL.Database.GetTables();
+        }
+
+        [HttpGet]
+        public string GetTableDataType(string table)
+        {
+            List<string> dattype = new List<string>();
+            string sql = "select * from information_schema.columns where TABLE_NAME=@tname";
+            MySqlParameter para = new MySqlParameter("@tname", SqlDbType.Text);
+            para.Value = table;
+            DataTable dattb = DAL.Database.GetData(sql, para);
+            for (int i = 0; i < dattb.Rows.Count; i++)
+            {
+                DataRow row = dattb.Rows[i];
+                dattype.Add(row["DATA_TYPE"].ToString());
+                Console.WriteLine(row["DATA_TYPE"].ToString());
+            }
+
+            return JsonSerializer.Serialize<List<string>>(dattype);
+
         }
 
         private List<string> GetTableHeader(string table)
