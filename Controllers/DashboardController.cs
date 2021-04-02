@@ -127,6 +127,24 @@ namespace Controllers
             return JsonSerializer.Serialize<List<List<string>>>(list);
         }
 
+        [HttpGet]
+        public string GetTableDataType(string table)
+        {
+            List<string> dattype = new List<string>();
+            string sql = "select * from information_schema.columns where TABLE_NAME=@tname";
+            MySqlParameter para = new MySqlParameter("@tname", MySqlDbType.VarChar);
+            para.Value = table;
+            DataTable dattb = DAL.Database.GetData(sql, para);
+            for (int i = 0; i < dattb.Rows.Count; i++)
+            {
+                DataRow row = dattb.Rows[i];
+                dattype.Add(row["DATA_TYPE"].ToString());
+            }
+
+            return JsonSerializer.Serialize<List<string>>(dattype);
+
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
@@ -139,25 +157,6 @@ namespace Controllers
             ViewData["Rooms"] = Models.Room.CountAllRooms();
             ViewData["Messages"] = Models.Message.CountAllMessage();
             ViewData["DatabaseTables"] = DAL.Database.GetTables();
-        }
-
-        [HttpGet]
-        public string GetTableDataType(string table)
-        {
-            List<string> dattype = new List<string>();
-            string sql = "select * from information_schema.columns where TABLE_NAME = @tname";
-            MySqlParameter param = new MySqlParameter("tname", MySqlDbType.VarChar);
-            param.Value = table;
-            DataTable dattb = DAL.Database.GetData(sql, param);
-            for (int i = 0; i < dattb.Rows.Count; i++)
-            {
-                DataRow row = dattb.Rows[i];
-                dattype.Add(row["DATA_TYPE"].ToString());
-                Console.WriteLine(row["DATA_TYPE"].ToString());
-            }
-
-            return JsonSerializer.Serialize<List<string>>(dattype);
-
         }
 
         private List<string> GetTableHeader(string table)
