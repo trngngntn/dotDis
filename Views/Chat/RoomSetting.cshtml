@@ -1,3 +1,4 @@
+@using DAL
 @{
     ViewData["Title"] = "dotDis";
     //User activeUser = (User)ViewData["active-user"];
@@ -18,16 +19,20 @@
         <div class="group">Generals</div>
         <div>
             <div class="entry clickable">
-                <img class="avatar" src="img/avatar.png"></img>
+                
                 <div class="name">Overview</div>
             </div>
             <div class="entry clickable">
-                <img class="avatar" src="img/avatar.png"></img>
+                
                 <div class="name">Notification</div>
             </div>
             <div class="entry clickable">
-                <img class="avatar" src="img/avatar.png"></img>
+                
                 <div class="name">Roles</div>
+            </div>
+            <div class="entry clickable">
+                
+                <div class="name">Invitation</div>
             </div>
         </div>
     </div>
@@ -35,11 +40,11 @@
         <div class="group">Users</div>
         <div>
             <div class="entry clickable">
-                <img class="avatar" src="img/avatar.png"></img>
+                
                 <div class="name">Members</div>
             </div>
             <div class="entry clickable">
-                <img class="avatar" src="img/avatar.png"></img>
+                
                 <div class="name">Bans</div>
             </div>
         </div>
@@ -52,5 +57,53 @@
         </div>
     </div>
     <div id="pane-setting" class="pane-right">
+        <div id="setting-overview">
+
+        </div>
+        <div id="setting-notification">
+            
+        </div>
+        
+        @if((int)ViewData["perm"] > RoomDAO.PERM_MOD)
+        {
+            <div id="setting-roles">
+            
+            </div>
+            <div id="setting-invitation">
+                
+            </div>
+            <div id="setting-members">
+                <table>
+                    @foreach(Models.User user in (List<User>)ViewData["member-list"])
+                    {
+                        <tr>
+                            <td>
+                                <img class="avatar" src="/img/avatar.png"/>
+                                <div class="member-name">user.Name</div>
+                            </td>
+                            <td>
+                                @if (user.Perm == RoomDAO.PERM_FULLACS)
+                                {
+                                    <text>Admin</text>
+                                } else 
+                                {
+                                    <select>
+                                        <option value="10" @if(user.Perm == RoomDAO.PERM_MOD){ <text>selected</text> }>Moderator</option>
+                                        <option value="1" @if(user.Perm == RoomDAO.PERM_DEFAULT){ <text>selected</text> }>Group</option>
+                                    </select>
+                                }
+                            </td>
+                            <td>
+                                <div class="bt-kick"><i class="fas fa-minus-circle"></i></div>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+            <div id="setting-bans">
+            
+            </div>
+        }
+        
     </div>
 </main>
