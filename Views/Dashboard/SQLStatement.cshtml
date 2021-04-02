@@ -1,0 +1,79 @@
+@{
+    ViewData["Title"] = "dotDis | Dashboard";
+}
+
+@section head {
+    <link rel="apple-touch-icon" sizes="180x180" href='@Url.Content("~/img/apple-touch-icon.png")'>
+    <link rel="icon" type="image/png" sizes="32x32" href='@Url.Content("~/img/favicon-32x32.png")'>
+    <link rel="icon" type="image/png" sizes="16x16" href='@Url.Content("~/img/favicon-16x16.png")'>
+    <link rel="manifest" href='@Url.Content("~/img/site.webmanifest")'>
+    <link href='@Url.Content("~/css/dashboard/fontawesome-free/css/all.min.css")' rel="stylesheet" type="text/css" />
+    <link href='@Url.Content("~/css/dashboard/overlayScrollbars/css/OverlayScrollbars.min.css")' rel="stylesheet" type="text/css" />
+    <link href='@Url.Content("~/css/dashboard/adminlte.min.css")' rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet" type="text/css" />
+    <link href='@Url.Content("~/css/dashboard/dashboard.css")' rel="stylesheet" type="text/css" />
+}
+
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+    <div class="wrapper">
+        <partial name="_navbar.cshtml"></partial>
+
+        <!-- Main Sidebar Container -->
+        <partial name="_sidebar.cshtml"></partial>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0 text-dark">SQL Statement</h1>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+
+            <!-- Main content -->
+            <section class="content">
+                <div id="main-content">
+                    <div class="statement">
+                        <form asp-action="SQLExecute" id="sql-form" method="GET">
+                            <textarea class="sql-input" form="sql-form" name="sql">SELECT * FROM `Admin`</textarea>
+                            <input type="submit" value="Execute" class="exe-button"/>
+                        </form>
+                    </div>
+                    @{
+                        var columns = Convert.ToInt32(ViewData["ColumnCount"]);
+                        var tableData = ViewData["TableData"] as System.Collections.Generic.List<System.Data.DataRow>;
+                            @if (tableData != null && tableData.Count > 0)
+                            {
+                            <table class="customTable" border="1">
+                                <tbody>
+                                
+                                @foreach (System.Data.DataRow row in tableData)
+                                {
+                                    <tr>
+                                        @for (int i = 0; i < columns; i++) {
+                                            <td>@row[i]</td>;
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                            }
+                    
+                    }
+                </div>
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+
+        <!-- Main Footer -->
+        <partial name="_footer.cshtml"></partial>
+    </div>
+    <!-- ./wrapper -->
+</body>
+<script src='@Url.Content("~/js/dashboard.js")'></script>

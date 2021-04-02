@@ -9,7 +9,7 @@ namespace DAL
 {
     public class MessageDAO
     {
-        
+
         public static int CreatePrivateMessage(int sendID, int recvID, string detail)
         {
             string sql = "insert into `Private_Mesg`(`send_id`, `recv_id`, detail) values (@sendId, @recvId, @detail)";
@@ -45,7 +45,8 @@ namespace DAL
             return result;
         }
 
-        public static int CountAllPrivateMessage() {
+        public static int CountAllPrivateMessage()
+        {
             string countPrivate = "SELECT COUNT(*) FROM `Private_Mesg`;";
             DataTable dat1 = Database.GetData(countPrivate);
             int prvt = Int32.Parse(dat1.Rows[0][0].ToString());
@@ -60,7 +61,7 @@ namespace DAL
             return chnl;
         }
 
-        
+
 
         public static List<PrivateMessage> GetMessages(int recvId)
         {
@@ -71,7 +72,39 @@ namespace DAL
             param.Value = recvId;
 
             DataTable dat = Database.GetData(sql, param);
-            foreach(DataRow row in dat.Rows) {
+            foreach (DataRow row in dat.Rows)
+            {
+                int id = Int32.Parse(row["id"].ToString());
+                int sendId = Int32.Parse(row["send_id"].ToString());
+                DateTime created = DateTime.Parse(row["created"].ToString());
+                string detail = row["detail"].ToString();
+
+                PrivateMessage pm = new PrivateMessage(id, sendId, recvId, created, detail);
+                list.Add(pm);
+            }
+
+
+            return list;
+        }
+
+        public static List<PrivateMessage> GetMessagesPaged(int recvId, int pageIndex, int pageSize)
+        {
+            List<PrivateMessage> list = new List<PrivateMessage>();
+
+            string sql = "select * from `Private_Mesg` where `recv_id`=@recvId order by `id` asc limit @index, @pageSize";
+            MySqlParameter[] param = new MySqlParameter[] { 
+                new MySqlParameter("@recvId", MySqlDbType.Int32),
+                new MySqlParameter("@index", MySqlDbType.Int32),
+                new MySqlParameter("@pageSize", MySqlDbType.Int32)
+            };
+
+            param[0].Value = recvId;
+            param[1].Value = pageIndex;
+            param[2].Value = pageSize;
+
+            DataTable dat = Database.GetData(sql, param);
+            foreach (DataRow row in dat.Rows)
+            {
                 int id = Int32.Parse(row["id"].ToString());
                 int sendId = Int32.Parse(row["send_id"].ToString());
                 DateTime created = DateTime.Parse(row["created"].ToString());

@@ -1,0 +1,86 @@
+@{
+    ViewData["Title"] = "dotDis | Dashboard";
+}
+
+@section head {
+    <link rel="apple-touch-icon" sizes="180x180" href='@Url.Content("~/img/apple-touch-icon.png")'>
+    <link rel="icon" type="image/png" sizes="32x32" href='@Url.Content("~/img/favicon-32x32.png")'>
+    <link rel="icon" type="image/png" sizes="16x16" href='@Url.Content("~/img/favicon-16x16.png")'>
+    <link rel="manifest" href='@Url.Content("~/img/site.webmanifest")'>
+    <link href='@Url.Content("~/css/dashboard/fontawesome-free/css/all.min.css")' rel="stylesheet" type="text/css" />
+    <link href='@Url.Content("~/css/dashboard/overlayScrollbars/css/OverlayScrollbars.min.css")' rel="stylesheet" type="text/css" />
+    <link href='@Url.Content("~/css/dashboard/adminlte.min.css")' rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet" type="text/css" />
+    <link href='@Url.Content("~/css/dashboard/dashboard.css")' rel="stylesheet" type="text/css" />
+}
+
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+    <div class="wrapper">
+        <partial name="_navbar.cshtml"></partial>
+
+        <!-- Main Sidebar Container -->
+        <partial name="_sidebar.cshtml"></partial>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            @{var TableName = ViewData["Tablename"];}
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0 text-dark">@TableName</h1>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+
+            <!-- Main content -->
+            <section class="content">
+                <div id="main-content">
+                    @{
+                        var tableHeader = ViewData["TableHeader"] as System.Collections.Generic.List<string>;
+                        var tableData = ViewData["TableData"] as System.Collections.Generic.List<System.Data.DataRow>;
+                        int maxPage = Convert.ToInt32(ViewData["maxPage"]);
+                        int pageIndex = Convert.ToInt32(ViewData["pageIndex"]);
+                            
+                        <table class="customTable" border="1">
+                            <tbody>
+                                <tr>
+                                    @foreach (var item in tableHeader) {
+                                        <th>@item</th>
+                                    }
+                                </tr>
+                                @foreach (System.Data.DataRow row in tableData)
+                                {
+                                    <tr>
+                                        @for (int i = 0; i < tableHeader.Count; i++) {
+                                            <td>@row[i]</td>;
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                        <div class="paging">
+                            @for (int i = 1; i <= maxPage; i++) {
+                                string isActive = i == pageIndex ? "anchor-active" : "";
+                                <a href="~/Dashboard/Table?table=@TableName&pageIndex=@i" class="@isActive">@i</a>
+                            }
+                        </div>
+                    }
+
+                    
+                </div>
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+
+        <!-- Main Footer -->
+        <partial name="_footer.cshtml"></partial>
+    </div>
+    <!-- ./wrapper -->
+</body>
+<script src='@Url.Content("~/js/dashboard.js")'></script>
