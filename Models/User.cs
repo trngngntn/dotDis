@@ -15,6 +15,8 @@ namespace Models
         private string email;
         private string salt;
         private int status;
+
+        private int perm;
         public User(int id, string name, string email, string salt)
         {
             this.id = id;
@@ -29,6 +31,20 @@ namespace Models
             this.name = name;
         }
 
+        public User(int id, string name, string username)
+        {
+            this.id = id;
+            this.name = name;
+            this.username = username;
+        }
+
+        public User(int id, string name, int perm)
+        {
+            this.id = id;
+            this.name = name;
+            this.perm = perm;
+        }
+
         [JsonPropertyName("id")]
         public int ID
         {
@@ -40,6 +56,11 @@ namespace Models
             get => name;
             set => name = value;
         }
+        [JsonPropertyName("username")]
+        public string Username
+        {
+            get => username;
+        }
         public string Email
         {
             get => email;
@@ -47,6 +68,12 @@ namespace Models
         public string Salt
         {
             get => salt;
+        }
+
+        public int Perm
+        {
+            get => perm;
+            set => perm = value;
         }
         public bool Login(string passwd)
         {

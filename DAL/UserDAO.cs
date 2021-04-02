@@ -152,6 +152,23 @@ namespace DAL
             }
             return result;
         }
+
+        public static List<User> Find(string str){
+            string sql = "SELECT `id`, `fullname`, `username` FROM `User` WHERE `fullname` LIKE @pattern OR `username` LIKE @pattern";
+            MySqlParameter param = new MySqlParameter("pattern", MySqlDbType.VarChar);
+            param.Value = "%" + str + "%";
+            DataTable dat = Database.GetData(sql, param);
+            List<User> result = new List<User>();
+            foreach(DataRow row in dat.Rows)
+            {
+                int id = row["id"].ToString().ToInt();
+                string name = row["fullname"].ToString();
+                string username = row["username"].ToString();
+                result.Add(new User(id, name, username));
+            }
+            return result;
+        }
+
         public static int CountAllUsers()
         {
             string sql = "SELECT COUNT(*) FROM `User`;";

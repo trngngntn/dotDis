@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <script src="js/addRoom.js"></script>
+    <script src="js/addFriend.js"></script>
     <link rel="stylesheet" href="css/variables.css" />
     <link rel="stylesheet" href="css/stylesheet.css" />
     <link rel="stylesheet" href="css/dialog.css" />
@@ -12,33 +12,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
 </head>
 
-<body onload="initAddRoomDialog()"></body>
+<body onload="initAddFriendDialog()"></body>
 
 </html>
 
 <div id="box-dialog-bg">
     <div class="dialog-wrapper">
-        <div id="box-add-room" class="box-dialog">
-            <div class="dialog-header">Add a room</div>
-            <div class="clickable dialog-bt-long" onclick="addRoomDialog.toCreate()">
-                Create a new room
-            </div>
-            <div class="clickable dialog-bt-long" onclick="addRoomDialog.toJoin()">
-                Join an existing room
-            </div>
-        </div>
-        <div id="box-create-room" class="box-dialog">
-            <div class="dialog-header">Create room</div>
+        <div id="box-add-friend" class="box-dialog">
+            <div class="dialog-header">Add friend</div>
             <div class="dialog-grid-container">
-                <div class="dialog-grid-cell"><span>Room name</span></div>
-                <div class="dialog-grid-cell"><input type="text" id="room-create-name"></div>
+                <div class="dialog-grid-cell"><span>Search</span></div>
+                <div class="dialog-grid-cell"><input type="text" id="search-name"></div>
             </div>
-        </div>
-        <div id="box-join-room" class="box-dialog">
-            <div class="dialog-header">Join room</div>
-            <div class="dialog-grid-container">
-                <div class="dialog-grid-cell"><span>Invitation code</span></div>
-                <div class="dialog-grid-cell"><input type="text" id="room-inv-code"></div>
+            <div class="dialog-container" id="result-list">
+                <div class="found-user clickable">
+                    <img class="avatar" src="img/avatar.png"/>
+                    <div class="found-user-name">Name</div>
+                </div>
             </div>
         </div>
         <div class="box-dialog-nav">

@@ -48,3 +48,20 @@ class JSONGeneric {
         this.data = data;
     }
 }
+
+function showPrev(){
+    btPrev.style.zIndex = 10;
+    btPrev.style.opacity = 100;
+}
+function showOk(){
+    btOk.style.zIndex = 10;
+    btOk.style.opacity = 100;
+}
+function hidePrev(){
+    btPrev.style.zIndex = -10;
+    btPrev.style.opacity = 0;
+}
+function hideOk(){
+    btOk.style.zIndex = -10;
+    btOk.style.opacity = 0;
+}

@@ -156,26 +156,39 @@ function hideChatRoom() {
   panelRoom.style.right = "-300px";
 }
 
+function addRoom(room) {
+  var list = document.getElementById("panel-room").children[1];
+  var elm = document.createElement("div");
+  elm.className = "entry clickable";
+  elm.id = `rid-room.id`;
+  elm.setAttribute("onclick", `setChatRoom(${room.id})`);
+  elm.innerHTML = `<img class="avatar" src="img/avatar.png"></img>
+  <div class="name" id="rid-${room.id}-name">${room.name}</div>`;
+  list.appendChild(elm);
+}
+
 function displayChannels(channels) {
+  channels.forEach(function(channel){addChannel(channel)});
+}
+
+function addChannel(channel) {
   var textChannel = document.getElementById("panel-channel-text-list");
   var voiceChannel = document.getElementById("panel-channel-voice-list");
-  channels.forEach(function (channel) {
-    var newElm = document.createElement("div");
-    newElm.className = "entry clickable";
-    newElm.id = `cid-${channel.type}`;
-    var newName = document.createElement("div");
-    newName.className = "name";
-    newName.id = `cid-${channel.type}-name`;
-    newName.innerHTML = channel.name;
-    newElm.appendChild(newName);
-    console.log(newElm);
-    if (channel.type == 1) {
-      newElm.setAttribute("onclick", `setChatChannel(${channel.id})`);
-      textChannel.appendChild(newElm);
-    } else {
-      voiceChannel.appendChild(newElm);
-    }
-  });
+  var newElm = document.createElement("div");
+  newElm.className = "entry clickable";
+  newElm.id = `cid-${channel.type}`;
+  var newName = document.createElement("div");
+  newName.className = "name";
+  newName.id = `cid-${channel.type}-name`;
+  newName.innerHTML = channel.name;
+  newElm.appendChild(newName);
+  console.log(newElm);
+  if (channel.type == 1) {
+    newElm.setAttribute("onclick", `setChatChannel(${channel.id})`);
+    textChannel.appendChild(newElm);
+  } else {
+    voiceChannel.appendChild(newElm);
+  }
 }
 
 function displayMembers(members) {
@@ -275,7 +288,7 @@ function appendMesg(mesg, type) {
   mesgPane.insertBefore(newMesgWrap, mesgPane.firstChild);
 }
 
-function createBubbleInfo(sendId, wrap){
+function createBubbleInfo(sendId, wrap) {
   var name = document.getElementById(`room-uid-${sendId}-name`).innerHTML;
   var infoElm = document.createElement("div");
   lastSendUID = sendId;
@@ -284,7 +297,7 @@ function createBubbleInfo(sendId, wrap){
   wrap.appendChild(infoElm);
 }
 
-function scrollToBottom(){
+function scrollToBottom() {
   var panelMesg = document.getElementById("pane-mesg");
   panelMesg.scrollTop = panelMesg.scrollHeight;
 }

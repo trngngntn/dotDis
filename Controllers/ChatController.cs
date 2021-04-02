@@ -49,7 +49,7 @@ namespace Controllers
                 int perm = RoomDAO.GetPermission(roomId, (int)uid);
                 if(perm >= RoomDAO.PERM_MOD)
                 {
-                    RoomDAO.GetMembers();
+                    RoomDAO.GetMembers(roomId);
                 }
                 //ViewData["active-user"] = UserDAO.GetUserByID((int)uid);
                 //ViewData["list-friend"] = Models.User.ListFriend((int)uid);

@@ -5,6 +5,7 @@
 @section head
 {
     <script src="js/class.js"></script>
+    <script src="js/addRoom.js"></script>
     <script src="js/webSocket.js"></script>
     <link rel="stylesheet" href="css/variables.css" />
     <link rel="stylesheet" href="css/stylesheet.css" />
@@ -33,7 +34,7 @@
         </div>
 
         <div id="panel-room" class="panel">
-            <div class="group">Rooms <div id="bt-add-room" class="bt-add-entry clickable">+</div></div>
+            <div class="group">Rooms <div id="bt-add-room" class="bt-add-entry clickable" onclick="doAddRoom()">+</div></div>
             <div>
                 @foreach (Room room in (List<Room>)ViewData["list-room"])
                 {  
@@ -119,9 +120,6 @@
         </div>
     </div>
 </main>
+<div id="placeholder">
 
-<div id="box-dialog-wrapper">
-    <div id="box-add-room" class="box-dialog">
-        <div></div>
-    </div>
 </div>

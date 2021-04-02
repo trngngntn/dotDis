@@ -5,9 +5,9 @@
     --font-color-blur: rgb(128, 128, 128);
     --background-color: rgb(250, 250, 250);
     --background-color-darker: rgb(235, 235, 235);
-    --hover: #0002;
+    --hover: rgba(0, 0, 0, 0.041);
     --line: #EEEEEE;
-    --active: #0006;
+    --active: rgba(0, 81, 255, 0.527);
     --blur: #EAEAEAAA;
     --shadow: 0 0 10px #4445;
 }
