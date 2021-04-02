@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Utils;
 using DAL;
+using System.Text.Json.Serialization;
 
 namespace Models
 {
@@ -27,10 +28,13 @@ namespace Models
             this.id = id;
             this.name = name;
         }
+
+        [JsonPropertyName("id")]
         public int ID
         {
             get => id;
         }
+        [JsonPropertyName("name")]
         public string Name
         {
             get => name;

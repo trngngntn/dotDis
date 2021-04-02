@@ -17,6 +17,7 @@ const TYPE_B_INFO_SEND_ERROR = 15;
 
 const TYPE_R_LOAD_ROOM_INFO = 100;
 const TYPE_B_INFO_ROOM_CHANNEL = 101;
+const TYPE_B_INFO_ROOM_MEMBER = 102;
 
 class PrivateMessage {
     constructor(sendId, recvId, detail){

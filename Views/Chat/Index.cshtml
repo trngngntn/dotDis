@@ -6,6 +6,7 @@
 {
     <script src="js/class.js"></script>
     <script src="js/webSocket.js"></script>
+    <link rel="stylesheet" href="css/variables.css" />
     <link rel="stylesheet" href="css/stylesheet.css" />
     <link rel="stylesheet" href="css/dialog.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -16,7 +17,7 @@
 }
 <script type="text/javascript">window.onload = init(@activeUser.ID)</script>
 <nav>
-    <div id="panel-detail-user">
+    <div id="panel-detail-user" class="group-panel">
         <div id="panel-friend" class="panel">
             <div class="group">Friends</div>
             <div>
@@ -28,9 +29,6 @@
                         <div id="status-user-@user.ID" class="status-dot"></div>
                     </div>
                 }
-                
-
-                </div>
             </div>
         </div>
 
@@ -44,14 +42,16 @@
                         <div class="name" id="rid-@room.ID-name">@room.Name</div>
                     </div>
                 }
-                
-
-                </div>
             </div>
         </div>
     </div>
     
-    <div id="panel-detail-room">
+    <div id="panel-detail-room" class="group-panel">
+        <div id="nav-room">
+            <div id="bt-panel-previous" class="clickable" onclick="hideChatRoom()"><i class="fas fa-chevron-left"></i></div>
+            <div id="active-room-name">NAME</div>
+            <div id="bt-room-setting" class="clickable"><i class="fas fa-cog"></i></div>
+        </div>
         <div id="panel-channel-text" class="panel">
             <div class="group">Conversations<div id="bt-add-text" class="bt-add-entry clickable">+</div></div>
             <div id="panel-channel-text-list">
@@ -84,7 +84,13 @@
         <div id="pane-conversation">
             <div id="pane-mesg">
                 <div class="bubble-wrapper"><div class="bubble-mesg own-mesg">Hello world!</div></div>
-                <div class="bubble-wrapper"><div class="bubble-mesg other-mesg">Hello the others.</div></div>
+                <div class="bubble-wrapper">
+                    <div class="sender-info">
+                        <img class="avatar" src="img/avatar.png"></img>
+                        <div class="name">Name</div>
+                    </div>
+                    <div class="bubble-mesg other-mesg">Hello the others.</div>
+                </div>
                 <div class="bubble-wrapper"><div class="bubble-mesg own-mesg">This is a message</div></div>
                 <div class="bubble-wrapper"><div class="bubble-mesg other-mesg">This is another one</div></div>
             </div>
@@ -95,7 +101,22 @@
                 </button>
             </div>
         </div>
-        <div id="pane-status"></div>
+        <div id="pane-status">
+            <div id="panel-friend" class="panel">
+            <div class="group">Members</div>
+            <div id="panel-room-member-list">
+                    <div class="entry" id="room-uid-">
+                        <img class="avatar" src="img/avatar.png"></img>
+                        <div class="name" id="room-uid-name">Name</div>
+                        <div id="status-room-user" class="status-dot"></div>
+                    </div>
+                    <div class="entry" id="room-uid-">
+                        <img class="avatar" src="img/avatar.png"></img>
+                        <div class="name" id="room-uid-name">Name</div>
+                        <div id="status-room-user" class="status-dot"></div>
+                    </div>
+            </div>
+        </div>
     </div>
 </main>
 

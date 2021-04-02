@@ -53,9 +53,10 @@ function wsGetMesg(mesg) {
       console.log(mesgList);
       mesgList.forEach((mesg) => {
         if (mesg.sendId == activeUser) {
-          appendMesg(mesg.detail, 1);
-        } else appendMesg(mesg.detail, 0);
+          appendMesg(mesg, 1);
+        } else appendMesg(mesg, 0);
       });
+      break;
     //Process channel messages
     case TYPE_B_RECV_CHANNEL_MESG:
       var chanMesg = JSON.parse(obj.data);
@@ -66,9 +67,10 @@ function wsGetMesg(mesg) {
       console.log(mesgList);
       mesgList.forEach((mesg) => {
         if (mesg.sendId == activeUser) {
-          appendMesg(mesg.detail, 1);
-        } else appendMesg(mesg.detail, 0);
+          appendMesg(mesg, 1);
+        } else appendMesg(mesg, 2);
       });
+      break;
     //Process info
     case TYPE_B_INFO_USER_ONL:
       setUserStatus(obj.data, true);
@@ -82,6 +84,10 @@ function wsGetMesg(mesg) {
     case TYPE_B_INFO_ROOM_CHANNEL:
       var channels = JSON.parse(obj.data);
       displayChannels(channels);
+      break;
+    case TYPE_B_INFO_ROOM_MEMBER:
+      var members = JSON.parse(obj.data);
+      displayMembers(members);
     default:
       break;
   }
@@ -135,6 +141,19 @@ function setChatRoom(id) {
   wsSendMesg(obj);
   clearMesgPane();
   clearChannels();
+  var panelMain = document.getElementById("panel-detail-user");
+  panelMain.style.left = "-300px";
+  var panelRoom = document.getElementById("panel-detail-room");
+  panelRoom.style.right = "0";
+  var name = document.getElementById("active-room-name");
+  name.innerHTML = document.getElementById(`rid-${id}-name`).innerHTML;
+}
+
+function hideChatRoom() {
+  var panelMain = document.getElementById("panel-detail-user");
+  panelMain.style.left = "0";
+  var panelRoom = document.getElementById("panel-detail-room");
+  panelRoom.style.right = "-300px";
 }
 
 function displayChannels(channels) {
@@ -150,9 +169,8 @@ function displayChannels(channels) {
     newName.innerHTML = channel.name;
     newElm.appendChild(newName);
     console.log(newElm);
-    if(channel.type == 1)
-    {
-      newElm.setAttribute("onclick",`setChatChannel(${channel.id})`);
+    if (channel.type == 1) {
+      newElm.setAttribute("onclick", `setChatChannel(${channel.id})`);
       textChannel.appendChild(newElm);
     } else {
       voiceChannel.appendChild(newElm);
@@ -160,7 +178,24 @@ function displayChannels(channels) {
   });
 }
 
-function clearChannels(channels) {
+function displayMembers(members) {
+  var memberList = document.getElementById("panel-room-member-list");
+  members.forEach(function (member) {
+    var newElm = document.createElement("div");
+    newElm.className = "entry";
+    newElm.id = `room-uid-${member.id}`;
+    var newName = document.createElement("div");
+    newName.className = "name";
+    newName.id = `room-uid-${member.id}-name`;
+    newName.innerHTML = member.name;
+    newElm.innerHTML = "<img class='avatar' src='img/avatar.png'></img>";
+    newElm.appendChild(newName);
+    console.log(newElm);
+    memberList.appendChild(newElm);
+  });
+}
+
+function clearChannels() {
   var textChannel = document.getElementById("panel-channel-text-list");
   var voiceChannel = document.getElementById("panel-channel-voice-list");
   textChannel.innerHTML = "";
@@ -178,7 +213,7 @@ function loadPrivateMesg(uid) {
 }
 
 function loadChannelMesg(cid) {
-  var obj = new JSONGeneric(TYPE_R_LOAD_CHANNEL_MESG,`${cid};${curChannelMesgIndex[cid]}`);
+  var obj = new JSONGeneric(TYPE_R_LOAD_CHANNEL_MESG, `${cid};${curChannelMesgIndex[cid]}`);
   curChannelMesgIndex[cid] += 25;
   wsSendMesg(obj);
 }
@@ -186,7 +221,7 @@ function loadChannelMesg(cid) {
 function sendMesg() {
   var mesg = document.getElementById("field-mesg").value;
   if (mesg == "") return;
-  if(activeChat == 1){
+  if (activeChat == 1) {
     var privMesg = new PrivateMessage(activeUser, chatUser, mesg);
     var obj = new JSONGeneric(TYPE_R_SENT_PRIVATE_MESG, JSON.stringify(privMesg));
     wsSendMesg(obj);
@@ -214,19 +249,42 @@ function createNewMesg(detail, type) {
   newMesgWrap.appendChild(newMesg);
   mesgPane.appendChild(newMesgWrap);
 }
-
-function appendMesg(detail, type) {
+var lastSendUID = 0;
+var lastMesgElm = null;
+function appendMesg(mesg, type) {
   var mesgPane = document.getElementById("pane-mesg");
   var newMesgWrap = document.createElement("div");
   newMesgWrap.className = " bubble-wrapper";
   var newMesg = document.createElement("div");
-  newMesg.innerHTML = detail;
+  newMesg.innerHTML = mesg.detail;
   newMesg.className = "bubble-mesg";
   if (type === 1) {
     newMesg.className += " own-mesg";
+    lastSendUID = 0;
   } else {
     newMesg.className += " other-mesg";
   }
+  if (type == 2) {
+    if (mesg.sendId == lastSendUID) {
+      lastMesgElm.firstChild.remove();
+    }
+    createBubbleInfo(mesg.sendId, newMesgWrap);
+  }
   newMesgWrap.appendChild(newMesg);
+  lastMesgElm = newMesgWrap;
   mesgPane.insertBefore(newMesgWrap, mesgPane.firstChild);
+}
+
+function createBubbleInfo(sendId, wrap){
+  var name = document.getElementById(`room-uid-${sendId}-name`).innerHTML;
+  var infoElm = document.createElement("div");
+  lastSendUID = sendId;
+  infoElm.className = "sender-info";
+  infoElm.innerHTML = `<img class="avatar" src="img/avatar.png"></img><div class="name">${name}</div>`;
+  wrap.appendChild(infoElm);
+}
+
+function scrollToBottom(){
+  var panelMesg = document.getElementById("pane-mesg");
+  panelMesg.scrollTop = panelMesg.scrollHeight;
 }

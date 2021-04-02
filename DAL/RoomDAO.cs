@@ -79,5 +79,21 @@ namespace DAL
             return result;
         }
 
+        public static List<User> GetMembers(int roomId)
+        {
+            string sql = "SELECT `id`,`fullname` FROM `Room_User` INNER JOIN `User` ON `Room_User`.`uid` = `User`.`id` "
+            + "WHERE `room_id` = @roomId";
+            MySqlParameter param = new MySqlParameter("roomId", MySqlDbType.Int32);
+            param.Value = roomId;
+            DataTable dat = Database.GetData(sql, param);
+            List<User> result = new List<User>();
+            foreach(DataRow row in dat.Rows)
+            {
+                int id = row["id"].ToString().ToInt();
+                string name = row["fullname"].ToString();
+                result.Add(new User(id,name,"",""));
+            }
+            return result;
+        }
     }
 }

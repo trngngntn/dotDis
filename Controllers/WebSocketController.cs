@@ -27,8 +27,8 @@ namespace Controllers
         private const int TYPE_R_SENT_CHANNEL_MESG = 7;
 
         private const int TYPE_R_LOAD_ROOM_INFO = 100;
-
         private const int TYPE_B_INFO_ROOM_CHANNEL = 101;
+        private const int TYPE_B_INFO_ROOM_MEMBER = 102;
 
         private const int TYPE_B_RECV_PRIVATE_MESG = 8;
         private const int TYPE_B_RECV_CHANNEL_MESG = 9;
@@ -187,6 +187,9 @@ namespace Controllers
                         List<Channel> channels = ChannelDAO.Get(roomId, (int)session.GetBindedUid());
                         JsonGeneric obj = new JsonGeneric(TYPE_B_INFO_ROOM_CHANNEL, JsonSerializer.Serialize<List<Channel>>(channels));
                         Task t = BroadcastInfo(obj, socket);
+                        List<User> members = RoomDAO.GetMembers(roomId);
+                        obj = new JsonGeneric(TYPE_B_INFO_ROOM_MEMBER, JsonSerializer.Serialize<List<User>>(members));
+                        Task t1 = BroadcastInfo(obj, socket);
                     }
                     break;
                 default:

@@ -145,10 +145,10 @@ namespace Controllers
         public string GetTableDataType(string table)
         {
             List<string> dattype = new List<string>();
-            string sql = "select * from information_schema.columns where TABLE_NAME=@tname";
-            MySqlParameter para = new MySqlParameter("@tname", SqlDbType.Text);
-            para.Value = table;
-            DataTable dattb = DAL.Database.GetData(sql, para);
+            string sql = "select * from information_schema.columns where TABLE_NAME = @tname";
+            MySqlParameter param = new MySqlParameter("tname", MySqlDbType.VarChar);
+            param.Value = table;
+            DataTable dattb = DAL.Database.GetData(sql, param);
             for (int i = 0; i < dattb.Rows.Count; i++)
             {
                 DataRow row = dattb.Rows[i];
