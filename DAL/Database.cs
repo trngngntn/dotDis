@@ -26,7 +26,7 @@ namespace DAL
         /// <param name="sql"></param>
         /// <return>DataTable</return>
         public static DataTable GetData(string sql, params MySqlParameter[] args){
-            //try{
+            try{
                 MySqlCommand command = new MySqlCommand(sql, GetConnection());
                 command.Parameters.AddRange(args);
                 MySqlDataAdapter dataAdapter = new MySqlDataAdapter();
@@ -34,9 +34,9 @@ namespace DAL
                 DataSet dataSet = new DataSet();
                 dataAdapter.Fill(dataSet);
                 return dataSet.Tables[0];
-            ////} catch(Exception e){
-               // ConsoleLogger.Error("Database error");
-            //}
+            } catch(Exception){
+                ConsoleLogger.Error("Database error");
+            }
             return null;
         }
 
@@ -63,6 +63,6 @@ namespace DAL
                 list.Add(row[0].ToString());
             }
             return list;
-        } 
+        }
     }
 }

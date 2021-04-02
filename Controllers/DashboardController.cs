@@ -16,6 +16,23 @@ namespace Controllers
     public class DashboardController : Controller
     {
         private readonly ILogger<DashboardController> _logger;
+        private List<string> tableHasId = new List<string>() {
+                "Admin",
+                "Channel",
+                "Channel_Mesg",
+                "Private_Mesg",
+                "Role",
+                "Room",
+                "Session",
+                "User"
+            };
+
+        private List<string> tableNoId = new List<string>() {
+                "Friend",
+                "Permission",
+                "Room_User",
+                "User_Role"
+            };
         public DashboardController(ILogger<DashboardController> logger)
         {
             _logger = logger;
@@ -62,87 +79,98 @@ namespace Controllers
         }
 
         [HttpGet]
-        public IActionResult Table(string table)
+        public IActionResult Table(string table, int? pageIndex)
         {
-            string sql = "select * from " + table;
-            DataTable dat = DAL.Database.GetData(sql);
-            List<string> header = GetTableHeader(table);
-            List<DataRow> list = new List<DataRow>();
-
-            foreach (DataRow row in dat.Rows)
+            if (this.HttpContext.Session.Get("active-admin") == null)
             {
-                list.Add(row);
+                return Redirect("/Dashboard");
             }
-            CollectData();
-            ViewData["TableHeader"] = header;
-            ViewData["TableData"] = list;
-
-            return View("Temp");
-
-        }
-
-        [HttpGet]
-        public string TableString(string table)
-        {
-            string sql = "select * from " + table;
-            DataTable dat = DAL.Database.GetData(sql);
-            List<List<string>> list = new List<List<string>>();
-
-            List<string> header = GetTableHeader(table);
-            list.Add(header);
-
-            foreach (DataRow row in dat.Rows)
+            else
             {
-                List<string> admin = new List<string>();
-                for (int i = 0; i < dat.Columns.Count; i++)
+                string tbl = ValidateTableName(table);
+                string sql = "SELECT * FROM `" + tbl + "` ORDER BY 1 LIMIT @pageIndex, @pageSize";
+                if (pageIndex == null)
                 {
-                    admin.Add(row[i].ToString());
+                    pageIndex = 1;
                 }
-                list.Add(admin);
-            }
+                int pageSize = 20;
 
-            return JsonSerializer.Serialize<List<List<string>>>(list);
-        }
+                MySqlParameter[] paras = new MySqlParameter[] {
+                new MySqlParameter("@pageIndex", MySqlDbType.Int32),
+                new MySqlParameter("@pageSize", MySqlDbType.Int32)
+                };
 
-        [HttpGet]
-        public string ExecuteSQL(string sql, string table)
-        {
-            DataTable dat = DAL.Database.GetData(sql);
-            Console.WriteLine(sql);
-            List<List<string>> list = new List<List<string>>();
+                paras[0].Value = (pageIndex - 1) * pageSize;
+                paras[1].Value = pageSize;
 
-            List<string> header = GetTableHeader(table);
-            list.Add(header);
+                DataTable dat = DAL.Database.GetData(sql, paras);
+                List<string> header = GetTableHeader(table);
+                List<DataRow> list = new List<DataRow>();
 
-            foreach (DataRow row in dat.Rows)
-            {
-                List<string> admin = new List<string>();
-                for (int i = 0; i < dat.Columns.Count; i++)
+                foreach (DataRow row in dat.Rows)
                 {
-                    admin.Add(row[i].ToString());
+                    list.Add(row);
                 }
-                list.Add(admin);
-            }
 
-            return JsonSerializer.Serialize<List<List<string>>>(list);
+                int total = CountRows(table);
+                int maxPage = total / pageSize;
+                if (total % pageSize > 0)
+                {
+                    maxPage++;
+                }
+
+                ViewData["TableName"] = table;
+                ViewData["TableHeader"] = header;
+                ViewData["TableData"] = list;
+                ViewData["DatabaseTables"] = DAL.Database.GetTables();
+                ViewData["maxPage"] = maxPage;
+                ViewData["pageIndex"] = pageIndex;
+
+                return View("Table");
+            }
+        }
+
+        public IActionResult SQLStatement(string table)
+        {
+            if (this.HttpContext.Session.Get("active-admin") == null)
+            {
+                return Redirect("/Dashboard");
+            }
+            else
+            {
+                ViewData["DatabaseTables"] = DAL.Database.GetTables();
+                return View("SQLStatement");
+            }
         }
 
         [HttpGet]
-        public string GetTableDataType(string table)
+        public IActionResult SQLExecute(string sql)
         {
-            List<string> dattype = new List<string>();
-            string sql = "select * from information_schema.columns where TABLE_NAME=@tname";
-            MySqlParameter para = new MySqlParameter("@tname", MySqlDbType.VarChar);
-            para.Value = table;
-            DataTable dattb = DAL.Database.GetData(sql, para);
-            for (int i = 0; i < dattb.Rows.Count; i++)
+
+            if (this.HttpContext.Session.Get("active-admin") == null)
             {
-                DataRow row = dattb.Rows[i];
-                dattype.Add(row["DATA_TYPE"].ToString());
+                return Redirect("/Dashboard");
             }
+            else
+            {
+                string[] spl = sql.Split(' ');
 
-            return JsonSerializer.Serialize<List<string>>(dattype);
 
+                DataTable dat = DAL.Database.GetData(sql);
+                //List<string> header = GetTableHeader(table);
+                List<DataRow> list = new List<DataRow>();
+
+                foreach (DataRow row in dat.Rows)
+                {
+                    list.Add(row);
+                }
+
+                ViewData["TableData"] = list;
+                ViewData["ColumnCount"] = dat.Columns.Count;
+                ViewData["DatabaseTables"] = DAL.Database.GetTables();
+
+                return View("SQLStatement");
+            }
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -157,6 +185,22 @@ namespace Controllers
             ViewData["Rooms"] = Models.Room.CountAllRooms();
             ViewData["Messages"] = Models.Message.CountAllMessage();
             ViewData["DatabaseTables"] = DAL.Database.GetTables();
+        }
+
+        private string ValidateTableName(string table)
+        {
+            if (tableHasId.Contains(table) || tableNoId.Contains(table))
+            {
+                return table;
+            }
+            return "Admin";
+        }
+
+        private int CountRows(string table)
+        {
+            string sql = "SELECT COUNT(*) FROM " + ValidateTableName(table);
+            DataTable dat = DAL.Database.GetData(sql);
+            return Convert.ToInt32(dat.Rows[0][0].ToString());
         }
 
         private List<string> GetTableHeader(string table)
