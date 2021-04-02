@@ -8,6 +8,8 @@ using Microsoft.Extensions.Logging;
 using Models;
 using Microsoft.AspNetCore.Http;
 using DAL;
+using System.Text.Json;
+using Utils;
 
 namespace Controllers
 {
@@ -35,7 +37,7 @@ namespace Controllers
             }
         }
 
-        public IActionResult RoomSetting()
+        public IActionResult RoomSetting(int roomId)
         {
             int? uid = this.HttpContext.Session.GetBindedUid();
             if (uid == null)
@@ -44,10 +46,29 @@ namespace Controllers
             }
             else
             {
+                int perm = RoomDAO.GetPermission(roomId, (int)uid);
+                if(perm >= RoomDAO.PERM_MOD)
+                {
+                    RoomDAO.GetMembers();
+                }
                 //ViewData["active-user"] = UserDAO.GetUserByID((int)uid);
                 //ViewData["list-friend"] = Models.User.ListFriend((int)uid);
                 return View();
             }
+        }
+
+        public String AddRoom(string name, int uid)
+        {
+            ConsoleLogger.Log("Add room {0}:{1}", name, uid);
+                return RoomDAO.Create(name, uid).ToString();
+        }
+
+        public String SearchUser(string str)
+        {
+            if (str == null || str.Equals("")) return "";
+            //ConsoleLogger.Log("Search for '{0}'", str);
+            List<User> found = UserDAO.Find(str);
+            return JsonSerializer.Serialize<List<User>>(found);
         }
 
         public IActionResult Logout()
@@ -63,6 +84,6 @@ namespace Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        
+
     }
 }
