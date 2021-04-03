@@ -307,3 +307,4 @@ function scrollToBottom() {
   var panelMesg = document.getElementById("pane-mesg");
   panelMesg.scrollTop = panelMesg.scrollHeight;
 }
+
