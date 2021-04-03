@@ -46,6 +46,7 @@ function wsGetMesg(mesg) {
     //Process private messages
     case TYPE_B_RECV_PRIVATE_MESG:
       var privMesg = JSON.parse(obj.data);
+      if(privMesg.sendId == chatUser && activeChat == 1)
       createNewMesg(privMesg.detail, 0);
       break;
     case TYPE_B_INFO_PRIVATE_MESG:
@@ -60,6 +61,7 @@ function wsGetMesg(mesg) {
     //Process channel messages
     case TYPE_B_RECV_CHANNEL_MESG:
       var chanMesg = JSON.parse(obj.data);
+      if(chanMesg.channelId == chatChannel && chanMesg.sendId != activeUser && activeChat == 2)
       createNewMesg(chanMesg.detail, 0);
       break;
     case TYPE_B_INFO_CHANNEL_MESG:
@@ -106,6 +108,7 @@ var curPrivateMesgIndex = new Array();
 var curChannelMesgIndex = new Array();
 
 function setChatUser(id) {
+  document.getElementById("panel-room-member-list").innerHTML = "";
   chatUser = id;
   activeChat = 1;
   document.getElementById("chat-name").innerHTML = document.getElementById(
@@ -132,6 +135,7 @@ function setChatChannel(id) {
 }
 
 function setChatRoom(id) {
+  document.getElementById("panel-room-member-list").innerHTML = "";
   chatRoom = id;
   activeChat = 2;
   document.getElementById("chat-name").innerHTML = document.getElementById(
@@ -245,6 +249,7 @@ function sendMesg() {
     wsSendMesg(obj);
     createNewMesg(mesg, 1);
   }
+  document.getElementById("field-mesg").value = "";
 }
 
 function createNewMesg(detail, type) {
@@ -261,6 +266,7 @@ function createNewMesg(detail, type) {
   }
   newMesgWrap.appendChild(newMesg);
   mesgPane.appendChild(newMesgWrap);
+  scrollToBottom();
 }
 var lastSendUID = 0;
 var lastMesgElm = null;

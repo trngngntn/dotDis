@@ -47,9 +47,10 @@ namespace Controllers
             else
             {
                 int perm = RoomDAO.GetPermission(roomId, (int)uid);
+                ViewData["perm"] = perm;
                 if(perm >= RoomDAO.PERM_MOD)
                 {
-                    RoomDAO.GetMembers(roomId);
+                    ViewData["member-list"] = RoomDAO.GetMembers(roomId);
                 }
                 //ViewData["active-user"] = UserDAO.GetUserByID((int)uid);
                 //ViewData["list-friend"] = Models.User.ListFriend((int)uid);
@@ -60,14 +61,25 @@ namespace Controllers
         public String AddRoom(string name, int uid)
         {
             ConsoleLogger.Log("Add room {0}:{1}", name, uid);
-                return RoomDAO.Create(name, uid).ToString();
+            return RoomDAO.Create(name, uid).ToString();
         }
 
-        public String SearchUser(string str)
+        public String AddFriend(int fuid)
+        {
+            int? uid = this.HttpContext.Session.GetBindedUid();
+            if (uid == null)
+            {
+                return "error";
+            }
+            UserDAO.AddFriend((int)uid, fuid);
+            return "done";
+        }
+        
+        public String SearchUser(int uid, string str)
         {
             if (str == null || str.Equals("")) return "";
             //ConsoleLogger.Log("Search for '{0}'", str);
-            List<User> found = UserDAO.Find(str);
+            List<User> found = UserDAO.Find(uid, str);
             return JsonSerializer.Serialize<List<User>>(found);
         }
 

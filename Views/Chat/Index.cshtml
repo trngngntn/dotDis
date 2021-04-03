@@ -6,6 +6,7 @@
 {
     <script src="js/class.js"></script>
     <script src="js/addRoom.js"></script>
+    <script src="js/addFriend.js"></script>
     <script src="js/webSocket.js"></script>
     <link rel="stylesheet" href="css/variables.css" />
     <link rel="stylesheet" href="css/stylesheet.css" />
@@ -20,8 +21,8 @@
 <nav>
     <div id="panel-detail-user" class="group-panel">
         <div id="panel-friend" class="panel">
-            <div class="group">Friends</div>
-            <div>
+            <div class="group">Friends <div id="bt-add-room" class="bt-add-entry clickable" onclick="doAddFriend()">+</div></div>
+            <div id="panel-friend-list">
                 @foreach (Models.User user in (List<Models.User>)ViewData["list-friend"])
                 {  
                     <div class="entry clickable" id="uid-@user.ID" onclick="setChatUser(@user.ID)">
@@ -106,16 +107,7 @@
             <div id="panel-friend" class="panel">
             <div class="group">Members</div>
             <div id="panel-room-member-list">
-                    <div class="entry" id="room-uid-">
-                        <img class="avatar" src="img/avatar.png"></img>
-                        <div class="name" id="room-uid-name">Name</div>
-                        <div id="status-room-user" class="status-dot"></div>
-                    </div>
-                    <div class="entry" id="room-uid-">
-                        <img class="avatar" src="img/avatar.png"></img>
-                        <div class="name" id="room-uid-name">Name</div>
-                        <div id="status-room-user" class="status-dot"></div>
-                    </div>
+                    
             </div>
         </div>
     </div>

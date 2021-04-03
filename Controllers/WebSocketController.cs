@@ -220,6 +220,12 @@ namespace Controllers
                 if (UserIsOnline(uid))
                 {
                     ConsoleLogger.Log("Send new MESG UID:{0},CHAN:{1} to UID:{2}", mesg.SendID, mesg.ChannelID, uid);
+                    Func<WebSocket, Task> action = async (socket) =>
+                    {
+                        JsonGeneric obj = new JsonGeneric(TYPE_B_RECV_CHANNEL_MESG, JsonSerializer.Serialize<ChannelMessage>(mesg));
+                        await socket.SendData(Encoding.UTF8.GetBytes(JsonSerializer.Serialize<JsonGeneric>(obj)));
+                    };
+                    IterateUserSockets(uid, action);
                 }
             }
         }

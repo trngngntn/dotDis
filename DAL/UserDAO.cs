@@ -136,6 +136,19 @@ namespace DAL
             return friend;
         }
 
+        public static void AddFriend(int uid, int fuid)
+        {
+            ConsoleLogger.Warn(uid + " " + fuid);
+            string sql = "INSERT INTO `Friend`(uid1,uid2,status) VALUES(@uid,@fuid,0)";
+            MySqlParameter[] param = {
+                new MySqlParameter("uid", MySqlDbType.Int32),
+                new MySqlParameter("fuid", MySqlDbType.Int32)
+            };
+            param[0].Value = uid;
+            param[1].Value = fuid;
+            Database.ExecuteSQL(sql, param);
+        }
+
         public static List<Room> ListRoom(int uid)
         {
             string sql = "SELECT * FROM `Room_User` INNER JOIN `Room` ON `Room`.`id` = `Room_User`.`room_id` "
@@ -153,13 +166,17 @@ namespace DAL
             return result;
         }
 
-        public static List<User> Find(string str){
-            string sql = "SELECT `id`, `fullname`, `username` FROM `User` WHERE `fullname` LIKE @pattern OR `username` LIKE @pattern";
-            MySqlParameter param = new MySqlParameter("pattern", MySqlDbType.VarChar);
-            param.Value = "%" + str + "%";
+        public static List<User> Find(int uid, string str)
+        {
+            string sql = "SELECT DISTINCT `id`, `fullname`, `username` FROM `User` WHERE `id` NOT IN "
+            + "(SELECT DISTINCT `id` FROM `User` INNER JOIN (SELECT `uid1`,`uid2` FROM `Friend` WHERE `uid1` = @uid OR `uid2` = @uid) `tbl` "
+            + " ON `User`.`id`=`tbl`.`uid1` OR `User`.`id`=`tbl`.`uid2`) AND (`fullname` LIKE @pattern OR `username` LIKE @pattern)";
+            MySqlParameter[] param = { new MySqlParameter("pattern", MySqlDbType.VarChar), new MySqlParameter("uid", MySqlDbType.Int32) };
+            param[0].Value = "%" + str + "%";
+            param[1].Value = uid;
             DataTable dat = Database.GetData(sql, param);
             List<User> result = new List<User>();
-            foreach(DataRow row in dat.Rows)
+            foreach (DataRow row in dat.Rows)
             {
                 int id = row["id"].ToString().ToInt();
                 string name = row["fullname"].ToString();

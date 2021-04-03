@@ -88,8 +88,11 @@
                                 } else 
                                 {
                                     <select>
-                                        <option value="10" @if(user.Perm == RoomDAO.PERM_MOD){ <text>selected</text> }>Moderator</option>
-                                        <option value="1" @if(user.Perm == RoomDAO.PERM_DEFAULT){ <text>selected</text> }>Group</option>
+                                        @if(user.Perm == RoomDAO.PERM_MOD){ <option value="10" selected>Moderator</option> }
+                                        else { <option value="10" >Moderator</option> }
+                                        @if(user.Perm == RoomDAO.PERM_DEFAULT){ <option value="1" selected>Group</option> }
+                                        else { <option value="1" >Group</option> }
+                                        
                                     </select>
                                 }
                             </td>

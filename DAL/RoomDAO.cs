@@ -69,8 +69,9 @@ namespace DAL
             param[1].Value = uid;
             DataTable dat = Database.GetData(sql, param);
             if (dat.Rows.Count == 0) return PERM_NOACS;
-            else
-            {
+            else    
+            {   
+                ConsoleLogger.Warn(dat.Rows[0]["perm"].ToString());
                 return dat.Rows[0]["perm"].ToString().ToInt();
             }
         }

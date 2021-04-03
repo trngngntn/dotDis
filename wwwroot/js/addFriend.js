@@ -5,7 +5,7 @@ function doAddFriend(){
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             document.getElementById("placeholder").innerHTML = this.responseText;
-            initAddRoomDialog();
+            initAddFriendDialog();
         } 
     };
     xhttp.open("GET", "/AddFriendDialog.html", true);
@@ -38,6 +38,26 @@ function initAddFriendDialog(){
     btCancel.setAttribute("onclick", "addFriendDialog.doCancel()");
     addFriendDialog = new AddFriendDialog();
 }
+function addFriend(uid, name){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            if(this.responseText == "done"){
+                var list = document.getElementById("panel-friend-list");
+                var elm = document.createElement("div");
+                elm.className = `entry clickable`;
+                elm.id = `uid-${uid}`;
+                elm.setAttribute("onclick", `setChatUser(${uid})`);
+                elm.innerHTML = `<img class="avatar" src="img/avatar.png"></img>
+                <div class="name" id="uid-${uid}-name">${name}</div>
+                <div id="status-user-${uid}" class="status-dot"></div>`;
+                list.appendChild(elm);
+            }
+        } 
+    };
+    xhttp.open("GET", `/Chat/AddFriend?fuid=${uid}`, true);
+    xhttp.send();
+}
 class AddFriendDialog {
     constructor(){
         this.addFriendPanel = document.getElementById("box-add-friend");
@@ -66,8 +86,7 @@ class AddFriendDialog {
                 addFriendDialog.displayResult(JSON.parse(this.responseText));
             } else console.log("pending");
         };
-        console.log(`/Chat/SearchUser/${this.searchBox.value.trim()}`);
-        xhr.open("GET",`/Chat/SearchUser?str=${this.searchBox.value.trim()}`);
+        xhr.open("GET",`/Chat/SearchUser?uid=${activeUser}&str=${this.searchBox.value.trim()}`);
         xhr.send();
     }
     displayResult(list){
@@ -75,6 +94,7 @@ class AddFriendDialog {
         list.forEach(function(user){
             var elm = document.createElement("div");
             elm.className = "found-user clickable";
+            elm.setAttribute("onclick", `addFriend(${user.id},"${user.name}")`);
             var elmAva = document.createElement("img");
             elmAva.className = "avatar";
             elmAva.src = "img/avatar.png";
